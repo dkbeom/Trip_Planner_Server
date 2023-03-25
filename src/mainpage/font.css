@@ -1,0 +1,42 @@
+@font-face {
+    font-family: 'SingleDay';
+    src: url('../../public/font/SingleDay.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: '돋움체';
+    src: url('../../public/font/돋움체.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+.sd {
+    font-family: "SingleDay", sans-serif;
+}
+
+.dd {
+    font-family: "돋움체", sans-serif;
+}
+
+.textarrange {
+    display: flex;
+    justify-content: space-between;
+    height: 30vh;
+}
+
+.item {
+    font-size: 3rem;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.show {
+    opacity: 1;
+}
+
+.btn-secondary:hover {
+    transform: scale(1.05);
+}
