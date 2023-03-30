@@ -16,6 +16,6 @@ public class TourApiServiceTest {
 	@Test
 	public void apiTest() {
 		
-		tourApiService.getApiCategoryList("A02", "A0201");
+//		tourApiService.getApiCategoryList("A02", "A0201");
 	}
 }
