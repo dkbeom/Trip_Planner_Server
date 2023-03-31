@@ -1,8 +1,6 @@
 package com.example.tripPlanner.controller;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.tripPlanner.entity.LoginForm;
 import com.example.tripPlanner.entity.Member;
-import com.example.tripPlanner.entity.Place;
 import com.example.tripPlanner.service.MemberService;
 import com.example.tripPlanner.service.SecurityService;
-import com.example.tripPlanner.service.TourApiService;
 import com.google.gson.Gson;
 
 @RestController
@@ -30,7 +26,7 @@ public class MemberController {
 
     @Autowired
     private SecurityService securityService;
-    
+
     
     @PostMapping("/join")
     public String join(@RequestBody Member member) {

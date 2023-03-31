@@ -8,6 +8,8 @@ import com.example.tripPlanner.entity.Place;
 
 public interface TourApiService {
 	
+	Map<String, Object> getItemListAndNumOfRows(String uriString);
+	
 	// Tour API 키워드 검색 조회
 	List<Place> getKeywordPlaceList(String keyword);
 	List<Place> getKeywordPlaceList(String keyword, String areaCode);
@@ -16,8 +18,9 @@ public interface TourApiService {
 	List<Place> getKeywordPlaceList(String keyword, String areaCode, String sigunguCode, String cat1, String cat2);
 	List<Place> getKeywordPlaceList(String keyword, String areaCode, String sigunguCode, String cat1, String cat2, String cat3);
 	
-//	// 지역코드, 시군구코드 조회
-//	Map<String, Integer> getAreaCode(String areaName, String sigunguName);
+	// DB에서 지역코드, 시군구코드 조회 (input: 지역 이름 / output: 지역 코드)
+	Map<String, String> getAreaCode(String areaName);
+	Map<String, String> getAreaCode(String areaName, String sigunguName);
 	
 	// Tour API 위치기반 관광정보 조회
 	List<Place> getLocationPlaceList(String mapX, String mapY);
