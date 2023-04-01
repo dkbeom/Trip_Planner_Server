@@ -18,6 +18,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+	
+
     // https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc10
     implementation 'com.oracle.database.jdbc:ojdbc10:19.18.0.0'
 
@@ -25,7 +27,6 @@ dependencies {
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.1'
     // https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter-test
     testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.1'
-
     // https://mvnrepository.com/artifact/org.json/json
     implementation 'org.json:json:20230227'
     // https://mvnrepository.com/artifact/com.google.code.gson/gson

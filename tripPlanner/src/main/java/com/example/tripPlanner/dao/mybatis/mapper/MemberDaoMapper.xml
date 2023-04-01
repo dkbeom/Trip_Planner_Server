@@ -28,5 +28,12 @@
         SELECT ID FROM MEMBER
         WHERE NICKNAME = #{nickname}
     </select>
+    
+   <!-- update password -->
+	<update id="updatePassword" parameterType="map">
+    UPDATE MEMBER
+    SET PWD = #{newPassword}
+    WHERE ID = #{username} AND PWD = #{oldPassword}
+	</update>
 
 </mapper>

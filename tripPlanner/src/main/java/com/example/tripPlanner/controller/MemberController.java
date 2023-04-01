@@ -1,17 +1,24 @@
 package com.example.tripPlanner.controller;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.tripPlanner.dao.MemberDao;
+import com.example.tripPlanner.dto.PasswordDto;
 import com.example.tripPlanner.entity.LoginForm;
 import com.example.tripPlanner.entity.Member;
 import com.example.tripPlanner.service.MemberService;
@@ -28,6 +35,9 @@ public class MemberController {
     @Autowired
     private SecurityService securityService;
 
+    @Autowired
+    private MemberDao memberDao;
+    
     @PostMapping("/join")
     public String join(@ModelAttribute Member member, BindingResult bindingResult) {
 
@@ -105,5 +115,26 @@ public class MemberController {
         else {
             return "{\"result\" : \"NOT_DUPLICATE_NICKNAME\"}";
         }
+    }
+
+    @PutMapping("/password")
+    public ResponseEntity<?> updatePassword(
+                                             @RequestBody PasswordDto passwordDto) {
+        if(!passwordDto.getNewPassword().equals(passwordDto.getConfirmNewPassword())) {
+            return ResponseEntity.badRequest().body("New password and confirm new password are not matched.");
+        }
+
+        Map<String, Object> parameterMap = new HashMap<>();
+        parameterMap.put("username", passwordDto.getUsername());
+        parameterMap.put("oldPassword", passwordDto.getOldPassword());
+        parameterMap.put("newPassword", passwordDto.getNewPassword());
+
+        int rows = memberDao.updatePassword(parameterMap);
+
+        if(rows == 0) {
+            return ResponseEntity.badRequest().body("Incorrect username or old password.");
+        }
+
+        return ResponseEntity.ok().build();
     }
 }
