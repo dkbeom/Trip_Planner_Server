@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tripPlanner.dao.PlaceDao">
+
+	<select id="getPlaceList" resultType="com.example.tripPlanner.entity.Place">
+		SELECT * FROM PLACE
+	</select>
+	
+	<select id="getPlace" resultType="com.example.tripPlanner.entity.Place">
+		SELECT * FROM PLACE
+		WHERE ID = #{placeId}
+	</select>
+	
+	<select id="getIdById" resultType="String">
+		SELECT ID FROM PLACE
+		WHERE ID = #{placeId}
+	</select>
+	
+	<select id="getSumScore" resultType="Double">
+		SELECT SUMSCORE
+		FROM PLACE
+		WHERE ID = #{placeId}
+	</select>
+	
+	<select id="getNumScore" resultType="Integer">
+		SELECT NUMSCORE
+		FROM PLACE
+		WHERE ID = #{placeId}
+	</select>
+
+	<insert id="insertPlace" parameterType="com.example.tripPlanner.entity.Place" >
+		INSERT INTO PLACE(ID, TITLE, ADDR, MAPX, MAPY, IMAGE, CONTENTTYPEID, CAT1, CAT2, CAT3, AREACODE, SIGUNGUCODE, TEL)
+		VALUES(#{id}, #{title}, #{addr}, #{mapX}, #{mapY}, #{image}, #{contentTypeId}, #{cat1}, #{cat2}, #{cat3}, #{areaCode}, #{sigunguCode}, #{tel})
+	</insert>
+
+    <select id="getSumOfScore" resultType="Double">
+		SELECT SUMSCORE
+		FROM PLACE
+		WHERE ID = #{placeId}
+	</select>
+	
+	<select id="getNumOfScore" resultType="Integer">
+		SELECT NUMSCORE
+		FROM PLACE
+		WHERE ID = #{placeId}
+	</select>
+	
+	<update id="updatePlaceScore">
+		UPDATE PLACE
+		SET
+			SUMSCORE = #{new_sum_score},
+			NUMSCORE = #{new_num_score}
+		WHERE ID = #{placeId}
+	</update>
+
+</mapper>
