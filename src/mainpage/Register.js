@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import { SignupForm, isFormOK } from "./SignUpForm.js";
+import { RegisterForm, isFormOK } from "./RegisterForm.js";
 import './font.css'
 
 
@@ -30,7 +30,7 @@ function Register() {
                     <Modal.Title className='sd'>회원가입</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <SignupForm onSubmit={handleSubmit} />
+                    <RegisterForm onSubmit={handleSubmit} />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>

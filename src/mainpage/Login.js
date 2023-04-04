@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import { SignupForm, isFormOK } from "./SignUpForm.js";
+import { LoginForm, isFormOK } from "./LoginForm.js"
 import './font.css'
 
 
@@ -27,17 +27,17 @@ function Login() {
 
             <Modal show={showModal} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title className='sd'>회원가입</Modal.Title>
+                    <Modal.Title className='sd'>로그인</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <SignupForm onSubmit={handleSubmit} />
+                    <LoginForm onSubmit={handleSubmit} />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
                     <Button variant="primary" onClick={handleSubmit}>
-                        Register
+                        Login
                     </Button>
                 </Modal.Footer>
             </Modal>

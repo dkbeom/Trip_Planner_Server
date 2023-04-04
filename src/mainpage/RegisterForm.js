@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export var isFormOK = false;
 
-export function SignupForm() {
+export function RegisterForm() {
     const [formData, setFormData] = useState({
         nickname: '',
         id: '',
