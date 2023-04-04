@@ -1,4 +1,4 @@
-import { Navbar, Container, Row, Col } from 'react-bootstrap';
+import { Navbar, Container, Col } from 'react-bootstrap';
 import { useState } from 'react';
 import { Title } from './Title';
 import Register from './Register';
@@ -23,7 +23,7 @@ function Greeting({ isLoggedIn, name, handleLogin, handleLogout }) {
 
     const [showModal, setShowModal] = useState(false);
     const handleModalClose = () => setShowModal(false);
-    const handleButtonClick = () => setShowModal(true);
+    //const handleButtonClick = () => setShowModal(true);
     if (isLoggedIn) {
         return (
             <Container>
@@ -75,7 +75,7 @@ function NavBar() {
                     <Col>
                         <Navbar.Brand href="/">
                             <Title>
-                                <img src="icon_STP.png" alt="Image" width="120" height="60" />
+                                <img src="icon_STP.png" alt="Main_Logo" width="120" height="60" />
                                 <span className="highlight">
                                     The <span className="green"> S</span>implest Trip{" "}
                                     <span className="orange"> P</span>lanner

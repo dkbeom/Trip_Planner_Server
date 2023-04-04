@@ -40,3 +40,10 @@
 .btn-secondary:hover {
     transform: scale(1.05);
 }
+
+
+.registerform {
+    display: flex;
+    flex-direction: column;
+    font-family: "SingleDay", sans-serif;
+}
