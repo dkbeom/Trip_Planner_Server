@@ -16,5 +16,6 @@ public interface MemberDao {
     String getIdByNickname(String nickname);
     
     public int updatePassword(Map<String, Object> parameterMap);
+    public int updateNickname(Map<String, Object> parameterMap);
    // void delete(String id);
 }

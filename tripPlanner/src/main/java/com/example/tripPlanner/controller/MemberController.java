@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.tripPlanner.dao.MemberDao;
-import com.example.tripPlanner.dto.PasswordDto;
+import com.example.tripPlanner.dto.updateDto;
 import com.example.tripPlanner.entity.LoginForm;
 import com.example.tripPlanner.entity.Member;
 import com.example.tripPlanner.service.MemberService;
@@ -117,24 +116,28 @@ public class MemberController {
         }
     }
 
-    @PutMapping("/password")
-    public ResponseEntity<?> updatePassword(
-                                             @RequestBody PasswordDto passwordDto) {
-        if(!passwordDto.getNewPassword().equals(passwordDto.getConfirmNewPassword())) {
-            return ResponseEntity.badRequest().body("New password and confirm new password are not matched.");
+    @PutMapping("/modify")
+    public ResponseEntity<?> updateMember(
+                                             @RequestBody updateDto updateDto) {
+        if(updateDto.getNewPassword()!=null&&!updateDto.getNewPassword().equals(updateDto.getConfirmNewPassword())) {
+            return ResponseEntity.badRequest().body("변경할 비민번호가 일치하지 않습니다.");
         }
 
         Map<String, Object> parameterMap = new HashMap<>();
-        parameterMap.put("username", passwordDto.getUsername());
-        parameterMap.put("oldPassword", passwordDto.getOldPassword());
-        parameterMap.put("newPassword", passwordDto.getNewPassword());
-
-        int rows = memberDao.updatePassword(parameterMap);
-
-        if(rows == 0) {
-            return ResponseEntity.badRequest().body("Incorrect username or old password.");
+        
+        parameterMap.put("username", updateDto.getUsername());
+        parameterMap.put("nickname", updateDto.getNickname());
+        if(updateDto.getNewPassword()!=null) {
+        parameterMap.put("oldPassword", updateDto.getOldPassword());
+        parameterMap.put("newPassword", updateDto.getNewPassword());
+        int row1 = memberDao.updatePassword(parameterMap);
+        
+        if(row1 == 0) {
+            return ResponseEntity.badRequest().body("기존 비밀번호가 일치하지 않습니다.");
         }
-
+        }
+        int row2 = memberDao.updateNickname(parameterMap);
+        
         return ResponseEntity.ok().build();
     }
 }

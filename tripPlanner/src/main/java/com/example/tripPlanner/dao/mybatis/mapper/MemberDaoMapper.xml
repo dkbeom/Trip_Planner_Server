@@ -35,5 +35,12 @@
     SET PWD = #{newPassword}
     WHERE ID = #{username} AND PWD = #{oldPassword}
 	</update>
+	
+	 <!-- update nickname -->
+	<update id="updateNickname" parameterType="map">
+    UPDATE MEMBER
+    SET nickname = #{nickname}
+    WHERE ID = #{username}
+	</update>
 
 </mapper>

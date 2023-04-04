@@ -47,6 +47,11 @@ public class MybatisMemberDao implements MemberDao {
     public int updatePassword(Map<String, Object> parameterMap) {
         return sqlSession.update("updatePassword", parameterMap);
     }
+    
+    @Override
+    public int updateNickname(Map<String, Object> parameterMap) {
+    	return sqlSession.update("updateNickname", parameterMap);
+    }
 }
 
 
