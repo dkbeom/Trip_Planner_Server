@@ -1,34 +1,47 @@
 import React, { useState } from 'react';
+import { Button, Modal } from 'react-bootstrap';
+import { SignupForm, isFormOK } from "./SignUpForm.js";
+import './font.css'
+
 
 function Login() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [showModal, setShowModal] = useState(false);
 
-    const handleUsernameChange = (event) => {
-        setUsername(event.target.value);
-    };
+    const handleClose = () => setShowModal(false);
+    const handleShow = () => setShowModal(true);
 
-    const handlePasswordChange = (event) => {
-        setPassword(event.target.value);
-    };
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log(`Username: ${username}, Password: ${password}`);
+    const handleSubmit = (formData) => {
+        document.querySelector('.registerform button[type="submit"]').click();
+        console.log(isFormOK);
+        if (!isFormOK)
+            return;
+        console.log(formData);
+        handleClose();
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label>Username:</label>
-                <input type="text" value={username} onChange={handleUsernameChange} />
-            </div>
-            <div>
-                <label>Password:</label>
-                <input type="password" value={password} onChange={handlePasswordChange} />
-            </div>
-            <button type="submit">Login</button>
-        </form>
+        <>
+            <Button variant="outline-success" onClick={handleShow}>
+                Login
+            </Button>
+
+            <Modal show={showModal} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title className='sd'>회원가입</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <SignupForm onSubmit={handleSubmit} />
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleSubmit}>
+                        Register
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
     );
 }
 

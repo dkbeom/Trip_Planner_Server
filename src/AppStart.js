@@ -1,12 +1,11 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import SchedulePage from './Schedule_1/SchedulePage';
 import MainPage from './mainpage/MainPage';
 
 
 
-function App() {
+function AppStart() {
   return (
     <BrowserRouter>
       <Routes>
@@ -17,4 +16,4 @@ function App() {
   );
 }
 
-export default App;
+export default AppStart;

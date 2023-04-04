@@ -2,6 +2,7 @@ import { Navbar, Container, Col } from 'react-bootstrap';
 import { useState } from 'react';
 import { Title } from './Title';
 import Register from './Register';
+import Login from './Login';
 import './font.css'
 
 
@@ -45,8 +46,8 @@ function Greeting({ isLoggedIn, name, handleLogin, handleLogout }) {
             <Container>
                 <Col style={{ paddingTop: "20px" }}>
                     <div className='dd' style={{ fontSize: "20px", marginRight: "200px" }}>
-                        <button type="button" class="btn btn-outline-success" onClick={handleLogin} style={{ marginRight: "10px" }}>Login</button>
-
+                        <Login show={showModal} handleClose={handleModalClose} />
+                        {" "} {/* 공백 추가 */}
                         <Register show={showModal} handleClose={handleModalClose} />
 
                     </div>
