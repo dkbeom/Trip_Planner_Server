@@ -103,10 +103,12 @@ public class TourApiServiceImp implements TourApiService {
 
 			String urlEncodedKeyword = URLEncoder.encode(keyword, "UTF-8");
 
-			String uriString = "https://apis.data.go.kr/B551011/KorService1/searchKeyword1" + "?serviceKey="
-					+ tourApiKey + "&MobileApp=AppTest&MobileOS=ETC&pageNo=1&numOfRows=500&listYN=Y&_type=json"
-					+ "&keyword=" + urlEncodedKeyword + "&cat1=" + cat1 + "&cat2=" + cat2 + "&cat3=" + cat3
-					+ "&areaCode=" + areaCode + "&sigunguCode=" + (areaCode == "" ? "" : sigunguCode);
+			String uriString = "https://apis.data.go.kr/B551011/KorService1/searchKeyword1"
+							+ "?serviceKey=" + tourApiKey
+							+ "&MobileApp=AppTest&MobileOS=ETC&pageNo=1&numOfRows=200&listYN=Y&_type=json"
+							+ "&keyword=" + urlEncodedKeyword
+							+ "&cat1=" + cat1 + "&cat2=" + cat2 + "&cat3=" + cat3
+							+ "&areaCode=" + areaCode + "&sigunguCode=" + (areaCode == "" ? "" : sigunguCode);
 
 			Map<String, Object> map = getItemListAndNumOfRows(uriString);
 			
@@ -154,7 +156,7 @@ public class TourApiServiceImp implements TourApiService {
 
 		String uriString = "http://apis.data.go.kr/B551011/KorService1/areaCode1"
 							+"?serviceKey="+tourApiKey
-							+"&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json"
+							+"&numOfRows=200&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json"
 							+"&areaCode=";
 
 		String areaCode = "";
@@ -169,7 +171,7 @@ public class TourApiServiceImp implements TourApiService {
 					areaCode = (String)eachItem.get("code");
 				}
 			}
-			// 지역코드(areaCode)를 찾았다면
+			// 지역코드(areaCode)가 존재한다면
 			if(!areaCode.equals("")) {
 				Map<String, Object> map2 = getItemListAndNumOfRows(uriString+areaCode);
 				if(map2 != null) {
@@ -194,7 +196,7 @@ public class TourApiServiceImp implements TourApiService {
 
 	@Override
 	public List<Place> getLocationPlaceList(String mapX, String mapY) {
-		return getLocationPlaceList(mapX, mapY, 50000, "", "", "");
+		return getLocationPlaceList(mapX, mapY, 5000000, "", "", "");
 	}
 
 	@Override
@@ -218,7 +220,7 @@ public class TourApiServiceImp implements TourApiService {
 
 		String uriString = "https://apis.data.go.kr/B551011/KorService1/locationBasedList1"
 				+ "?serviceKey="+ tourApiKey
-				+ "&MobileOS=ETC&MobileApp=AppTest&listYN=Y&_type=json&numOfRows=500&pageNo=1"
+				+ "&MobileOS=ETC&MobileApp=AppTest&listYN=Y&_type=json&numOfRows=200&pageNo=1"
 				+ "&mapX=" + mapX + "&mapY=" + mapY + "&radius=" + radius
 				+ "&contentTypeId=";
 		
