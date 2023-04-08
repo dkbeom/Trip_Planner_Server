@@ -63,34 +63,31 @@ public class TSPAlgorithm {
 			}
 		}
 		
-		for(int i = 0; i < placeList.size()+1; i++) {
-			System.out.println();
-			for(int j = 0; j < placeList.size()+1; j++) {
-				System.out.printf("%26.20f  ", distances[i][j]);
-			}
-			System.out.println();
-		}
-		System.out.println();
-		
 		// TSP 알고리즘 실행
-		long startTime = System.currentTimeMillis();
-		
 		ArrayList<Integer> pathOrderList = getTspPathOrderList();
 		
-		System.out.println("order => " + pathOrderList);
-		System.out.println("order size => " + pathOrderList.size());
-		System.out.println("placeList => " + placeList);
-		System.out.println("placeList size => " + placeList.size());
-		
-		long endTime = System.currentTimeMillis();
-		long elapsedTime = endTime - startTime;
-		System.out.println("TSP 실행 시간: " + elapsedTime + "밀리초");
-		System.out.println("최소 비용 => "+minDistance);
 		// 여행지 순서 변경
 		ArrayList<Place> orderedPlaceList = new ArrayList<>();
 		for (int i = 1; i < pathOrderList.size(); i++) {
 			orderedPlaceList.add(placeList.get(pathOrderList.get(i) - 1));
 		}
+		
+		//--------------------------------TEST--------------------------------
+		// 원래의 여행지 순서대로 title 출력
+		System.out.printf("원래 순서:   ");
+		for(Place p : placeList) {
+			System.out.printf("[%s]  ", p.getTitle());
+		}
+		System.out.println();
+		System.out.println();
+		// 정렬된 여행지 순서대로 title 출력
+		System.out.printf("정렬된 순서:  ");
+		for(Place p : orderedPlaceList) {
+			System.out.printf("[%s]  ", p.getTitle());
+		}
+		System.out.println();
+		System.out.println();
+		//--------------------------------TEST--------------------------------
 		
 		return orderedPlaceList;
 	}
@@ -107,6 +104,13 @@ public class TSPAlgorithm {
         
         // 재귀함수 호출
         findTspPath(path, currentPlace, totalDistance, 1);
+        
+        //--------------------------------TEST--------------------------------
+        // 여행지 순서(번호) 출력
+        System.out.println();
+        System.out.println("여행지 순서: "+minPath);
+        System.out.println();
+        //--------------------------------TEST--------------------------------
         
         // 최소 경로 반환
         return minPath;
@@ -134,9 +138,7 @@ public class TSPAlgorithm {
                 visited[i] = true; // 방문 처리
                 path.add(i); // 경로에 추가
                 totalDistance += distances[currentPlace][i]; // 거리 더하기
-                // 재귀함수 호출
-                findTspPath(path, i, totalDistance, count + 1);
-                
+                findTspPath(path, i, totalDistance, count + 1); // 재귀함수 호출
                 visited[i] = false; // 방문 처리 취소
                 path.remove(path.size() - 1); // 경로에서 제거
                 totalDistance -= distances[currentPlace][i]; // 거리 빼기

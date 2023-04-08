@@ -107,8 +107,11 @@ public class TourApiServiceImp implements TourApiService {
 							+ "?serviceKey=" + tourApiKey
 							+ "&MobileApp=AppTest&MobileOS=ETC&pageNo=1&numOfRows=200&listYN=Y&_type=json"
 							+ "&keyword=" + urlEncodedKeyword
-							+ "&cat1=" + cat1 + "&cat2=" + cat2 + "&cat3=" + cat3
-							+ "&areaCode=" + areaCode + "&sigunguCode=" + (areaCode == "" ? "" : sigunguCode);
+							+ "&cat1=" + cat1
+							+ "&cat2=" + (cat1 != null && cat2 != null && cat2.length() >= 5 && cat1.equals(cat2.substring(0, 2)) ? cat2 : "")
+							+ "&cat3=" + (cat2 != null && cat3 != null && cat3.length() >= 9 && cat2.equals(cat3.substring(0, 4)) ? cat3 : "")
+							+ "&areaCode=" + areaCode
+							+ "&sigunguCode=" + (areaCode == null || areaCode.equals("") ? "" : sigunguCode);
 
 			Map<String, Object> map = getItemListAndNumOfRows(uriString);
 			
@@ -196,33 +199,22 @@ public class TourApiServiceImp implements TourApiService {
 
 	@Override
 	public List<Place> getLocationPlaceList(String mapX, String mapY) {
-		return getLocationPlaceList(mapX, mapY, 5000000, "", "", "");
+		return getLocationPlaceList(mapX, mapY, 50000, "");
 	}
 
 	@Override
 	public List<Place> getLocationPlaceList(String mapX, String mapY, Integer radius) {
-		return getLocationPlaceList(mapX, mapY, radius, "", "", "");
+		return getLocationPlaceList(mapX, mapY, radius, "");
 	}
 
 	@Override
-	public List<Place> getLocationPlaceList(String mapX, String mapY, Integer radius, String cat1) {
-		return getLocationPlaceList(mapX, mapY, radius, cat1, "", "");
-	}
-
-	@Override
-	public List<Place> getLocationPlaceList(String mapX, String mapY, Integer radius, String cat1, String cat2) {
-		return getLocationPlaceList(mapX, mapY, radius, cat1, cat2, "");
-	}
-
-	@Override
-	public List<Place> getLocationPlaceList(String mapX, String mapY, Integer radius, String cat1, String cat2,
-			String cat3) {
+	public List<Place> getLocationPlaceList(String mapX, String mapY, Integer radius, String contentTypeId) {
 
 		String uriString = "https://apis.data.go.kr/B551011/KorService1/locationBasedList1"
 				+ "?serviceKey="+ tourApiKey
 				+ "&MobileOS=ETC&MobileApp=AppTest&listYN=Y&_type=json&numOfRows=200&pageNo=1"
 				+ "&mapX=" + mapX + "&mapY=" + mapY + "&radius=" + radius
-				+ "&contentTypeId=";
+				+ "&contentTypeId=" + contentTypeId;
 		
 		Map<String, Object> map = getItemListAndNumOfRows(uriString);
 
@@ -275,7 +267,9 @@ public class TourApiServiceImp implements TourApiService {
 		String uriString = "https://apis.data.go.kr/B551011/KorService1/categoryCode1"
 				+ "?serviceKey=" + tourApiKey
 				+ "&numOfRows=500&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json"
-				+ "&cat1=" + cat1 + "&cat2=" + cat2 + "&cat3=" + cat3;
+				+ "&cat1=" + cat1
+				+ "&cat2=" + (cat1 != null && cat2 != null && cat2.length() >= 5 && cat1.equals(cat2.substring(0, 2)) ? cat2 : "")
+				+ "&cat3=" + (cat2 != null && cat3 != null && cat3.length() >= 9 && cat2.equals(cat3.substring(0, 4)) ? cat3 : "");
 		
 		Map<String, Object> map = getItemListAndNumOfRows(uriString);
 
@@ -294,5 +288,74 @@ public class TourApiServiceImp implements TourApiService {
 		}
 
 		return categoryList;
+	}
+	
+	/////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public List<Place> getAreaBasedPlaceList() {
+		return getAreaBasedPlaceList("", "", "", "", "");
+	}
+
+	@Override
+	public List<Place> getAreaBasedPlaceList(String areaCode) {
+		return getAreaBasedPlaceList(areaCode, "", "", "", "");
+	}
+
+	@Override
+	public List<Place> getAreaBasedPlaceList(String areaCode, String sigunguCode) {
+		return getAreaBasedPlaceList(areaCode, sigunguCode, "", "", "");
+	}
+
+	@Override
+	public List<Place> getAreaBasedPlaceList(String areaCode, String sigunguCode, String cat1) {
+		return getAreaBasedPlaceList(areaCode, sigunguCode, cat1, "", "");
+	}
+
+	@Override
+	public List<Place> getAreaBasedPlaceList(String areaCode, String sigunguCode, String cat1, String cat2) {
+		return getAreaBasedPlaceList(areaCode, sigunguCode, cat1, cat2, "");
+	}
+
+	@Override
+	public List<Place> getAreaBasedPlaceList(String areaCode, String sigunguCode, String cat1, String cat2, String cat3) {
+		
+		String uriString = "https://apis.data.go.kr/B551011/KorService1/areaBasedList1"
+				+ "?serviceKey=" + tourApiKey
+				+ "&MobileApp=AppTest&MobileOS=ETC&pageNo=1&numOfRows=200&listYN=Y&_type=json&arrange=A"
+				+ "&cat1=" + cat1
+				+ "&cat2=" + (cat1 != null && cat2 != null && cat2.length() >= 5 && cat1.equals(cat2.substring(0, 2)) ? cat2 : "")
+				+ "&cat3=" + (cat2 != null && cat3 != null && cat3.length() >= 9 && cat2.equals(cat3.substring(0, 4)) ? cat3 : "")
+				+ "&areaCode=" + areaCode
+				+ "&sigunguCode=" + (areaCode == null || areaCode.equals("") ? "" : sigunguCode);
+		
+		System.out.println("어떻게 되는데? =>"+uriString);
+		
+		Map<String, Object> map = getItemListAndNumOfRows(uriString);
+		
+		// List<Place> 생성
+		List<Place> placeList = new ArrayList<>();
+		if(map != null) {
+			for (int i = 0; i < (Integer)map.get("numOfRows"); i++) {
+				JSONObject eachItem = (JSONObject) ((JSONArray)map.get("item")).get(i);
+				Place place = new Place();
+				place.setId((String) eachItem.get("contentid"));
+				place.setTitle((String) eachItem.get("title"));
+				place.setAddr((String) eachItem.get("addr1"));
+				place.setMapX((String) eachItem.get("mapx"));
+				place.setMapY((String) eachItem.get("mapy"));
+				place.setImage((String) eachItem.get("firstimage"));
+				place.setContentTypeId((String) eachItem.get("contenttypeid"));
+				place.setCat1((String) eachItem.get("cat1"));
+				place.setCat2((String) eachItem.get("cat2"));
+				place.setCat3((String) eachItem.get("cat3"));
+				place.setAreaCode((String) eachItem.get("areacode"));
+				place.setSigunguCode((String) eachItem.get("sigungucode"));
+				place.setTel((String) eachItem.get("tel"));
+				placeList.add(place);
+			}
+		}
+		
+		return placeList;
 	}
 }
