@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.tripPlanner.entity.Place;
+import com.example.tripPlanner.entity.Restaurant;
 import com.example.tripPlanner.entity.TourApiParam;
 import com.example.tripPlanner.service.PlaceService;
 import com.example.tripPlanner.service.TourApiService;
-import com.example.tripPlanner.util.Excel;
+import com.example.tripPlanner.util.ExcelReader;
 import com.example.tripPlanner.util.TSPAlgorithm;
 
 @RestController
@@ -142,5 +143,19 @@ public class TourApiController {
 		}
 
 		return orderedPlaceList;
+	}
+	
+	// 특정 지역의 특정 좌표 주변 음식점 리스트 조회
+	@GetMapping("/restaurant")
+	public List<Restaurant> excel(String area, String mapX, String mapY, Integer radiusKm) {
+		
+		ExcelReader excelReader = new ExcelReader();
+		List<Restaurant> restaurantList = excelReader.getRestaurantListWithinRadius(area, mapX, mapY, radiusKm);
+		
+		// restaurantList 한번 더 필터링하는 작업 필요
+		// ...
+		
+		System.out.println(radiusKm+"km 반경 이내에 있는 음식점 수 => "+restaurantList.size());
+		return restaurantList;
 	}
 }
