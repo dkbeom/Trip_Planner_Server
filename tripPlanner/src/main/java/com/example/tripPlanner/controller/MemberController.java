@@ -120,7 +120,7 @@ public class MemberController {
     public ResponseEntity<?> updateMember(
                                              @RequestBody updateDto updateDto) {
         if(updateDto.getNewPassword()!=null&&!updateDto.getNewPassword().equals(updateDto.getConfirmNewPassword())) {
-            return ResponseEntity.badRequest().body("변경할 비민번호가 일치하지 않습니다.");
+            return ResponseEntity.badRequest().body("password wrong.");
         }
 
         Map<String, Object> parameterMap = new HashMap<>();
