@@ -3,13 +3,13 @@ import './font.css'
 import axios from 'axios';
 
 export var isFormOK = false;
+var confirmPWD = '';
 
 export function RegisterForm() {
     const [formData, setFormData] = useState({
         nickname: '',
         id: '',
-        pwd: '',
-        confirmPWD: ''
+        pwd: ''
     });
     const [errorMessage, setErrorMessage] = useState('');
     isFormOK = false;
@@ -30,7 +30,7 @@ export function RegisterForm() {
             setErrorMessage('비밀번호는 5자 이상이어야 합니다!');
             return;
         }
-        if (formData.pwd !== formData.confirmPWD) {
+        if (formData.pwd !== confirmPWD) {
             setErrorMessage('비밀번호가 다릅니다!');
             return;
         }
@@ -91,7 +91,7 @@ export function RegisterForm() {
                 <label style={{ paddingLeft: 10, paddingRight: 8.5 }}>
                     비밀번호 확인:
                 </label>
-                <input type="password" name="confirmPWD" value={formData.confirmPWD} onChange={handleChange} placeholder="비밀번호를 한 번 더 입력해주세요." style={{ width: '300px' }} />
+                <input type="password" name="confirmPWD" value={confirmPWD} onChange={handleChange} placeholder="비밀번호를 한 번 더 입력해주세요." style={{ width: '300px' }} />
             </div>
             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
             <button type="submit" style={{ opacity: 0, pointerEvents: 'none', height: '0' }}>JSON 파일 다운로드</button>

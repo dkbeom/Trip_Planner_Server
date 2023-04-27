@@ -9,7 +9,7 @@ function NextPageButton() {
     useEffect(() => {
         const timer = setTimeout(() => {
             setShowButton(true);
-        }, 4000);
+        }, 123);
 
         return () => clearTimeout(timer);
     }, []);
