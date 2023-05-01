@@ -1,10 +1,9 @@
-
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
-import SchedulePage from './ScheduleTable';
 import NavBar from '../mainpage/NavBar';
 import MapAPI from './Map';
+import ScheduleTable from './ScheduleTable';
 
 const Background = styled.div`
   background-image: url('/loginpage_background.png');
@@ -14,14 +13,38 @@ const Background = styled.div`
   background-position: center center;
 `;
 
+const MainWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+`;
+
+const MapWrapper = styled.div`
+  width: 600px;
+  height: 300px;
+  margin-right: 20px;
+  background-color: #DDFFFF77;
+`;
+
+const ScheduleWrapper = styled.div`
+  display: flex;
+  flex: 1;
+`;
+
 function MainPage() {
-    return (
-        <Background>
-          <NavBar/>
-          <MapAPI/>
-          <SchedulePage/>
-        </Background>
-    );
+  return (
+    <Background>
+      <NavBar />
+      <MainWrapper>
+        <MapWrapper>
+          <MapAPI />
+        </MapWrapper>
+        <ScheduleWrapper>
+          <ScheduleTable />
+        </ScheduleWrapper>
+      </MainWrapper>
+    </Background>
+  );
 }
 
 export default MainPage;
