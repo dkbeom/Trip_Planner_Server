@@ -1,5 +1,7 @@
 package com.example.tripPlanner.entity;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -19,4 +21,6 @@ public class Place {
 	private String tel;           // 전화번호
 	private Double sumScore;      // 평점 총점
 	private Integer numScore;     // 평점 갯수
+	
+	private List<Restaurant> nearByRestaurants; // 근처 식당 목록
 }

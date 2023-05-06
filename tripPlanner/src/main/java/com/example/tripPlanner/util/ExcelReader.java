@@ -18,7 +18,7 @@ import com.example.tripPlanner.entity.Restaurant;
 
 public class ExcelReader {
 	
-    public List<Restaurant> getRestaurantListWithinRadius(String area, String currentX, String currentY, Integer radiusKm) {
+    public List<Restaurant> getRestaurantListWithinRadius(String area, String currentX, String currentY, Double radiusKm) {
     	
         try {
             // 읽어올 엑셀 파일 경로와 파일명을 지정
@@ -59,7 +59,7 @@ public class ExcelReader {
                 	BigDecimal distance = x2.add(y2).sqrt(mc);
                 	
                 	// 음식점이 설정한 반경 안에 있는 경우
-                	if(distance.doubleValue() <= (double)radiusKm) {
+                	if(distance.doubleValue() <= radiusKm) {
                 		Restaurant restaurant = new Restaurant(
                 				(int)row.getCell(0).getNumericCellValue(),
 								row.getCell(1).getStringCellValue(),

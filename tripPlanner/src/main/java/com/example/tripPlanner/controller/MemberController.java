@@ -30,6 +30,7 @@ public class MemberController {
     
     @PostMapping("/join")
     public String join(@RequestBody Member member) {
+    // 파라미터: id, pwd, name, nickname, gender, age
     	
         boolean isJoin = memberService.join(member);
 
@@ -42,6 +43,7 @@ public class MemberController {
 
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody LoginForm loginForm) {
+    // 파라미터: id, pwd
     	
         // 로그인 입혁한 정보에 맞는 Member 객체 가져오기
         Member member = memberService.getMember(loginForm);

@@ -324,12 +324,10 @@ public class TourApiServiceImp implements TourApiService {
 				+ "?serviceKey=" + tourApiKey
 				+ "&MobileApp=AppTest&MobileOS=ETC&pageNo=1&numOfRows=200&listYN=Y&_type=json&arrange=A"
 				+ "&cat1=" + cat1
-				+ "&cat2=" + (cat1 != null && cat2 != null && cat2.length() >= 5 && cat1.equals(cat2.substring(0, 2)) ? cat2 : "")
-				+ "&cat3=" + (cat2 != null && cat3 != null && cat3.length() >= 9 && cat2.equals(cat3.substring(0, 4)) ? cat3 : "")
+				+ "&cat2=" + (cat1 != null && cat2 != null && cat2.length() == 5 && cat1.equals(cat2.substring(0, 3)) ? cat2 : "")
+				+ "&cat3=" + (cat2 != null && cat3 != null && cat3.length() == 9 && cat2.equals(cat3.substring(0, 5)) ? cat3 : "")
 				+ "&areaCode=" + areaCode
 				+ "&sigunguCode=" + (areaCode == null || areaCode.equals("") ? "" : sigunguCode);
-		
-		System.out.println("어떻게 되는데? =>"+uriString);
 		
 		Map<String, Object> map = getItemListAndNumOfRows(uriString);
 		

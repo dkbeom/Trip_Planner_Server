@@ -59,12 +59,13 @@ public class TSPAlgorithm {
 
 				BigDecimal distance = x2.add(y2);
 
+				// x2 + y2 의 값을 입력
 				distances[i][j] = distance.doubleValue();
 			}
 		}
 		
 		// TSP 알고리즘 실행
-		ArrayList<Integer> pathOrderList = getTspPathOrderList();
+		ArrayList<Integer> pathOrderList = getPathOrder();
 		
 		// 여행지 순서 변경
 		ArrayList<Place> orderedPlaceList = new ArrayList<>();
@@ -73,6 +74,10 @@ public class TSPAlgorithm {
 		}
 		
 		//--------------------------------TEST--------------------------------
+		System.out.println();
+		System.out.println("This is BackTracking Algorithm");
+		System.out.println();
+		
 		// 원래의 여행지 순서대로 title 출력
 		System.out.printf("원래 순서:   ");
 		for(Place p : placeList) {
@@ -87,14 +92,19 @@ public class TSPAlgorithm {
 		}
 		System.out.println();
 		System.out.println();
+		System.out.println("여행지 총 "+(numOfPlaces-1)+"개");
+		System.out.println();
 		//--------------------------------TEST--------------------------------
 		
 		return orderedPlaceList;
 	}
     
-    // TSP 알고리즘 실행해서, 경로 순서를 반환하는 메소드
-    public ArrayList<Integer> getTspPathOrderList() {
+	
+    // Greedy 알고리즘 실행해서, 경로 순서를 반환하는 메소드
+    public ArrayList<Integer> getPathOrder() {
+    	
         ArrayList<Integer> path = new ArrayList<>(); // 경로
+        
         // 시작 여행지 설정
         int startPlace = 0; // 시작 여행지를 0으로 설정
         int currentPlace = startPlace; // 시작 여행지를 현재 여행지로 설정
