@@ -53,6 +53,14 @@ public class TourApiController {
 		TSPAlgorithmGreedy tsp = new TSPAlgorithmGreedy(placeList);
 		ArrayList<Place> orderedPlaceList = tsp.getTspOrderedPlaceList(param.getCurrentX(), param.getCurrentY());
 
+		// 각 여행지마다 근처 식당 목록 삽입
+		ExcelReader excelReader = new ExcelReader();
+		List<Restaurant> restaurantList;
+		for (Place p : orderedPlaceList) {
+			restaurantList = excelReader.getRestaurantListWithinRadius(tourApiService.getAreaName(p.getAreaCode()), p.getMapX(), p.getMapY(), (double)1);
+			p.setNearByRestaurants(restaurantList);
+		}
+		
 		// 여행지 DB 조회 및 삽입
 		for (Place p : orderedPlaceList) {
 			// 기존 여행지 DB에 해당 여행지 정보가 존재하는 경우
@@ -86,6 +94,14 @@ public class TourApiController {
 		TSPAlgorithmGreedy tsp = new TSPAlgorithmGreedy(placeList);
 		ArrayList<Place> orderedPlaceList = tsp.getTspOrderedPlaceList(param.getCurrentX(), param.getCurrentY());
 
+		// 각 여행지마다 근처 식당 목록 삽입
+		ExcelReader excelReader = new ExcelReader();
+		List<Restaurant> restaurantList;
+		for (Place p : orderedPlaceList) {
+			restaurantList = excelReader.getRestaurantListWithinRadius(tourApiService.getAreaName(p.getAreaCode()), p.getMapX(), p.getMapY(), (double)1);
+			p.setNearByRestaurants(restaurantList);
+		}
+		
 		// 여행지 DB 조회 및 삽입
 		for (Place p : orderedPlaceList) {
 			// 기존 여행지 DB에 해당 여행지 정보가 존재하는 경우
@@ -126,6 +142,14 @@ public class TourApiController {
 		// TSP 알고리즘(Greedy)
 		TSPAlgorithmGreedy tsp = new TSPAlgorithmGreedy(placeList);
 		ArrayList<Place> orderedPlaceList = tsp.getTspOrderedPlaceList(param.getCurrentX(), param.getCurrentY());
+		
+		// 각 여행지마다 근처 식당 목록 삽입
+		ExcelReader excelReader = new ExcelReader();
+		List<Restaurant> restaurantList;
+		for (Place p : orderedPlaceList) {
+			restaurantList = excelReader.getRestaurantListWithinRadius(tourApiService.getAreaName(p.getAreaCode()), p.getMapX(), p.getMapY(), (double)1);
+			p.setNearByRestaurants(restaurantList);
+		}
 
 		// 여행지 DB 조회 및 삽입
 		for (Place p : orderedPlaceList) {
