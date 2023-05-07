@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,9 +15,9 @@ import com.example.tripPlanner.entity.Place;
 import com.example.tripPlanner.entity.Restaurant;
 import com.example.tripPlanner.entity.TourApiParam;
 import com.example.tripPlanner.service.PlaceService;
+import com.example.tripPlanner.service.SecurityService;
 import com.example.tripPlanner.service.TourApiService;
 import com.example.tripPlanner.util.ExcelReader;
-import com.example.tripPlanner.util.TSPAlgorithm;
 import com.example.tripPlanner.util.TSPAlgorithmGreedy;
 
 @RestController
@@ -28,6 +29,9 @@ public class TourApiController {
 
 	@Autowired
 	private PlaceService placeService;
+	
+	@Autowired
+    private SecurityService securityService;
 	
 
 	// 키워드에 맞는 여행지 리스트 조회
@@ -58,6 +62,8 @@ public class TourApiController {
 		List<Restaurant> restaurantList;
 		for (Place p : orderedPlaceList) {
 			restaurantList = excelReader.getRestaurantListWithinRadius(tourApiService.getAreaName(p.getAreaCode()), p.getMapX(), p.getMapY(), (double)1);
+			// restaurantList 한번 더 필터링하는 작업 필요
+			// ...
 			p.setNearByRestaurants(restaurantList);
 		}
 		
@@ -99,6 +105,8 @@ public class TourApiController {
 		List<Restaurant> restaurantList;
 		for (Place p : orderedPlaceList) {
 			restaurantList = excelReader.getRestaurantListWithinRadius(tourApiService.getAreaName(p.getAreaCode()), p.getMapX(), p.getMapY(), (double)1);
+			// restaurantList 한번 더 필터링하는 작업 필요
+			// ...
 			p.setNearByRestaurants(restaurantList);
 		}
 		
@@ -122,8 +130,11 @@ public class TourApiController {
 	
 	// 특정 지역에 있는 여행지 리스트 조회
 	@PostMapping("/areaBased")
-	public List<Place> getAreaBasedPlaceList(@RequestBody TourApiParam param) {
+	public List<Place> getAreaBasedPlaceList(@RequestBody TourApiParam param, @RequestHeader(value = "Authorization") String token) {
 		// 파라미터: currentX, currentY, areaName, sigunguName, cat1, cat2, cat3
+		
+		// TEST (개인정보 확인)
+		System.out.println("name => "+securityService.getSubject(token).get("name"));
 		
 		// TourAPI 에서 지역 코드 조회
 		Map<String, String> areaCodeMap = tourApiService.getAreaCode(param.getAreaName(), param.getSigunguName());
@@ -148,6 +159,8 @@ public class TourApiController {
 		List<Restaurant> restaurantList;
 		for (Place p : orderedPlaceList) {
 			restaurantList = excelReader.getRestaurantListWithinRadius(tourApiService.getAreaName(p.getAreaCode()), p.getMapX(), p.getMapY(), (double)1);
+			// restaurantList 한번 더 필터링하는 작업 필요
+			// ...
 			p.setNearByRestaurants(restaurantList);
 		}
 

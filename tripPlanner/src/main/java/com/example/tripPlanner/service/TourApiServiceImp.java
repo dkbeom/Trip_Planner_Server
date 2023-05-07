@@ -120,21 +120,24 @@ public class TourApiServiceImp implements TourApiService {
 			if(itemsAndNumOfRows != null) {
 				for (int i = 0; i < (Integer)itemsAndNumOfRows.get("numOfRows"); i++) {
 					JSONObject eachItem = (JSONObject) ((JSONArray)itemsAndNumOfRows.get("item")).get(i);
-					Place place = new Place();
-					place.setId((String) eachItem.get("contentid"));
-					place.setTitle((String) eachItem.get("title"));
-					place.setAddr((String) eachItem.get("addr1"));
-					place.setMapX((String) eachItem.get("mapx"));
-					place.setMapY((String) eachItem.get("mapy"));
-					place.setImage((String) eachItem.get("firstimage"));
-					place.setContentTypeId((String) eachItem.get("contenttypeid"));
-					place.setCat1((String) eachItem.get("cat1"));
-					place.setCat2((String) eachItem.get("cat2"));
-					place.setCat3((String) eachItem.get("cat3"));
-					place.setAreaCode((String) eachItem.get("areacode"));
-					place.setSigunguCode((String) eachItem.get("sigungucode"));
-					place.setTel((String) eachItem.get("tel"));
-					placeList.add(place);
+					// 음식, 숙박 제외
+					if((String)eachItem.get("cat1") != "A05" && (String)eachItem.get("cat1") != "B02") {
+						Place place = new Place();
+						place.setId((String) eachItem.get("contentid"));
+						place.setTitle((String) eachItem.get("title"));
+						place.setAddr((String) eachItem.get("addr1"));
+						place.setMapX((String) eachItem.get("mapx"));
+						place.setMapY((String) eachItem.get("mapy"));
+						place.setImage((String) eachItem.get("firstimage"));
+						place.setContentTypeId((String) eachItem.get("contenttypeid"));
+						place.setCat1((String) eachItem.get("cat1"));
+						place.setCat2((String) eachItem.get("cat2"));
+						place.setCat3((String) eachItem.get("cat3"));
+						place.setAreaCode((String) eachItem.get("areacode"));
+						place.setSigunguCode((String) eachItem.get("sigungucode"));
+						place.setTel((String) eachItem.get("tel"));
+						placeList.add(place);
+					}
 				}
 			}
 
@@ -250,21 +253,24 @@ public class TourApiServiceImp implements TourApiService {
 		if(itemsAndNumOfRows != null) {
 			for (int i = 0; i < (Integer)itemsAndNumOfRows.get("numOfRows"); i++) {
 				JSONObject eachItem = (JSONObject) ((JSONArray)itemsAndNumOfRows.get("item")).get(i);
-				Place place = new Place();
-				place.setId((String) eachItem.get("contentid"));
-				place.setTitle((String) eachItem.get("title"));
-				place.setAddr((String) eachItem.get("addr1"));
-				place.setMapX((String) eachItem.get("mapx"));
-				place.setMapY((String) eachItem.get("mapy"));
-				place.setImage((String) eachItem.get("firstimage"));
-				place.setContentTypeId((String) eachItem.get("contenttypeid"));
-				place.setCat1((String) eachItem.get("cat1"));
-				place.setCat2((String) eachItem.get("cat2"));
-				place.setCat3((String) eachItem.get("cat3"));
-				place.setAreaCode((String) eachItem.get("areacode"));
-				place.setSigunguCode((String) eachItem.get("sigungucode"));
-				place.setTel((String) eachItem.get("tel"));
-				placeList.add(place);
+				// 음식, 숙박 제외
+				if((String)eachItem.get("cat1") != "A05" && (String)eachItem.get("cat1") != "B02") {
+					Place place = new Place();
+					place.setId((String) eachItem.get("contentid"));
+					place.setTitle((String) eachItem.get("title"));
+					place.setAddr((String) eachItem.get("addr1"));
+					place.setMapX((String) eachItem.get("mapx"));
+					place.setMapY((String) eachItem.get("mapy"));
+					place.setImage((String) eachItem.get("firstimage"));
+					place.setContentTypeId((String) eachItem.get("contenttypeid"));
+					place.setCat1((String) eachItem.get("cat1"));
+					place.setCat2((String) eachItem.get("cat2"));
+					place.setCat3((String) eachItem.get("cat3"));
+					place.setAreaCode((String) eachItem.get("areacode"));
+					place.setSigunguCode((String) eachItem.get("sigungucode"));
+					place.setTel((String) eachItem.get("tel"));
+					placeList.add(place);
+				}
 			}
 		}
 
@@ -363,21 +369,24 @@ public class TourApiServiceImp implements TourApiService {
 		if(itemsAndNumOfRows != null) {
 			for (int i = 0; i < (Integer)itemsAndNumOfRows.get("numOfRows"); i++) {
 				JSONObject eachItem = (JSONObject) ((JSONArray)itemsAndNumOfRows.get("item")).get(i);
-				Place place = new Place();
-				place.setId((String) eachItem.get("contentid"));
-				place.setTitle((String) eachItem.get("title"));
-				place.setAddr((String) eachItem.get("addr1"));
-				place.setMapX((String) eachItem.get("mapx"));
-				place.setMapY((String) eachItem.get("mapy"));
-				place.setImage((String) eachItem.get("firstimage"));
-				place.setContentTypeId((String) eachItem.get("contenttypeid"));
-				place.setCat1((String) eachItem.get("cat1"));
-				place.setCat2((String) eachItem.get("cat2"));
-				place.setCat3((String) eachItem.get("cat3"));
-				place.setAreaCode((String) eachItem.get("areacode"));
-				place.setSigunguCode((String) eachItem.get("sigungucode"));
-				place.setTel((String) eachItem.get("tel"));
-				placeList.add(place);
+				// 음식, 숙박 제외
+				if((String)eachItem.get("cat1") != "A05" && (String)eachItem.get("cat1") != "B02") {
+					Place place = new Place();
+					place.setId((String) eachItem.get("contentid"));
+					place.setTitle((String) eachItem.get("title"));
+					place.setAddr((String) eachItem.get("addr1"));
+					place.setMapX((String) eachItem.get("mapx"));
+					place.setMapY((String) eachItem.get("mapy"));
+					place.setImage((String) eachItem.get("firstimage"));
+					place.setContentTypeId((String) eachItem.get("contenttypeid"));
+					place.setCat1((String) eachItem.get("cat1"));
+					place.setCat2((String) eachItem.get("cat2"));
+					place.setCat3((String) eachItem.get("cat3"));
+					place.setAreaCode((String) eachItem.get("areacode"));
+					place.setSigunguCode((String) eachItem.get("sigungucode"));
+					place.setTel((String) eachItem.get("tel"));
+					placeList.add(place);
+				}
 			}
 		}
 		
