@@ -20,9 +20,14 @@ public class MybatisMemberDao implements MemberDao {
 
 
     @Override
-    public Member getMember(LoginForm loginForm) {
-        return mapper.getMember(loginForm);
+    public Member getMemberByLoginForm(LoginForm loginForm) {
+        return mapper.getMemberByLoginForm(loginForm);
     }
+    
+    @Override
+	public Member getMemberById(String id) {
+		return mapper.getMemberById(id);
+	}
 
     @Override
     public boolean insertMember(Member member) {

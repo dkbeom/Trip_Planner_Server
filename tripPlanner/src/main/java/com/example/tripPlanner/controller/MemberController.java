@@ -45,7 +45,7 @@ public class MemberController {
     // 파라미터: id, pwd
     	
         // 로그인 입혁한 정보에 맞는 Member 객체 가져오기
-        Member member = memberService.getMember(loginForm);
+        Member member = memberService.getMemberToLogin(loginForm);
 
         Map<String, Object> map = new LinkedHashMap<>();
         // 로그인할 때, 입력한 정보와 일치하는 Member가 존재할 때

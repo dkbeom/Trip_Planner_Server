@@ -5,9 +5,15 @@
 <mapper namespace="com.example.tripPlanner.dao.MemberDao">
 
     <!-- login -->
-    <select id="getMember" resultType="com.example.tripPlanner.entity.Member" >
+    <select id="getMemberByLoginForm" resultType="com.example.tripPlanner.entity.Member" >
         SELECT * FROM MEMBER
         WHERE ID = #{id} AND PWD = #{pwd}
+    </select>
+    
+    <!-- getMember -->
+    <select id="getMemberById" resultType="com.example.tripPlanner.entity.Member">
+    	SELECT * FROM MEMBER
+    	WHERE ID = #{id}
     </select>
 
     <!-- join -->

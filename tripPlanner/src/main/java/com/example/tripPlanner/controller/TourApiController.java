@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.tripPlanner.entity.Member;
 import com.example.tripPlanner.entity.Place;
 import com.example.tripPlanner.entity.Restaurant;
 import com.example.tripPlanner.entity.TourApiParam;
+import com.example.tripPlanner.service.MemberService;
 import com.example.tripPlanner.service.PlaceService;
 import com.example.tripPlanner.service.SecurityService;
 import com.example.tripPlanner.service.TourApiService;
@@ -32,6 +34,9 @@ public class TourApiController {
 	
 	@Autowired
     private SecurityService securityService;
+	
+	@Autowired
+    private MemberService memberService;
 	
 
 	// 키워드에 맞는 여행지 리스트 조회
@@ -134,7 +139,7 @@ public class TourApiController {
 		// 파라미터: currentX, currentY, areaName, sigunguName, cat1, cat2, cat3
 		
 		// TEST (개인정보 확인)
-		System.out.println("name => "+securityService.getSubject(token).get("name"));
+		Member member = memberService.getMemberById(securityService.getSubject(token).get("id"));
 		
 		// TourAPI 에서 지역 코드 조회
 		Map<String, String> areaCodeMap = tourApiService.getAreaCode(param.getAreaName(), param.getSigunguName());
