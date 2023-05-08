@@ -1,31 +1,40 @@
 .sc_container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    height: 100vh;
-}
-
-table {
+    height: 60vh;
+    overflow: auto;
+  }
+  
+  .sc_container thead {
+    position: sticky;
+    top: 0;
+    background-color: #eee;
+  }
+  
+  .sc_container th {
+    padding: 8px 16px;
+    text-align: center;
+  }
+  
+  .sc_container table {
     border-collapse: collapse;
     border: 2px solid #ccc;
     border-radius: 8px;
     overflow: hidden;
-}
-
-th,
-td {
+  }
+  
+  .sc_container td {
     padding: 8px 16px;
     text-align: center;
-}
-
-th {
-    background-color: #eee;
-}
-
-tr {
+  }
+  
+  .sc_container tr {
     cursor: pointer;
-}
-
-tr:hover {
+  }
+  
+  .sc_container tr:hover {
     background-color: #eee;
-}
+  }
+  

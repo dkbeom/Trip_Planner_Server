@@ -15,7 +15,7 @@ function NextPageButton() {
     }, []);
 
     return (
-        <Container style={{ paddingTop: "150px", textAlign: "center" }}>
+        <Container style={{ paddingTop: "50px", textAlign: "center" }}>
             <div className={`item ${showButton ? "show" : ""}`}>
                 <Link to="/schedule">
                     <button

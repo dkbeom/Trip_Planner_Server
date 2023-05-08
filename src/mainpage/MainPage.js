@@ -4,9 +4,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { SubTitle } from './Title';
 import styled from 'styled-components';
 import NavBar from './NavBar';
-import ThreeTexts from './ImageAnime';
 import NextPageButton from './NextPageButton';
 import { Container } from 'react-bootstrap';
+import UncontrolledExample from './Carousel';
 
 const Background = styled.div`
   background-image: url('/loginpage_background.png');
@@ -26,7 +26,7 @@ function MainPage() {
                 </div>
                 <SubTitle children={"We offer..."} />
             </Container>
-            <ThreeTexts />
+            <UncontrolledExample/>
             <NextPageButton />
         </Background>
     );

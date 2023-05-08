@@ -26,32 +26,36 @@ function ScheduleTable() {
   const handleClick = (id) => {
     console.log(`Clicked on item ${id}`);
   };
-
   return (
-    <div
-      className="sc_container"
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        height: '50vh',
-        overflow: 'auto',
-      }}
-    >
-      <table>
-        <thead>
-          <tr>
-            <th>도</th>
-          </tr>
-        </thead>
-        <tbody>
-          {listItems.map((item, index) => (
-            <tr key={index} onClick={() => handleClick(index)}>
-              <td>{item.text}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <div>
+      <div>
+        dh
+      </div>
+        <div
+          className="sc_container"
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            height: '60vh',
+            width: '20vh',
+            overflow: 'auto',
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <table>
+              <tbody>
+                {listItems.map((item, index) => (
+                  <tr key={index} onClick={() => handleClick(index)}>
+                    <td>{item.text}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
   );
 }
 

@@ -4,6 +4,9 @@ import styled from 'styled-components';
 import NavBar from '../mainpage/NavBar';
 import MapAPI from './Map';
 import ScheduleTable from './ScheduleTable';
+import JoinButton from './HSH';
+import SmallExample from './Table';
+import LinkedExample from './Table';
 
 const Background = styled.div`
   background-image: url('/loginpage_background.png');
@@ -40,7 +43,7 @@ function MainPage() {
           <MapAPI />
         </MapWrapper>
         <ScheduleWrapper>
-          <ScheduleTable />
+        <LinkedExample/>
         </ScheduleWrapper>
       </MainWrapper>
     </Background>

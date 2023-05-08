@@ -31,7 +31,7 @@ const TitleWrapper = styled.h1`
 
 const SubTitleWrapper = styled.h1`
   font-size: 40px;
-  color: black;
+  color: #232323;
   text-align: center;
   margin-top: 30px;
   font-family: "SingleDay", sans-serif;
