@@ -21,6 +21,8 @@ public class ExcelReader {
     public List<Restaurant> getRestaurantListWithinRadius(String area, String currentX, String currentY, Double radiusKm) {
     	
         try {
+        	int n = 0;
+        	
             // 읽어올 엑셀 파일 경로와 파일명을 지정
             String filePath = "excel/Restaurant.xlsx";
             ClassLoader classLoader = getClass().getClassLoader();
@@ -48,6 +50,12 @@ public class ExcelReader {
             	// 첫번째 행(머리글)은 패스
             	else if(row.getRowNum() == 0) {
             		// Header Row
+            		continue;
+            	}
+            	// 간이음식, 카페/찻집 제외
+            	else if(row.getCell(8).getStringCellValue().equals("간이음식") || row.getCell(8).getStringCellValue().equals("카페/찻집")) {
+            		// 간이음식, 카페/찻집 패스
+            		continue;
             	}
             	// 지정한 반경 이내에 있는 음식점 리스트 수집
             	else {
@@ -72,7 +80,13 @@ public class ExcelReader {
 								row.getCell(9) == null ? null : (int)row.getCell(9).getNumericCellValue()
 							);
                 		restaurantList.add(restaurant);
+                		n++;
                 	}
+            	}
+            	
+            	// 식당 3개 담았으면 그만
+            	if(n == 3) {
+            		break;
             	}
             }
             
