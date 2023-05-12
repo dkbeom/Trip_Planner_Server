@@ -49,6 +49,7 @@ public class SecurityServiceImp implements SecurityService {
         Member member = memberDao.getMember(loginForm);
         Map<String, String> map = new HashMap<>();
         map.put("id", member.getId());
+        map.put("name", member.getName());
         map.put("nickname", member.getNickname());
         String jsonStr = gson.toJson(map);
         

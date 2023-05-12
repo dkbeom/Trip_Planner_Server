@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tripPlanner.dao.ReviewDao">
+
+	<select id="getReviewList" resultType="com.example.tripPlanner.entity.Review">
+		SELECT *
+		FROM REVIEW
+		WHERE PLACEID = #{placeId}
+	</select>
+	
+	<select id="getReview" resultType="com.example.tripPlanner.entity.Review">
+		SELECT *
+		FROM REVIEW
+		WHERE ID = #{reviewId}
+	</select>
+
+	<insert id="insertReview" parameterType="com.example.tripPlanner.entity.Review">
+		INSERT INTO REVIEW(PLACEID, MEMBERID, MEMBERNICKNAME, SCORE, CONTENT)
+		VALUES(#{placeId}, #{memberId}, #{memberNickname}, #{score}, #{content})
+	</insert>
+	
+	<delete id="deleteReview" parameterType="Integer">
+		DELETE REVIEW
+		WHERE ID = #{reviewId}
+	</delete>
+
+</mapper>

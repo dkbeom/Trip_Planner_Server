@@ -9,10 +9,18 @@ import lombok.Data;
 @Data
 public class GptResponse implements Serializable {
 	
-	private String id;
-	private String object;
-	private LocalDate created;
-	private String model;
+//	private String id;
+//	private String object;
+//	private LocalDate created;
+//	private String model;
 	private List<Choice> choices;
 	
 }
+/*
+{
+  "messages": [{
+    "role": "user",
+    "content": "안녕하세요~"
+  }]
+}
+*/

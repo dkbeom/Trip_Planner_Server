@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GptRequest implements Serializable{
 
+
 	private String model;
 	//private String prompt;
 	@JsonProperty("max_tokens")
@@ -21,6 +22,6 @@ public class GptRequest implements Serializable{
 	private double temperature;
 	@JsonProperty("top_p")
 	private Double topP;
-	private List<Message> messages; 
+	private List<Message> messages;
 	 //추가
 }
