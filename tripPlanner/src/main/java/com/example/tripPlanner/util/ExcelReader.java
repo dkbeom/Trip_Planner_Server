@@ -2,6 +2,7 @@ package com.example.tripPlanner.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -9,6 +10,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -18,19 +20,28 @@ import com.example.tripPlanner.entity.Restaurant;
 
 public class ExcelReader {
 	
+	private Workbook workbook;
+	private FileInputStream inputStream;
+	
+	public ExcelReader() {
+        // 읽어올 엑셀 파일 경로와 파일명을 지정
+        String filePath = "excel/Restaurant.xlsx";
+        ClassLoader classLoader = getClass().getClassLoader();
+        File file = new File(classLoader.getResource(filePath).getFile());
+        
+        // 엑셀 파일을 읽어들임
+        try {
+			inputStream = new FileInputStream(file);
+			workbook = WorkbookFactory.create(inputStream);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
     public List<Restaurant> getRestaurantListWithinRadius(String area, String currentX, String currentY, String[] foodPreference, Double radiusKm) {
         try {
         	// 현재 추천 음식점 개수
         	int n = 0;
-        	
-            // 읽어올 엑셀 파일 경로와 파일명을 지정
-            String filePath = "excel/Restaurant.xlsx";
-            ClassLoader classLoader = getClass().getClassLoader();
-            File file = new File(classLoader.getResource(filePath).getFile());
-            
-            // 엑셀 파일을 읽어들임
-            FileInputStream inputStream = new FileInputStream(file);
-            Workbook workbook = WorkbookFactory.create(inputStream);
             
             Sheet sheet = workbook.getSheet(area);
             
@@ -43,7 +54,6 @@ public class ExcelReader {
             
             // 각 행(Row)마다 반복
             for (Row row : sheet) {
-            	
             	// 행이 끝나면 반복 끝
             	if (row.getCell(0) == null) {
             		break;
@@ -84,7 +94,7 @@ public class ExcelReader {
                 		
                 		n++;
                 		// 식당 3개 담았으면 그만
-                    	if(n == 1) {
+                    	if(n == 3) {
                     		break;
                     	}
                 	}

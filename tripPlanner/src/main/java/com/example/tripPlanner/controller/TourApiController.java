@@ -135,10 +135,10 @@ public class TourApiController {
 	
 	// 특정 지역에 있는 여행지 리스트 조회
 	@PostMapping("/areaBased")
-	public ArrayList<ArrayList<Place>> getAreaBasedPlaceList(@RequestBody TourApiParam param, @RequestHeader(value = "Authorization") String token) {
+	public ArrayList<ArrayList<Place>> getAreaBasedPlaceList(@RequestBody TourApiParam param/*, @RequestHeader(value = "Authorization") String token*/) {
 		// 파라미터: currentX, currentY, areaName, sigunguName, cat1, cat2, cat3, foodPreference
 		
-		// TEST (개인정보 확인)
+		// 개인정보 확인
 		//Member member = memberService.getMemberById(securityService.getSubject(token).get("id"));
 		
 		// TourAPI 에서 지역 코드 조회
