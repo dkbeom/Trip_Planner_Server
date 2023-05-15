@@ -18,9 +18,9 @@ import com.example.tripPlanner.entity.Restaurant;
 
 public class ExcelReader {
 	
-    public List<Restaurant> getRestaurantListWithinRadius(String area, String currentX, String currentY, Double radiusKm) {
-    	
+    public List<Restaurant> getRestaurantListWithinRadius(String area, String currentX, String currentY, String[] foodPreference, Double radiusKm) {
         try {
+        	// 현재 추천 음식점 개수
         	int n = 0;
         	
             // 읽어올 엑셀 파일 경로와 파일명을 지정
@@ -43,6 +43,7 @@ public class ExcelReader {
             
             // 각 행(Row)마다 반복
             for (Row row : sheet) {
+            	
             	// 행이 끝나면 반복 끝
             	if (row.getCell(0) == null) {
             		break;
@@ -80,15 +81,16 @@ public class ExcelReader {
 								row.getCell(9) == null ? null : (int)row.getCell(9).getNumericCellValue()
 							);
                 		restaurantList.add(restaurant);
+                		
                 		n++;
+                		// 식당 3개 담았으면 그만
+                    	if(n == 1) {
+                    		break;
+                    	}
                 	}
             	}
-            	
-            	// 식당 3개 담았으면 그만
-            	if(n == 3) {
-            		break;
-            	}
             }
+            System.out.println();
             
             // Workbook, InputStream을 close() 메소드를 통해 닫음
             workbook.close();
