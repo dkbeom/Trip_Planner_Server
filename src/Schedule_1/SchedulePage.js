@@ -43,7 +43,7 @@ function MainPage() {
           <MapAPI />
         </MapWrapper>
         <ScheduleWrapper>
-        <LinkedExample/>
+          <LinkedExample />
         </ScheduleWrapper>
       </MainWrapper>
     </Background>
