@@ -2,6 +2,7 @@ package com.example.tripPlanner.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -9,6 +10,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -18,17 +20,28 @@ import com.example.tripPlanner.entity.Restaurant;
 
 public class ExcelReader {
 	
-    public List<Restaurant> getRestaurantListWithinRadius(String area, String currentX, String currentY, Double radiusKm) {
-    	
+	private Workbook workbook;
+	private FileInputStream inputStream;
+	
+	public ExcelReader() {
+        // 읽어올 엑셀 파일 경로와 파일명을 지정
+        String filePath = "excel/Restaurant.xlsx";
+        ClassLoader classLoader = getClass().getClassLoader();
+        File file = new File(classLoader.getResource(filePath).getFile());
+        
+        // 엑셀 파일을 읽어들임
         try {
-            // 읽어올 엑셀 파일 경로와 파일명을 지정
-            String filePath = "excel/Restaurant.xlsx";
-            ClassLoader classLoader = getClass().getClassLoader();
-            File file = new File(classLoader.getResource(filePath).getFile());
-            
-            // 엑셀 파일을 읽어들임
-            FileInputStream inputStream = new FileInputStream(file);
-            Workbook workbook = WorkbookFactory.create(inputStream);
+			inputStream = new FileInputStream(file);
+			workbook = WorkbookFactory.create(inputStream);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+    public List<Restaurant> getRestaurantListWithinRadius(String area, String currentX, String currentY, String[] foodPreference, Double radiusKm) {
+        try {
+        	// 현재 추천 음식점 개수
+        	int n = 0;
             
             Sheet sheet = workbook.getSheet(area);
             
@@ -48,6 +61,12 @@ public class ExcelReader {
             	// 첫번째 행(머리글)은 패스
             	else if(row.getRowNum() == 0) {
             		// Header Row
+            		continue;
+            	}
+            	// 간이음식, 카페/찻집 제외
+            	else if(row.getCell(8).getStringCellValue().equals("간이음식") || row.getCell(8).getStringCellValue().equals("카페/찻집")) {
+            		// 간이음식, 카페/찻집 패스
+            		continue;
             	}
             	// 지정한 반경 이내에 있는 음식점 리스트 수집
             	else {
@@ -72,9 +91,16 @@ public class ExcelReader {
 								row.getCell(9) == null ? null : (int)row.getCell(9).getNumericCellValue()
 							);
                 		restaurantList.add(restaurant);
+                		
+                		n++;
+                		// 식당 3개 담았으면 그만
+                    	if(n == 3) {
+                    		break;
+                    	}
                 	}
             	}
             }
+            System.out.println();
             
             // Workbook, InputStream을 close() 메소드를 통해 닫음
             workbook.close();
