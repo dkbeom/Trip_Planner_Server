@@ -32,9 +32,10 @@ public class ReviewController {
 		return reviewService.getReview(reviewId);
 	}
 	
-	// 리뷰 DB에 리뷰 삽입
+	// 리뷰 DB에 리뷰 하나 삽입
 	@PostMapping("/insert")
 	public String insert(@RequestBody Review review) {
+		// 파라미터: placeId, memberId, memberNickname, score, content
 		
 		boolean isInsert = reviewService.insertReview(review);
 		

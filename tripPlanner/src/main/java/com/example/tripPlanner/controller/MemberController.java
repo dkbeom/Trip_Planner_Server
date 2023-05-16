@@ -20,7 +20,6 @@ import com.example.tripPlanner.entity.LoginForm;
 import com.example.tripPlanner.entity.Member;
 import com.example.tripPlanner.service.MemberService;
 import com.example.tripPlanner.service.SecurityService;
-import com.google.gson.Gson;
 
 @RestController
 @RequestMapping("/member")
@@ -38,6 +37,7 @@ public class MemberController {
     
     @PostMapping("/join")
     public String join(@RequestBody Member member) {
+    // 파라미터: id, pwd, name, nickname, gender, age
     	
         boolean isJoin = memberService.join(member);
 
@@ -50,15 +50,16 @@ public class MemberController {
 
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody LoginForm loginForm) {
+    // 파라미터: id, pwd
     	
         // 로그인 입혁한 정보에 맞는 Member 객체 가져오기
-        Member member = memberService.getMember(loginForm);
+        Member member = memberService.getMemberToLogin(loginForm);
 
         Map<String, Object> map = new LinkedHashMap<>();
         // 로그인할 때, 입력한 정보와 일치하는 Member가 존재할 때
         if (member != null && member.getId() != null && member.getId() != "") {
             // 토큰 발급
-            String token = securityService.createToken(loginForm);
+            String token = securityService.createToken(member);
             // 토큰 저장
             map.put("token", token);
         }
@@ -73,14 +74,9 @@ public class MemberController {
 
     // 토큰에서 subject 꺼내기
     @GetMapping("/get/subject")
-    public Map<String, Object> getIdAndNickname(@RequestHeader(value = "Authorization") String token) {
+    public Map<String, String> getIdAndNickname(@RequestHeader(value = "Authorization") String token) {
 
-        String subject = securityService.getSubject(token);
-
-        Gson gson = new Gson();
-        Map<String, Object> map = gson.fromJson(subject, Map.class);
-
-        return map;
+        return securityService.getSubject(token);
     }
 
     @GetMapping("/checkIdDuplicate")

@@ -54,11 +54,11 @@ public class TourApiServiceImp implements TourApiService {
 				item = body.getJSONObject("items").getJSONArray("item");
 			}
 			
-			Map<String,Object> map = new HashMap<>();
-			map.put("numOfRows", numOfRows);
-			map.put("item", item);
+			Map<String,Object> itemsAndNumOfRows = new HashMap<>();
+			itemsAndNumOfRows.put("numOfRows", numOfRows);
+			itemsAndNumOfRows.put("item", item);
 			
-			return map;
+			return itemsAndNumOfRows;
 			
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
@@ -113,28 +113,31 @@ public class TourApiServiceImp implements TourApiService {
 							+ "&areaCode=" + areaCode
 							+ "&sigunguCode=" + (areaCode == null || areaCode.equals("") ? "" : sigunguCode);
 
-			Map<String, Object> map = getItemListAndNumOfRows(uriString);
+			Map<String, Object> itemsAndNumOfRows = getItemListAndNumOfRows(uriString);
 			
 			// List<Place> 생성
 			List<Place> placeList = new ArrayList<>();
-			if(map != null) {
-				for (int i = 0; i < (Integer)map.get("numOfRows"); i++) {
-					JSONObject eachItem = (JSONObject) ((JSONArray)map.get("item")).get(i);
-					Place place = new Place();
-					place.setId((String) eachItem.get("contentid"));
-					place.setTitle((String) eachItem.get("title"));
-					place.setAddr((String) eachItem.get("addr1"));
-					place.setMapX((String) eachItem.get("mapx"));
-					place.setMapY((String) eachItem.get("mapy"));
-					place.setImage((String) eachItem.get("firstimage"));
-					place.setContentTypeId((String) eachItem.get("contenttypeid"));
-					place.setCat1((String) eachItem.get("cat1"));
-					place.setCat2((String) eachItem.get("cat2"));
-					place.setCat3((String) eachItem.get("cat3"));
-					place.setAreaCode((String) eachItem.get("areacode"));
-					place.setSigunguCode((String) eachItem.get("sigungucode"));
-					place.setTel((String) eachItem.get("tel"));
-					placeList.add(place);
+			if(itemsAndNumOfRows != null) {
+				for (int i = 0; i < (Integer)itemsAndNumOfRows.get("numOfRows"); i++) {
+					JSONObject eachItem = (JSONObject) ((JSONArray)itemsAndNumOfRows.get("item")).get(i);
+					// 음식, 숙박 제외
+					if((String)eachItem.get("cat1") != "A05" && (String)eachItem.get("cat1") != "B02") {
+						Place place = new Place();
+						place.setId((String) eachItem.get("contentid"));
+						place.setTitle((String) eachItem.get("title"));
+						place.setAddr((String) eachItem.get("addr1"));
+						place.setMapX((String) eachItem.get("mapx"));
+						place.setMapY((String) eachItem.get("mapy"));
+						place.setImage((String) eachItem.get("firstimage"));
+						place.setContentTypeId((String) eachItem.get("contenttypeid"));
+						place.setCat1((String) eachItem.get("cat1"));
+						place.setCat2((String) eachItem.get("cat2"));
+						place.setCat3((String) eachItem.get("cat3"));
+						place.setAreaCode((String) eachItem.get("areacode"));
+						place.setSigunguCode((String) eachItem.get("sigungucode"));
+						place.setTel((String) eachItem.get("tel"));
+						placeList.add(place);
+					}
 				}
 			}
 
@@ -165,23 +168,24 @@ public class TourApiServiceImp implements TourApiService {
 		String areaCode = "";
 		String sigunguCode = "";
 		
-		Map<String, Object> map1 = getItemListAndNumOfRows(uriString);
+		Map<String, Object> itemsAndNumOfRows1 = getItemListAndNumOfRows(uriString);
 		
-		if(map1 != null) {
-			for (int i = 0; i < (Integer)map1.get("numOfRows"); i++) {
-				JSONObject eachItem = (JSONObject) ((JSONArray)map1.get("item")).get(i);
+		if(itemsAndNumOfRows1 != null) {
+			for (int i = 0; i < (Integer)itemsAndNumOfRows1.get("numOfRows"); i++) {
+				JSONObject eachItem = (JSONObject) ((JSONArray)itemsAndNumOfRows1.get("item")).get(i);
 				if(((String)eachItem.get("name")).equals(areaName)) {
 					areaCode = (String)eachItem.get("code");
 				}
 			}
 			// 지역코드(areaCode)가 존재한다면
 			if(!areaCode.equals("")) {
-				Map<String, Object> map2 = getItemListAndNumOfRows(uriString+areaCode);
-				if(map2 != null) {
-					for (int i = 0; i < (Integer)map2.get("numOfRows"); i++) {
-						JSONObject eachItem = (JSONObject) ((JSONArray)map2.get("item")).get(i);
+				Map<String, Object> itemsAndNumOfRows2 = getItemListAndNumOfRows(uriString+areaCode);
+				if(itemsAndNumOfRows2 != null) {
+					for (int i = 0; i < (Integer)itemsAndNumOfRows2.get("numOfRows"); i++) {
+						JSONObject eachItem = (JSONObject) ((JSONArray)itemsAndNumOfRows2.get("item")).get(i);
 						if(((String)eachItem.get("name")).equals(sigunguName)) {
 							sigunguCode = (String)eachItem.get("code");
+							break;
 						}
 					}
 				}
@@ -193,6 +197,32 @@ public class TourApiServiceImp implements TourApiService {
 		areaCodeMap.put("sigunguCode", sigunguCode);
 		
 		return areaCodeMap;
+	}
+	
+	/////////////////////////////////////////////////////////////////////////
+	
+	@Override
+	public String getAreaName(String areaCode) {
+		
+		String uriString = "http://apis.data.go.kr/B551011/KorService1/areaCode1"
+				+"?serviceKey="+tourApiKey
+				+"&numOfRows=200&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json";
+
+		String areaName = "";
+
+		Map<String, Object> itemsAndNumOfRows = getItemListAndNumOfRows(uriString);
+
+		if(itemsAndNumOfRows != null) {
+			for (int i = 0; i < (Integer)itemsAndNumOfRows.get("numOfRows"); i++) {
+				JSONObject eachItem = (JSONObject) ((JSONArray)itemsAndNumOfRows.get("item")).get(i);
+				if(((String)eachItem.get("code")).equals(areaCode)) {
+					areaName = (String)eachItem.get("name");
+					break;
+				}
+			}
+		}
+		
+		return areaName;
 	}
 
 	/////////////////////////////////////////////////////////////////////////
@@ -216,28 +246,31 @@ public class TourApiServiceImp implements TourApiService {
 				+ "&mapX=" + mapX + "&mapY=" + mapY + "&radius=" + radius
 				+ "&contentTypeId=" + contentTypeId;
 		
-		Map<String, Object> map = getItemListAndNumOfRows(uriString);
+		Map<String, Object> itemsAndNumOfRows = getItemListAndNumOfRows(uriString);
 
 		// List<Place> 생성
 		List<Place> placeList = new ArrayList<>();
-		if(map != null) {
-			for (int i = 0; i < (Integer)map.get("numOfRows"); i++) {
-				JSONObject eachItem = (JSONObject) ((JSONArray)map.get("item")).get(i);
-				Place place = new Place();
-				place.setId((String) eachItem.get("contentid"));
-				place.setTitle((String) eachItem.get("title"));
-				place.setAddr((String) eachItem.get("addr1"));
-				place.setMapX((String) eachItem.get("mapx"));
-				place.setMapY((String) eachItem.get("mapy"));
-				place.setImage((String) eachItem.get("firstimage"));
-				place.setContentTypeId((String) eachItem.get("contenttypeid"));
-				place.setCat1((String) eachItem.get("cat1"));
-				place.setCat2((String) eachItem.get("cat2"));
-				place.setCat3((String) eachItem.get("cat3"));
-				place.setAreaCode((String) eachItem.get("areacode"));
-				place.setSigunguCode((String) eachItem.get("sigungucode"));
-				place.setTel((String) eachItem.get("tel"));
-				placeList.add(place);
+		if(itemsAndNumOfRows != null) {
+			for (int i = 0; i < (Integer)itemsAndNumOfRows.get("numOfRows"); i++) {
+				JSONObject eachItem = (JSONObject) ((JSONArray)itemsAndNumOfRows.get("item")).get(i);
+				// 음식, 숙박 제외
+				if((String)eachItem.get("cat1") != "A05" && (String)eachItem.get("cat1") != "B02") {
+					Place place = new Place();
+					place.setId((String) eachItem.get("contentid"));
+					place.setTitle((String) eachItem.get("title"));
+					place.setAddr((String) eachItem.get("addr1"));
+					place.setMapX((String) eachItem.get("mapx"));
+					place.setMapY((String) eachItem.get("mapy"));
+					place.setImage((String) eachItem.get("firstimage"));
+					place.setContentTypeId((String) eachItem.get("contenttypeid"));
+					place.setCat1((String) eachItem.get("cat1"));
+					place.setCat2((String) eachItem.get("cat2"));
+					place.setCat3((String) eachItem.get("cat3"));
+					place.setAreaCode((String) eachItem.get("areacode"));
+					place.setSigunguCode((String) eachItem.get("sigungucode"));
+					place.setTel((String) eachItem.get("tel"));
+					placeList.add(place);
+				}
 			}
 		}
 
@@ -271,13 +304,13 @@ public class TourApiServiceImp implements TourApiService {
 				+ "&cat2=" + (cat1 != null && cat2 != null && cat2.length() >= 5 && cat1.equals(cat2.substring(0, 2)) ? cat2 : "")
 				+ "&cat3=" + (cat2 != null && cat3 != null && cat3.length() >= 9 && cat2.equals(cat3.substring(0, 4)) ? cat3 : "");
 		
-		Map<String, Object> map = getItemListAndNumOfRows(uriString);
+		Map<String, Object> itemsAndNumOfRows = getItemListAndNumOfRows(uriString);
 
 		// List<Category> 생성
 		List<Category> categoryList = new ArrayList<>();
-		if(map != null) {
-			for (int i = 0; i < (Integer)map.get("numOfRows"); i++) {
-				JSONObject eachItem = (JSONObject) ((JSONArray)map.get("item")).get(i);
+		if(itemsAndNumOfRows != null) {
+			for (int i = 0; i < (Integer)itemsAndNumOfRows.get("numOfRows"); i++) {
+				JSONObject eachItem = (JSONObject) ((JSONArray)itemsAndNumOfRows.get("item")).get(i);
 				Category category = new Category();
 				category.setCode((String) eachItem.get("code"));
 				category.setName((String) eachItem.get("name"));
@@ -324,35 +357,36 @@ public class TourApiServiceImp implements TourApiService {
 				+ "?serviceKey=" + tourApiKey
 				+ "&MobileApp=AppTest&MobileOS=ETC&pageNo=1&numOfRows=200&listYN=Y&_type=json&arrange=A"
 				+ "&cat1=" + cat1
-				+ "&cat2=" + (cat1 != null && cat2 != null && cat2.length() >= 5 && cat1.equals(cat2.substring(0, 2)) ? cat2 : "")
-				+ "&cat3=" + (cat2 != null && cat3 != null && cat3.length() >= 9 && cat2.equals(cat3.substring(0, 4)) ? cat3 : "")
+				+ "&cat2=" + (cat1 != null && cat2 != null && cat2.length() == 5 && cat1.equals(cat2.substring(0, 3)) ? cat2 : "")
+				+ "&cat3=" + (cat2 != null && cat3 != null && cat3.length() == 9 && cat2.equals(cat3.substring(0, 5)) ? cat3 : "")
 				+ "&areaCode=" + areaCode
 				+ "&sigunguCode=" + (areaCode == null || areaCode.equals("") ? "" : sigunguCode);
 		
-		System.out.println("어떻게 되는데? =>"+uriString);
-		
-		Map<String, Object> map = getItemListAndNumOfRows(uriString);
+		Map<String, Object> itemsAndNumOfRows = getItemListAndNumOfRows(uriString);
 		
 		// List<Place> 생성
 		List<Place> placeList = new ArrayList<>();
-		if(map != null) {
-			for (int i = 0; i < (Integer)map.get("numOfRows"); i++) {
-				JSONObject eachItem = (JSONObject) ((JSONArray)map.get("item")).get(i);
-				Place place = new Place();
-				place.setId((String) eachItem.get("contentid"));
-				place.setTitle((String) eachItem.get("title"));
-				place.setAddr((String) eachItem.get("addr1"));
-				place.setMapX((String) eachItem.get("mapx"));
-				place.setMapY((String) eachItem.get("mapy"));
-				place.setImage((String) eachItem.get("firstimage"));
-				place.setContentTypeId((String) eachItem.get("contenttypeid"));
-				place.setCat1((String) eachItem.get("cat1"));
-				place.setCat2((String) eachItem.get("cat2"));
-				place.setCat3((String) eachItem.get("cat3"));
-				place.setAreaCode((String) eachItem.get("areacode"));
-				place.setSigunguCode((String) eachItem.get("sigungucode"));
-				place.setTel((String) eachItem.get("tel"));
-				placeList.add(place);
+		if(itemsAndNumOfRows != null) {
+			for (int i = 0; i < (Integer)itemsAndNumOfRows.get("numOfRows"); i++) {
+				JSONObject eachItem = (JSONObject) ((JSONArray)itemsAndNumOfRows.get("item")).get(i);
+				// 음식, 숙박 제외
+				if((String)eachItem.get("cat1") != "A05" && (String)eachItem.get("cat1") != "B02") {
+					Place place = new Place();
+					place.setId((String) eachItem.get("contentid"));
+					place.setTitle((String) eachItem.get("title"));
+					place.setAddr((String) eachItem.get("addr1"));
+					place.setMapX((String) eachItem.get("mapx"));
+					place.setMapY((String) eachItem.get("mapy"));
+					place.setImage((String) eachItem.get("firstimage"));
+					place.setContentTypeId((String) eachItem.get("contenttypeid"));
+					place.setCat1((String) eachItem.get("cat1"));
+					place.setCat2((String) eachItem.get("cat2"));
+					place.setCat3((String) eachItem.get("cat3"));
+					place.setAreaCode((String) eachItem.get("areacode"));
+					place.setSigunguCode((String) eachItem.get("sigungucode"));
+					place.setTel((String) eachItem.get("tel"));
+					placeList.add(place);
+				}
 			}
 		}
 		

@@ -25,3 +25,4 @@ public class GptRequest implements Serializable{
 	private List<Message> messages;
 	 //추가
 }
+ 

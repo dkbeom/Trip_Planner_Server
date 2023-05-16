@@ -1,12 +1,14 @@
 package com.example.tripPlanner.service;
 
-import com.example.tripPlanner.entity.LoginForm;
+import java.util.Map;
+
+import com.example.tripPlanner.entity.Member;
 
 public interface SecurityService {
 
     // 토큰 생성
-    String createToken(LoginForm loginForm);
+    String createToken(Member member);
     
     // subject 가져오기
-    String getSubject(String token);
+    Map<String, String> getSubject(String token);
 }

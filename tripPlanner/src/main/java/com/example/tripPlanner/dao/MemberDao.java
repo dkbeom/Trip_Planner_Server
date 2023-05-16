@@ -7,7 +7,9 @@ import com.example.tripPlanner.entity.Member;
 
 public interface MemberDao {
 
-    Member getMember(LoginForm loginForm);
+    Member getMemberByLoginForm(LoginForm loginForm);
+    
+    Member getMemberById(String id);
 
     boolean insertMember(Member member);
 

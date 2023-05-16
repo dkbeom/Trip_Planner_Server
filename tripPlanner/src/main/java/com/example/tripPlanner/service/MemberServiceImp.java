@@ -14,9 +14,14 @@ public class MemberServiceImp implements MemberService {
     private MemberDao memberDao;
 
     @Override
-    public Member getMember(LoginForm loginForm) {
-        return memberDao.getMember(loginForm);
+    public Member getMemberToLogin(LoginForm loginForm) {
+        return memberDao.getMemberByLoginForm(loginForm);
     }
+    
+    @Override
+	public Member getMemberById(String id) {
+    	return memberDao.getMemberById(id);
+	}
 
     @Override
     public boolean join(Member member) {

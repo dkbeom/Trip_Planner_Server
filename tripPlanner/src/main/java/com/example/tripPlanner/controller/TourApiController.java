@@ -5,19 +5,22 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.tripPlanner.entity.Member;
 import com.example.tripPlanner.entity.Place;
 import com.example.tripPlanner.entity.Restaurant;
 import com.example.tripPlanner.entity.TourApiParam;
+import com.example.tripPlanner.service.MemberService;
 import com.example.tripPlanner.service.PlaceService;
+import com.example.tripPlanner.service.SecurityService;
 import com.example.tripPlanner.service.TourApiService;
 import com.example.tripPlanner.util.ExcelReader;
-import com.example.tripPlanner.util.TSPAlgorithm;
+import com.example.tripPlanner.util.TSPAlgorithmGreedy;
 
 @RestController
 @RequestMapping("/tourApi")
@@ -29,8 +32,14 @@ public class TourApiController {
 	@Autowired
 	private PlaceService placeService;
 	
+	@Autowired
+    private SecurityService securityService;
+	
+	@Autowired
+    private MemberService memberService;
+	
 
-	// 키워드에 맞는 여행지 리스트
+	// 키워드에 맞는 여행지 리스트 조회
 	@PostMapping("/keyword")
 	public List<Place> getKeywordPlaceList(@RequestBody TourApiParam param) {
 		// 파라미터: currentX, currentY, areaName, sigunguName, keyword
@@ -49,10 +58,20 @@ public class TourApiController {
 		// placeList 한번 더 필터링하는 작업 필요
 		// ...
 
-		// TSP 알고리즘
-		TSPAlgorithm tsp = new TSPAlgorithm(placeList);
+		// TSP 알고리즘(Greedy)
+		TSPAlgorithmGreedy tsp = new TSPAlgorithmGreedy(placeList);
 		ArrayList<Place> orderedPlaceList = tsp.getTspOrderedPlaceList(param.getCurrentX(), param.getCurrentY());
 
+		// 각 여행지마다 근처 식당 목록 삽입
+		ExcelReader excelReader = new ExcelReader();
+		List<Restaurant> restaurantList;
+		for (Place p : orderedPlaceList) {
+			restaurantList = excelReader.getRestaurantListWithinRadius(tourApiService.getAreaName(p.getAreaCode()), p.getMapX(), p.getMapY(), (double)1);
+			// restaurantList 한번 더 필터링하는 작업 필요
+			// ...
+			p.setNearByRestaurants(restaurantList);
+		}
+		
 		// 여행지 DB 조회 및 삽입
 		for (Place p : orderedPlaceList) {
 			// 기존 여행지 DB에 해당 여행지 정보가 존재하는 경우
@@ -71,7 +90,7 @@ public class TourApiController {
 		return orderedPlaceList;
 	}
 
-	// 지정한 위치 주변에 있는 여행지 리스트
+	// 지정한 위치 주변에 있는 여행지 리스트 조회
 	@PostMapping("/location")
 	public List<Place> getLocationPlaceList(@RequestBody TourApiParam param) {
 		// 파라미터: currentX, currentY, mapX, mapY, radius, contentTypeId
@@ -82,10 +101,20 @@ public class TourApiController {
 		// placeList 한번 더 필터링하는 작업 필요
 		// ...
 		
-		// TSP 알고리즘
-		TSPAlgorithm tsp = new TSPAlgorithm(placeList);
+		// TSP 알고리즘(Greedy)
+		TSPAlgorithmGreedy tsp = new TSPAlgorithmGreedy(placeList);
 		ArrayList<Place> orderedPlaceList = tsp.getTspOrderedPlaceList(param.getCurrentX(), param.getCurrentY());
 
+		// 각 여행지마다 근처 식당 목록 삽입
+		ExcelReader excelReader = new ExcelReader();
+		List<Restaurant> restaurantList;
+		for (Place p : orderedPlaceList) {
+			restaurantList = excelReader.getRestaurantListWithinRadius(tourApiService.getAreaName(p.getAreaCode()), p.getMapX(), p.getMapY(), (double)1);
+			// restaurantList 한번 더 필터링하는 작업 필요
+			// ...
+			p.setNearByRestaurants(restaurantList);
+		}
+		
 		// 여행지 DB 조회 및 삽입
 		for (Place p : orderedPlaceList) {
 			// 기존 여행지 DB에 해당 여행지 정보가 존재하는 경우
@@ -104,10 +133,13 @@ public class TourApiController {
 		return orderedPlaceList;
 	}
 	
-	// 특정 지역에 있는 여행지 리스트
+	// 특정 지역에 있는 여행지 리스트 조회
 	@PostMapping("/areaBased")
-	public List<Place> getAreaBasedPlaceList(@RequestBody TourApiParam param) {
+	public List<Place> getAreaBasedPlaceList(@RequestBody TourApiParam param, @RequestHeader(value = "Authorization") String token) {
 		// 파라미터: currentX, currentY, areaName, sigunguName, cat1, cat2, cat3
+		
+		// TEST (개인정보 확인)
+		Member member = memberService.getMemberById(securityService.getSubject(token).get("id"));
 		
 		// TourAPI 에서 지역 코드 조회
 		Map<String, String> areaCodeMap = tourApiService.getAreaCode(param.getAreaName(), param.getSigunguName());
@@ -122,10 +154,20 @@ public class TourApiController {
 
 		// placeList 한번 더 필터링하는 작업 필요
 		// ...
-
-		// TSP 알고리즘
-		TSPAlgorithm tsp = new TSPAlgorithm(placeList);
+		
+		// TSP 알고리즘(Greedy)
+		TSPAlgorithmGreedy tsp = new TSPAlgorithmGreedy(placeList);
 		ArrayList<Place> orderedPlaceList = tsp.getTspOrderedPlaceList(param.getCurrentX(), param.getCurrentY());
+		
+		// 각 여행지마다 근처 식당 목록 삽입
+		ExcelReader excelReader = new ExcelReader();
+		List<Restaurant> restaurantList;
+		for (Place p : orderedPlaceList) {
+			restaurantList = excelReader.getRestaurantListWithinRadius(tourApiService.getAreaName(p.getAreaCode()), p.getMapX(), p.getMapY(), (double)1);
+			// restaurantList 한번 더 필터링하는 작업 필요
+			// ...
+			p.setNearByRestaurants(restaurantList);
+		}
 
 		// 여행지 DB 조회 및 삽입
 		for (Place p : orderedPlaceList) {
@@ -146,16 +188,17 @@ public class TourApiController {
 	}
 	
 	// 특정 지역의 특정 좌표 주변 음식점 리스트 조회
-	@GetMapping("/restaurant")
-	public List<Restaurant> excel(String area, String mapX, String mapY, Integer radiusKm) {
+	@PostMapping("/restaurant")
+	public List<Restaurant> excel(@RequestBody TourApiParam param) {
+		// 파라미터: area, mapX, mapY, radius
 		
 		ExcelReader excelReader = new ExcelReader();
-		List<Restaurant> restaurantList = excelReader.getRestaurantListWithinRadius(area, mapX, mapY, radiusKm);
+		List<Restaurant> restaurantList = excelReader.getRestaurantListWithinRadius(param.getArea(), param.getMapX(), param.getMapY(), param.getRadius()/1000.0);
 		
 		// restaurantList 한번 더 필터링하는 작업 필요
 		// ...
 		
-		System.out.println(radiusKm+"km 반경 이내에 있는 음식점 수 => "+restaurantList.size());
+		System.out.println(param.getRadius()/1000.0+"km 반경 이내에 있는 음식점 수 => "+restaurantList.size());
 		return restaurantList;
 	}
 }

@@ -22,6 +22,9 @@ public interface TourApiService {
 	Map<String, String> getAreaCode(String areaName);
 	Map<String, String> getAreaCode(String areaName, String sigunguName);
 	
+	// DB에서 지역이름 조회 (input: 지역 코드 / output: 지역 이름)
+	String getAreaName(String areaCode);
+	
 	// Tour API 위치기반 관광정보 조회
 	List<Place> getLocationPlaceList(String mapX, String mapY);
 	List<Place> getLocationPlaceList(String mapX, String mapY, Integer radius);

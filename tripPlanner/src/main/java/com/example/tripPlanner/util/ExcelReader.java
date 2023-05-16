@@ -18,7 +18,7 @@ import com.example.tripPlanner.entity.Restaurant;
 
 public class ExcelReader {
 	
-    public List<Restaurant> getRestaurantListWithinRadius(String area, String currentX, String currentY, Integer radiusKm) {
+    public List<Restaurant> getRestaurantListWithinRadius(String area, String currentX, String currentY, Double radiusKm) {
     	
         try {
             // 읽어올 엑셀 파일 경로와 파일명을 지정
@@ -29,6 +29,7 @@ public class ExcelReader {
             // 엑셀 파일을 읽어들임
             FileInputStream inputStream = new FileInputStream(file);
             Workbook workbook = WorkbookFactory.create(inputStream);
+            
             Sheet sheet = workbook.getSheet(area);
             
             // 현재 "x,y 좌표"를 BigDecimal 형으로 변환
@@ -59,22 +60,22 @@ public class ExcelReader {
                 	BigDecimal distance = x2.add(y2).sqrt(mc);
                 	
                 	// 음식점이 설정한 반경 안에 있는 경우
-                	if(distance.doubleValue() <= (double)radiusKm) {
+                	if(distance.doubleValue() <= radiusKm) {
                 		Restaurant restaurant = new Restaurant(
-                				(int)row.getCell(0).getNumericCellValue(),
-								row.getCell(1).getStringCellValue(),
-								row.getCell(4).getStringCellValue(),
-								row.getCell(5).getNumericCellValue(),
-								row.getCell(6).getNumericCellValue(),
-								row.getCell(8).getStringCellValue(),
-								row.getCell(10).getStringCellValue(),
-								(int)row.getCell(9).getNumericCellValue()
+                				row.getCell(0) == null ? null : (int)row.getCell(0).getNumericCellValue(),
+                				row.getCell(1) == null ? null : row.getCell(1).getStringCellValue(),
+								row.getCell(4) == null ? null : row.getCell(4).getStringCellValue(),
+								row.getCell(5) == null ? null : row.getCell(5).getNumericCellValue(),
+								row.getCell(6) == null ? null : row.getCell(6).getNumericCellValue(),
+								row.getCell(8) == null ? null : row.getCell(8).getStringCellValue(),
+								row.getCell(10) == null ? null : row.getCell(10).getStringCellValue(),
+								row.getCell(9) == null ? null : (int)row.getCell(9).getNumericCellValue()
 							);
                 		restaurantList.add(restaurant);
                 	}
             	}
             }
-
+            
             // Workbook, InputStream을 close() 메소드를 통해 닫음
             workbook.close();
             inputStream.close();

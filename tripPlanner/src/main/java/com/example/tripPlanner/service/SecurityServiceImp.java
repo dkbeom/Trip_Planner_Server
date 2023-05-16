@@ -8,13 +8,10 @@ import java.util.Map;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
-import com.example.tripPlanner.dao.MemberDao;
-import com.example.tripPlanner.entity.LoginForm;
 import com.example.tripPlanner.entity.Member;
 import com.google.gson.Gson;
 
@@ -26,17 +23,14 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @PropertySource("classpath:local.properties")
 public class SecurityServiceImp implements SecurityService {
     
-    @Autowired
-    private MemberDao memberDao;
-    
     @Value("${JWT_SECRET_KEY}")
     private String SECRET_KEY;
     
-    private static final long expTime = 2*1000*60;
+    private static final long expTime = 2*1000*60; // 2분
 
     // 토큰 생성
     // 로그인 서비스 던질 때 같이 던져주면 됨
-    public String createToken(LoginForm loginForm){
+    public String createToken(Member member){
 
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
@@ -46,7 +40,6 @@ public class SecurityServiceImp implements SecurityService {
         Key signingKey = new SecretKeySpec(secretKeyBytes, signatureAlgorithm.getJcaName());
 
         Gson gson = new Gson();
-        Member member = memberDao.getMember(loginForm);
         Map<String, String> map = new HashMap<>();
         map.put("id", member.getId());
         map.put("name", member.getName());
@@ -61,13 +54,16 @@ public class SecurityServiceImp implements SecurityService {
     }
 
     // 토큰 검증하는 메소드를 만들어서 boolean 타입으로 리턴하는 걸 만들어서 사용하면 됨
-    public String getSubject(String token) {
+    public Map<String, String> getSubject(String token) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY))
                 .build()
                 .parseClaimsJws(token) // 토큰을 넣어서, 클레임들을 구함
                 .getBody();
-         
-         return claims.getSubject();
+        
+        Gson gson = new Gson();
+        Map<String, String> userInfoMap = gson.fromJson(claims.getSubject(), Map.class);
+        
+        return userInfoMap;
     }
 }

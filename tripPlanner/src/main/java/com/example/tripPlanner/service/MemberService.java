@@ -5,8 +5,11 @@ import com.example.tripPlanner.entity.Member;
 
 public interface MemberService {
 
-    // Member 객체 가져오기
-    Member getMember(LoginForm loginForm);
+    // 로그인 시에 Member 객체 가져오기
+    Member getMemberToLogin(LoginForm loginForm);
+    
+    // id로 Member 객체 가져오기
+    Member getMemberById(String id);
 
     // 회원가입
     boolean join(Member member);
