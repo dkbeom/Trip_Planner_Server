@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
-import './font.css'
+import './font.css';
 import axios from 'axios';
 
 export var isFormOK = false;
-var confirmPWD = '';
 
 export function RegisterForm() {
-    const [formData, setFormData] = useState({
-        nickname: '',
-        id: '',
-        pwd: ''
-    });
+    const [formData, setFormData] = useState(
+        {
+            "id": "",
+            "pwd": "",
+            "name": "",
+            "nickname": "",
+            "gender": "1",
+            "age": 1,
+        }
+    )
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
     const [errorMessage, setErrorMessage] = useState('');
     isFormOK = false;
 
@@ -20,7 +29,6 @@ export function RegisterForm() {
             setErrorMessage('닉네임은 최소 2글자 이상으로 설정해주세요!');
             return;
         }
-        // 이메일 형식 체크를 위한 정규 표현식
         const emailRegExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if (!emailRegExp.test(formData.id)) {
             setErrorMessage('이메일의 형식에 어긋납니다!');
@@ -30,35 +38,36 @@ export function RegisterForm() {
             setErrorMessage('비밀번호는 5자 이상이어야 합니다!');
             return;
         }
-        if (formData.pwd !== confirmPWD) {
+        if (formData.pwd !== formData.name) {
             setErrorMessage('비밀번호가 다릅니다!');
             return;
         }
         setErrorMessage('');
-        // 여기서 폼 데이터를 서버로 전송할 수 있습니다.
+
         console.log(formData);
 
-        // axios를 사용하여 데이터 전송
-        axios.post('http://192.168.1.239:8080/member/join', formData)
-            .then(response => {
+        axios.post('http://192.168.1.38:8080/member/join', formData)
+            .then((response) => {
                 console.log(response);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
             });
+
+
         isFormOK = true;
-        // 폼 데이터를 JSON으로 변환합니다.
         const jsonFormData = JSON.stringify(formData);
-        // Blob 객체를 생성합니다.
         const blob = new Blob([jsonFormData], { type: 'application/json' });
-        // a 태그를 생성하여 JSON 파일을 다운로드합니다.
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
         link.download = 'formData.json';
+        document.body.appendChild(link); // link 엘리먼트를 DOM에 추가
+
         //link.click();
+
+        document.body.removeChild(link); // link 엘리먼트를 DOM에서 제거
+
     };
-
-
 
     const handleChange = (e) => {
         setFormData({
@@ -66,6 +75,7 @@ export function RegisterForm() {
             [e.target.name]: e.target.value
         });
     };
+
 
     return (
         <form onSubmit={handleSubmit} className='registerform'>
@@ -91,7 +101,7 @@ export function RegisterForm() {
                 <label style={{ paddingLeft: 10, paddingRight: 8.5 }}>
                     비밀번호 확인:
                 </label>
-                <input type="password" name="confirmPWD" value={confirmPWD} onChange={handleChange} placeholder="비밀번호를 한 번 더 입력해주세요." style={{ width: '300px' }} />
+                <input type="password" name="name" value={formData.name} onChange={handleChange} placeholder="비밀번호를 한 번 더 입력해주세요." style={{ width: '300px' }} />
             </div>
             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
             <button type="submit" style={{ opacity: 0, pointerEvents: 'none', height: '0' }}>JSON 파일 다운로드</button>

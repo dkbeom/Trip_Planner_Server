@@ -4,7 +4,7 @@ import './schedule.css';
 
 
 function ScheduleTable() {
-  const [listItems, setListItems] = useState([
+  const listItems = useState([
     { text: '강원도' },
     { text: '경기도' },
     { text: '경상남도' },

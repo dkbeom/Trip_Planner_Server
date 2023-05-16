@@ -46,6 +46,7 @@ function MainPage() {
           <LinkedExample />
         </ScheduleWrapper>
       </MainWrapper>
+      <JoinButton/>
     </Background>
   );
 }

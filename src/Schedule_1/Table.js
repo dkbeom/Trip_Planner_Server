@@ -11,6 +11,7 @@ function LinkedExample() {
 
     const handleClick1 = (index) => {
         setActiveItem1(index);
+        setActiveItem2('');
         if (index === 0) {
             setSubListItems([
                 { text: '강원도 강릉시' },
