@@ -17,9 +17,9 @@ public class GPTController {
 
     private final GPTApiServiceImp gptApiServiceImp;
     
-    @PostMapping("/ask")
-    public List<List<String>> gptreq(){
-    	return gptApiServiceImp.sendQuestion();
-    }
+//    @PostMapping("/ask")
+//    public List<List<String>> gptreq(){
+//    	return gptApiServiceImp.sendQuestion();
+//    }
     
 }

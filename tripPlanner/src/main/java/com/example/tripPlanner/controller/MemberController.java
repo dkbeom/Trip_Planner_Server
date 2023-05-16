@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.tripPlanner.dao.MemberDao;
-import com.example.tripPlanner.dto.updateDto;
+import com.example.tripPlanner.dto.UpdateDto;
 import com.example.tripPlanner.entity.LoginForm;
 import com.example.tripPlanner.entity.Member;
 import com.example.tripPlanner.service.MemberService;
@@ -106,18 +106,18 @@ public class MemberController {
     }
     @PutMapping("/modify")
     public ResponseEntity<?> updateMember(
-                                             @RequestBody updateDto updateDto) {
-        if(updateDto.getNewPassword()!=null&&!updateDto.getNewPassword().equals(updateDto.getConfirmNewPassword())) {
+                                             @RequestBody UpdateDto UpdateDto) {
+        if(UpdateDto.getNewPassword()!=null&&!UpdateDto.getNewPassword().equals(UpdateDto.getConfirmNewPassword())) {
             return ResponseEntity.badRequest().body("password wrong.");
         }
 
         Map<String, Object> parameterMap = new HashMap<>();
         
-        parameterMap.put("username", updateDto.getUsername());
-        parameterMap.put("nickname", updateDto.getNickname());
-        if(updateDto.getNewPassword()!=null) {
-        parameterMap.put("oldPassword", updateDto.getOldPassword());
-        parameterMap.put("newPassword", updateDto.getNewPassword());
+        parameterMap.put("username", UpdateDto.getUsername());
+        parameterMap.put("nickname", UpdateDto.getNickname());
+        if(UpdateDto.getNewPassword()!=null) {
+        parameterMap.put("oldPassword", UpdateDto.getOldPassword());
+        parameterMap.put("newPassword", UpdateDto.getNewPassword());
         int row1 = memberDao.updatePassword(parameterMap);
         
         if(row1 == 0) {

@@ -6,7 +6,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class GPTQuestionDto implements Serializable{
+public class GptQuestionDto implements Serializable{
 	 //private String message;
 	 private List<Message> messages;
 }

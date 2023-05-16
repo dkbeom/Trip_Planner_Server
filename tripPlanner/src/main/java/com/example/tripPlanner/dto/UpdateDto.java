@@ -3,7 +3,7 @@ package com.example.tripPlanner.dto;
 import lombok.Data;
 
 @Data
-public class updateDto {
+public class UpdateDto {
 	private String username;
 	private String nickname;
     private String oldPassword;
