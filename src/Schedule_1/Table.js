@@ -1,13 +1,15 @@
 import ListGroup from 'react-bootstrap/ListGroup';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Row, Col } from 'react-bootstrap';
+import { MyContext } from './provider';
 
-function LinkedExample() {
+function TableComponent() {
     const [activeItem1, setActiveItem1] = useState(''); // 초기값 0으로 설정
     const [activeItem2, setActiveItem2] = useState('');
     const [subListItems, setSubListItems] = useState([
         { text: '' }
     ]);
+    const {tripList, setTripList} = useContext(MyContext);
 
     const handleClick1 = (index) => {
         setActiveItem1(index);
@@ -321,10 +323,11 @@ function LinkedExample() {
     };
 
     const handleClick2 = (index) => {
-    setActiveItem2(index);
-    const itemName = subListItems[index].text;
-    alert(`${itemName} 버튼을 추가합니다!`);
-};
+        setActiveItem2(index);
+        const itemName = subListItems[index].text;
+        setTripList([...tripList, itemName]);
+        console.log(tripList);
+    };
 
     const [listItems1] = useState([
         { text: '강원도' },
@@ -398,4 +401,4 @@ function LinkedExample() {
     );
 }
 
-export default LinkedExample;
+export default TableComponent;

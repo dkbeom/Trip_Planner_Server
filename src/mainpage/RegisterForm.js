@@ -22,7 +22,7 @@ export function RegisterForm() {
     }
     const [errorMessage, setErrorMessage] = useState('');
     isFormOK = false;
-
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
     const handleSubmit = (e) => {
         e.preventDefault();
         if (formData.nickname.length < 2) {

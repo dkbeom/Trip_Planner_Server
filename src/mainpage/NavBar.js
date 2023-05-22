@@ -4,6 +4,7 @@ import { Title } from './Title';
 import Register from './Register';
 import Login from './Login';
 import './font.css'
+import { Link } from 'react-router-dom';
 
 
 
@@ -57,6 +58,21 @@ function Greeting({ isLoggedIn, name, handleLogin, handleLogout }) {
                         로그인하세요.
                     </div>
                 </Col>
+                <Link to="/sample">
+                    <button
+                        type="button"
+                        className="btn btn-secondary btn-lg"
+                        style={{
+                            backgroundColor: "#F0CC90",
+                            color: "#121212",
+                            boxShadow: "0px 0px 10px 1px rgba(0,0,0,0.2)"
+                        }}
+                    >
+                        <div className='sd' style={{ fontSize: "10px" }}>
+                            debug
+                        </div>
+                    </button>
+                </Link>
             </Container>
         );
     }

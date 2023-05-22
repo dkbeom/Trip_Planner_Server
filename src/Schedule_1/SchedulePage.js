@@ -6,7 +6,11 @@ import MapAPI from './Map';
 import ScheduleTable from './ScheduleTable';
 import JoinButton from './HSH';
 import SmallExample from './Table';
-import LinkedExample from './Table';
+import TableComponent from './Table';
+import TripList from './tripList';
+import { Row, Col } from 'react-bootstrap';
+import { MyContextProvider } from './provider';
+import Departure from './Departure';
 
 const Background = styled.div`
   background-image: url('/loginpage_background.png');
@@ -39,14 +43,18 @@ function MainPage() {
     <Background>
       <NavBar />
       <MainWrapper>
-        <MapWrapper>
-          <MapAPI />
-        </MapWrapper>
-        <ScheduleWrapper>
-          <LinkedExample />
-        </ScheduleWrapper>
+        <Row>
+          <MyContextProvider>
+          <MapWrapper>
+            <MapAPI />
+          </MapWrapper>
+          <ScheduleWrapper>
+            <TableComponent />
+          </ScheduleWrapper>
+          <TripList />
+          </MyContextProvider>
+        </Row>
       </MainWrapper>
-      <JoinButton/>
     </Background>
   );
 }
