@@ -8,3 +8,6 @@ The Simplest Trip Planner
 2. npm install을 입력합니다.
 3. npm start를 입력합니다.
 4. localhost:3000/ 여기에서 실행됩니다.
+
+----
+* 서버 배포했을 때, kakao api에서 허용 주소 업데이트 해줘야 함.
