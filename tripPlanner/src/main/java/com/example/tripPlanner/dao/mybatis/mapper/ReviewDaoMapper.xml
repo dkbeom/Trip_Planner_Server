@@ -17,8 +17,8 @@
 	</select>
 
 	<insert id="insertReview" parameterType="com.example.tripPlanner.entity.Review">
-		INSERT INTO REVIEW(PLACEID, MEMBERID, MEMBERNICKNAME, SCORE, CONTENT)
-		VALUES(#{placeId}, #{memberId}, #{memberNickname}, #{score}, #{content})
+		INSERT INTO REVIEW(ID, PLACEID, MEMBERID, MEMBERNICKNAME, SCORE, CONTENT)
+		VALUES(REVIEW_ID_SEQ.NEXTVAL, #{placeId}, #{memberId}, #{memberNickname}, #{score}, #{content})
 	</insert>
 	
 	<delete id="deleteReview" parameterType="Integer">

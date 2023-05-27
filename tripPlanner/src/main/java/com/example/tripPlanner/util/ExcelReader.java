@@ -2,7 +2,6 @@ package com.example.tripPlanner.util;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -10,7 +9,6 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -20,8 +18,8 @@ import com.example.tripPlanner.entity.Restaurant;
 
 public class ExcelReader {
 	
-	private Workbook workbook;
 	private FileInputStream inputStream;
+	private Workbook workbook;
 	
 	public ExcelReader() {
         // 읽어올 엑셀 파일 경로와 파일명을 지정
@@ -100,7 +98,6 @@ public class ExcelReader {
                 	}
             	}
             }
-            System.out.println();
             
             // Workbook, InputStream을 close() 메소드를 통해 닫음
             workbook.close();

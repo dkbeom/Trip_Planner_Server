@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.tripPlanner.dao.PlaceDao;
 import com.example.tripPlanner.entity.Place;
 import com.example.tripPlanner.entity.Restaurant;
 import com.example.tripPlanner.entity.TourApiParam;
@@ -136,7 +136,7 @@ public class TourApiController {
 	// 특정 지역에 있는 여행지 리스트 조회
 	@PostMapping("/areaBased")
 	public ArrayList<ArrayList<Place>> getAreaBasedPlaceList(@RequestBody TourApiParam param/*, @RequestHeader(value = "Authorization") String token*/) {
-		// 파라미터: currentX, currentY, areaName, sigunguName, cat1, cat2, cat3, foodPreference
+		// 파라미터: currentX, currentY, areaName, sigunguName, cat1, cat2, cat3, foodPreference, tag
 		
 		// 개인정보 확인
 		//Member member = memberService.getMemberById(securityService.getSubject(token).get("id"));

@@ -64,5 +64,4 @@ public class MybatisPlaceDao implements PlaceDao {
 	public boolean updatePlaceScore(Map<String, Object> newScore) {
 		return mapper.updatePlaceScore(newScore);
 	}
-	
 }
