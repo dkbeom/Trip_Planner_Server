@@ -7,8 +7,6 @@ import './font.css'
 import { Link } from 'react-router-dom';
 
 
-
-
 function ParentComponent() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const handleLogin = () => setIsLoggedIn(true);

@@ -16,6 +16,7 @@ function TableComponent() {
         setActiveItem2('');
         if (index === 0) {
             setSubListItems([
+                { text: '강원도' },
                 { text: '강원도 강릉시' },
                 { text: '강원도 고성군' },
                 { text: '강원도 동해시' },
@@ -38,6 +39,7 @@ function TableComponent() {
             ]);
         } else if (index === 1) {
             setSubListItems([
+                { text: '경기도' },
                 { text: '경기도 가평군' },
                 { text: '경기도 고양시 덕양구' },
                 { text: '경기도 고양시 일산동구' },
@@ -84,6 +86,7 @@ function TableComponent() {
             ]);
         } else if (index === 2) {
             setSubListItems([
+                { text: '경상남도' },
                 { text: '경상남도 거제시' },
                 { text: '경상남도 거창군' },
                 { text: '경상남도 고성군' },
@@ -109,6 +112,7 @@ function TableComponent() {
             ]);
         } else if (index === 3) {
             setSubListItems([
+                { text: '경상북도' },
                 { text: '경상북도 경산시' },
                 { text: '경상북도 경주시' },
                 { text: '경상북도 고령군' },
@@ -137,6 +141,7 @@ function TableComponent() {
             ]);
         } else if (index === 4) {
             setSubListItems([
+                { text: '광주광역시' },
                 { text: '광주광역시 광산구' },
                 { text: '광주광역시 남구' },
                 { text: '광주광역시 동구' },
@@ -145,6 +150,7 @@ function TableComponent() {
             ]);
         } else if (index === 5) {
             setSubListItems([
+                { text: '대구광역시' },
                 { text: '대구광역시 남구' },
                 { text: '대구광역시 달서구' },
                 { text: '대구광역시 달성군' },
@@ -156,6 +162,7 @@ function TableComponent() {
             ]);
         } else if (index === 6) {
             setSubListItems([
+                { text: '대전광역시' },
                 { text: '대전광역시 대덕구' },
                 { text: '대전광역시 동구' },
                 { text: '대전광역시 서구' },
@@ -164,6 +171,7 @@ function TableComponent() {
             ]);
         } else if (index === 7) {
             setSubListItems([
+                { text: '부산광역시' },
                 { text: '부산광역시 강서구' },
                 { text: '부산광역시 금정구' },
                 { text: '부산광역시 기장군' },
@@ -183,6 +191,7 @@ function TableComponent() {
             ]);
         } else if (index === 8) {
             setSubListItems([
+                { text: '서울특별시' },
                 { text: '서울특별시 강남구' },
                 { text: '서울특별시 강동구' },
                 { text: '서울특별시 강북구' },
@@ -215,6 +224,7 @@ function TableComponent() {
             ])
         } else if (index === 10) {
             setSubListItems([
+                { text: '울산광역시' },
                 { text: '울산광역시 남구' },
                 { text: '울산광역시 동구' },
                 { text: '울산광역시 북구' },
@@ -223,6 +233,7 @@ function TableComponent() {
             ])
         } else if (index === 11) {
             setSubListItems([
+                { text: '인천광역시' },
                 { text: '인천광역시 강화군' },
                 { text: '인천광역시 계양구' },
                 { text: '인천광역시 남구' },
@@ -236,6 +247,7 @@ function TableComponent() {
             ])
         } else if (index === 12) {
             setSubListItems([
+                { text: '전라남도' },
                 { text: '전라남도 강진군' },
                 { text: '전라남도 고흥군' },
                 { text: '전라남도 곡성군' },
@@ -261,7 +273,7 @@ function TableComponent() {
             ])
         } else if (index === 13) {
             setSubListItems([
-
+                { text: '전라북도' },
                 { text: '전라북도 고창군' },
                 { text: '전라북도 군산시' },
                 { text: '전라북도 김제시' },
@@ -280,11 +292,13 @@ function TableComponent() {
             ])
         } else if (index === 14) {
             setSubListItems([
+                { text: '제주도' },
                 { text: '제주도 서귀포시' },
                 { text: '제주도 제주시' }
             ])
         } else if (index === 15) {
             setSubListItems([
+                { text: '충청남도' },
                 { text: '충청남도 계룡시' },
                 { text: '충청남도 공주시' },
                 { text: '충청남도 금산군' },
@@ -304,6 +318,7 @@ function TableComponent() {
             ])
         } else if (index === 16) {
             setSubListItems([
+                { text: '충청북도' },
                 { text: '충청북도 괴산군' },
                 { text: '충청북도 단양군' },
                 { text: '충청북도 보은군' },
@@ -351,7 +366,7 @@ function TableComponent() {
     return (
         <Row>
             <Col>
-                <ListGroup>
+                <ListGroup style={{width: "25vh"}}>
                     <ListGroup.Item variant="info" style={{ textAlign: 'center' }}>
                         도 / 시
                     </ListGroup.Item>
@@ -362,7 +377,6 @@ function TableComponent() {
                                 action
                                 onClick={() => handleClick1(index)}
                                 style={{
-                                    width: '25vh',
                                     textAlign: 'center',
                                     background: activeItem1 === index ? 'lightgray' : '',
                                 }}
@@ -375,7 +389,7 @@ function TableComponent() {
             </Col>
 
             <Col>
-                <ListGroup>
+                <ListGroup style={{width: "30vh"}}>
                     <ListGroup.Item variant="info" style={{ textAlign: 'center' }}>
                         시 / 군 / 구
                     </ListGroup.Item>
@@ -386,7 +400,6 @@ function TableComponent() {
                                 action
                                 onClick={() => handleClick2(index)}
                                 style={{
-                                    width: '30vh',
                                     textAlign: 'center',
                                     background: activeItem2 === index ? 'lightgray' : '',
                                 }}

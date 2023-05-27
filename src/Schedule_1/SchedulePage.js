@@ -45,13 +45,13 @@ function MainPage() {
       <MainWrapper>
         <Row>
           <MyContextProvider>
-          <MapWrapper>
-            <MapAPI />
-          </MapWrapper>
-          <ScheduleWrapper>
-            <TableComponent />
-          </ScheduleWrapper>
-          <TripList />
+            <MapWrapper>
+              <MapAPI />
+            </MapWrapper>
+            <ScheduleWrapper>
+              <TableComponent />
+              <TripList />
+            </ScheduleWrapper>
           </MyContextProvider>
         </Row>
       </MainWrapper>
