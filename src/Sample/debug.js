@@ -1,14 +1,13 @@
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const instance = axios.create({
-  baseURL: 'http://192.168.1.27:8080',
-});
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 function Api() {
     const [hello, setHello] = useState('동권님이랑 통신 아직 안됨');
 
     useEffect(() => {
-        instance.get('/member/hi?mapX=127.147540&mapY=34.553648')
+        axios.get('http://43.201.19.87:8080/tourApi/hi')
             .then(response => {
                 setHello(response.data);
             })

@@ -2,7 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
 import NavBar from '../mainpage/NavBar';
-import MapAPI from './Map';
+import MapAPI from './Tmap';
 import ScheduleTable from './ScheduleTable';
 import JoinButton from './HSH';
 import SmallExample from './Table';
