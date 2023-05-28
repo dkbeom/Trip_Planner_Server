@@ -1,8 +1,7 @@
 package com.example.tripPlanner.util;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -18,18 +17,18 @@ import com.example.tripPlanner.entity.Restaurant;
 
 public class ExcelReader {
 	
-	private FileInputStream inputStream;
+	private InputStream inputStream;
+	
 	private Workbook workbook;
 	
 	public ExcelReader() {
         // 읽어올 엑셀 파일 경로와 파일명을 지정
-        String filePath = "excel/Restaurant.xlsx";
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource(filePath).getFile());
+		String filePath = "/excel/Restaurant.xlsx";
         
         // 엑셀 파일을 읽어들임
         try {
-			inputStream = new FileInputStream(file);
+        	inputStream = ExcelReader.class.getResourceAsStream(filePath);
+        	
 			workbook = WorkbookFactory.create(inputStream);
 		} catch (IOException e) {
 			e.printStackTrace();
