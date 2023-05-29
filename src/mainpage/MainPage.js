@@ -1,4 +1,4 @@
-
+import { MyContextProvider } from './provider';
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { SubTitle } from './Title';
@@ -18,17 +18,19 @@ const Background = styled.div`
 
 function MainPage() {
     return (
-        <Background>
-            <NavBar />
-            <Container style={{ paddingTop: "30px" }}>
-                <div>
+        <MyContextProvider>
+            <Background>
+                <NavBar />
+                <Container style={{ paddingTop: "30px" }}>
+                    <div>
 
-                </div>
-                <SubTitle children={"We offer..."} />
-            </Container>
-            <UncontrolledExample/>
-            <NextPageButton />
-        </Background>
+                    </div>
+                    <SubTitle children={"We offer..."} />
+                </Container>
+                <UncontrolledExample />
+                <NextPageButton />
+            </Background>
+        </MyContextProvider>
     );
 }
 

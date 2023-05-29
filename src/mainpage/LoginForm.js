@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './font.css'
 import axios from 'axios';
+import { MyContext } from './provider';
 
 export var isFormOK = false;
 
@@ -10,13 +11,14 @@ export function LoginForm() {
         pwd: '',
     });
     const [errorMessage, setErrorMessage] = useState('');
+    const {setIsLogin, setaccountEmail} = useContext(MyContext);
     isFormOK = false;
 
     const handleSubmit = (e) => {
         e.preventDefault();
         // 이메일 형식 체크를 위한 정규 표현식
         const emailRegExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (!emailRegExp.test(formData.id)) {
+        if (!emailRegExp.test(formData.id) || formData.id.length > 30) {
             setErrorMessage('이메일의 형식에 어긋납니다!');
             return;
         }
@@ -29,9 +31,17 @@ export function LoginForm() {
         console.log(formData);
 
         // axios를 사용하여 데이터 전송
-        axios.post('http://192.168.1.239:8080/member/login', formData)
+        axios.post('http://43.201.19.87:8080/member/login', formData)
             .then(response => {
                 console.log(response);
+                if(response.data.token==null){
+                    setIsLogin(false);
+                    setaccountEmail("");
+                }
+                else{
+                    setIsLogin(true);
+                    setaccountEmail(formData.id);
+                }
             })
             .catch(error => {
                 console.log(error);

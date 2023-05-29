@@ -1,29 +1,37 @@
 import { Navbar, Container, Col } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Title } from './Title';
 import Register from './Register';
 import Login from './Login';
-import './font.css'
+import './font.css';
 import { Link } from 'react-router-dom';
-
+import { MyContext } from './provider';
 
 function ParentComponent() {
+    const { isLogin, accountEmail } = useContext(MyContext);
+
+    return (
+        <Greeting isLogin={isLogin} accountEmail={accountEmail} />
+    );
+}
+
+function Greeting({ isLogin, accountEmail }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+
     const handleLogin = () => setIsLoggedIn(true);
     const handleLogout = () => setIsLoggedIn(false);
 
-    return (
-        <Greeting isLoggedIn={isLoggedIn} name="이강은" handleLogin={handleLogin} handleLogout={handleLogout} />
-    );
-}
-// API 통해서 통신할 부분. 로그인&회원가입
-
-
-function Greeting({ isLoggedIn, name, handleLogin, handleLogout }) {
+    useEffect(() => {
+        if (isLogin) {
+            handleLogin();
+        } else {
+            handleLogout();
+        }
+    }, [isLogin]);
 
     const [showModal, setShowModal] = useState(false);
     const handleModalClose = () => setShowModal(false);
-    //const handleButtonClick = () => setShowModal(true);
+
     if (isLoggedIn) {
         return (
             <Container>
@@ -35,7 +43,7 @@ function Greeting({ isLoggedIn, name, handleLogin, handleLogout }) {
                 </Col>
                 <Col style={{ paddingTop: "20px" }}>
                     <div className='sd'>
-                        {name}님 안녕하세요!
+                        {accountEmail}님 안녕하세요!
                     </div>
                 </Col>
             </Container>
@@ -76,8 +84,6 @@ function Greeting({ isLoggedIn, name, handleLogin, handleLogout }) {
     }
 }
 
-
-
 function NavBar() {
     return (
         <Navbar
@@ -106,9 +112,8 @@ function NavBar() {
                 </Container>
             </div>
             <div>
-                <ParentComponent />
+            <ParentComponent />
             </div>
-
         </Navbar>
     );
 }

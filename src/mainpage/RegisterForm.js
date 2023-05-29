@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import './font.css';
 import axios from 'axios';
+import { MyContext } from './provider';
+import { useContext } from 'react';
 
 export var isFormOK = false;
 
+
 export function RegisterForm() {
+    isFormOK = false;
     const [formData, setFormData] = useState(
         {
             "id": "",
@@ -12,30 +16,28 @@ export function RegisterForm() {
             "name": "",
             "nickname": "",
             "gender": "1",
-            "age": 1,
+            "age": 3
         }
     )
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }
     const [errorMessage, setErrorMessage] = useState('');
-    isFormOK = false;
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+    const {joinsuccess, setJoinsuccess} = useContext(MyContext);
     const handleSubmit = (e) => {
         e.preventDefault();
         if (formData.nickname.length < 2) {
             setErrorMessage('닉네임은 최소 2글자 이상으로 설정해주세요!');
             return;
         }
+        if (formData.nickname.length > 10) {
+            setErrorMessage('닉네임은 10글자 미만으로 설정해주세요!');
+            return;
+        }
         const emailRegExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (!emailRegExp.test(formData.id)) {
+        if (!emailRegExp.test(formData.id) || formData.id.length > 30) {
             setErrorMessage('이메일의 형식에 어긋납니다!');
             return;
         }
-        if (formData.pwd.length < 5) {
-            setErrorMessage('비밀번호는 5자 이상이어야 합니다!');
+        if (formData.pwd.length < 5 || formData.pwd.length > 20) {
+            setErrorMessage('비밀번호는 5자 이상, 20자 미만이어야 합니다!');
             return;
         }
         if (formData.pwd !== formData.name) {
@@ -44,16 +46,21 @@ export function RegisterForm() {
         }
         setErrorMessage('');
 
-        console.log(formData);
-
-        axios.post('http://192.168.1.38:8080/member/join', formData)
+        axios.post('http://43.201.19.87:8080/member/join', formData)
             .then((response) => {
-                console.log(response);
+                const response1 = response.data.result;
+
+                if (response1 === "JOIN_SUCCESS") {
+                    console.log(response1);
+                    setJoinsuccess(true);
+                } else {
+                    console.log(response1);
+                    setJoinsuccess(false);
+                }
             })
             .catch((error) => {
                 console.log(error);
             });
-
 
         isFormOK = true;
         const jsonFormData = JSON.stringify(formData);
@@ -62,11 +69,7 @@ export function RegisterForm() {
         link.href = URL.createObjectURL(blob);
         link.download = 'formData.json';
         document.body.appendChild(link); // link 엘리먼트를 DOM에 추가
-
-        //link.click();
-
         document.body.removeChild(link); // link 엘리먼트를 DOM에서 제거
-
     };
 
     const handleChange = (e) => {

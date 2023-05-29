@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { LoginForm, isFormOK } from "./LoginForm.js"
 import './font.css'
+import { MyContext } from './provider.js';
+import { useContext } from 'react';
+import { useEffect } from 'react';
 
 
 function Login() {
@@ -9,15 +12,22 @@ function Login() {
 
     const handleClose = () => setShowModal(false);
     const handleShow = () => setShowModal(true);
-
+    const { isLogin, accountEmail } = useContext(MyContext);
     const handleSubmit = (formData) => {
         document.querySelector('.registerform button[type="submit"]').click();
-        console.log(isFormOK);
         if (!isFormOK)
             return;
         console.log(formData);
         handleClose();
     };
+
+    useEffect(() => {
+        if (isLogin) {
+            console.log("Login: %s", isLogin);
+            console.log("Email: %s", accountEmail);
+        }
+    }, [isLogin, accountEmail]);
+
 
     return (
         <>
