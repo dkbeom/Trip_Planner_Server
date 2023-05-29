@@ -120,8 +120,8 @@ public class TourApiServiceImp implements TourApiService {
 			if(itemsAndNumOfRows != null) {
 				for (int i = 0; i < (Integer)itemsAndNumOfRows.get("numOfRows"); i++) {
 					JSONObject eachItem = (JSONObject) ((JSONArray)itemsAndNumOfRows.get("item")).get(i);
-					// 음식, 숙박 제외
-					if((String)eachItem.get("cat1") != "A05" && (String)eachItem.get("cat1") != "B02") {
+					// 쇼핑, 음식, 숙박 제외
+					if(!((String)eachItem.get("cat1")).equals("A04") && !((String)eachItem.get("cat1")).equals("A05") && !((String)eachItem.get("cat1")).equals("B02")) {
 						Place place = new Place();
 						place.setId((String) eachItem.get("contentid"));
 						place.setTitle((String) eachItem.get("title"));
@@ -253,8 +253,8 @@ public class TourApiServiceImp implements TourApiService {
 		if(itemsAndNumOfRows != null) {
 			for (int i = 0; i < (Integer)itemsAndNumOfRows.get("numOfRows"); i++) {
 				JSONObject eachItem = (JSONObject) ((JSONArray)itemsAndNumOfRows.get("item")).get(i);
-				// 음식, 숙박 제외
-				if((String)eachItem.get("cat1") != "A05" && (String)eachItem.get("cat1") != "B02") {
+				// 쇼핑, 음식, 숙박 제외
+				if(!((String)eachItem.get("cat1")).equals("A04") && !((String)eachItem.get("cat1")).equals("A05") && !((String)eachItem.get("cat1")).equals("B02")) {
 					Place place = new Place();
 					place.setId((String) eachItem.get("contentid"));
 					place.setTitle((String) eachItem.get("title"));
@@ -369,8 +369,8 @@ public class TourApiServiceImp implements TourApiService {
 		if(itemsAndNumOfRows != null) {
 			for (int i = 0; i < (Integer)itemsAndNumOfRows.get("numOfRows"); i++) {
 				JSONObject eachItem = (JSONObject) ((JSONArray)itemsAndNumOfRows.get("item")).get(i);
-				// 음식, 숙박 제외
-				if((String)eachItem.get("cat1") != "A05" && (String)eachItem.get("cat1") != "B02") {
+				// 쇼핑, 음식, 숙박 제외
+				if(!((String)eachItem.get("cat1")).equals("A04") && !((String)eachItem.get("cat1")).equals("A05") && !((String)eachItem.get("cat1")).equals("B02")) {
 					Place place = new Place();
 					place.setId((String) eachItem.get("contentid"));
 					place.setTitle((String) eachItem.get("title"));

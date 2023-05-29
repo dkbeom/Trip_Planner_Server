@@ -42,7 +42,7 @@ public class TourApiController {
 	// 키워드에 맞는 여행지 리스트 조회
 	@PostMapping("/keyword")
 	public List<Place> getKeywordPlaceList(@RequestBody TourApiParam param) {
-		// 파라미터: currentX, currentY, areaName, sigunguName, keyword, foodPreference
+		// 파라미터: currentX, currentY, areaName, sigunguName, keyword, foodPreferences
 
 		// TourAPI 에서 지역 코드 조회
 		Map<String, String> areaCodeMap = tourApiService.getAreaCode(param.getAreaName(), param.getSigunguName());
@@ -63,10 +63,10 @@ public class TourApiController {
 		ArrayList<Place> orderedPlaceList = tsp.getTspOrderedPlaceList(param.getCurrentX(), param.getCurrentY());
 
 		// 각 여행지마다 근처 식당 목록 삽입
-		ExcelReader excelReader = new ExcelReader();
+		ExcelReader excelReader = new ExcelReader(param.getFoodPreferences());
 		List<Restaurant> restaurantList;
 		for (Place p : orderedPlaceList) {
-			restaurantList = excelReader.getRestaurantListWithinRadius(tourApiService.getAreaName(p.getAreaCode()), p.getMapX(), p.getMapY(), param.getFoodPreference(), (double)1);
+			restaurantList = excelReader.getRestaurantListWithinRadius(tourApiService.getAreaName(p.getAreaCode()), p.getMapX(), p.getMapY(), (double)1);
 			// restaurantList 한번 더 필터링하는 작업 필요
 			// ...
 			p.setNearByRestaurants(restaurantList);
@@ -93,7 +93,7 @@ public class TourApiController {
 	// 지정한 위치 주변에 있는 여행지 리스트 조회
 	@PostMapping("/location")
 	public List<Place> getLocationPlaceList(@RequestBody TourApiParam param) {
-		// 파라미터: currentX, currentY, mapX, mapY, radius, contentTypeId, foodPreference
+		// 파라미터: currentX, currentY, mapX, mapY, radius, contentTypeId, foodPreferences
 
 		// TourAPI 에서 특정 좌표 주변에 있는 여행지 리스트 조회
 		List<Place> placeList = tourApiService.getLocationPlaceList(param.getMapX(), param.getMapY(), param.getRadius(), param.getContentTypeId());
@@ -106,10 +106,10 @@ public class TourApiController {
 		ArrayList<Place> orderedPlaceList = tsp.getTspOrderedPlaceList(param.getCurrentX(), param.getCurrentY());
 
 		// 각 여행지마다 근처 식당 목록 삽입
-		ExcelReader excelReader = new ExcelReader();
+		ExcelReader excelReader = new ExcelReader(param.getFoodPreferences());
 		List<Restaurant> restaurantList;
 		for (Place p : orderedPlaceList) {
-			restaurantList = excelReader.getRestaurantListWithinRadius(tourApiService.getAreaName(p.getAreaCode()), p.getMapX(), p.getMapY(), param.getFoodPreference(), (double)1);
+			restaurantList = excelReader.getRestaurantListWithinRadius(tourApiService.getAreaName(p.getAreaCode()), p.getMapX(), p.getMapY(), (double)1);
 			// restaurantList 한번 더 필터링하는 작업 필요
 			// ...
 			p.setNearByRestaurants(restaurantList);
@@ -136,7 +136,7 @@ public class TourApiController {
 	// 특정 지역에 있는 여행지 리스트 조회
 	@PostMapping("/areaBased")
 	public ArrayList<ArrayList<Place>> getAreaBasedPlaceList(@RequestBody TourApiParam param/*, @RequestHeader(value = "Authorization") String token*/) {
-		// 파라미터: currentX, currentY, areaName, sigunguName, cat1, cat2, cat3, foodPreference, tag
+		// 파라미터: currentX, currentY, areaName, sigunguName, cat1, cat2, cat3, foodPreferences, tag
 		
 		// 개인정보 확인
 		//Member member = memberService.getMemberById(securityService.getSubject(token).get("id"));
@@ -168,10 +168,10 @@ public class TourApiController {
 		// ChatGPT에서 추천 여행지로 받은 2차원 배열 다시 PlaceList로 매핑 (recommendationsAllDates -> recommendedPlaceListAllDates)
 		String[][] recommendationsAllDates = testArray; // ChatGPT에서 배열을 받음
 		ArrayList<ArrayList<Place>> recommendedPlaceListAllDates = new ArrayList<>();
-		for(String[] recommendationsByDate : recommendationsAllDates) { // 특정 날짜의 여행지 리스트
+		for(String[] recommendationsByDate : recommendationsAllDates) {
 			// 날짜별 추천된 여행지 리스트
 			ArrayList<Place> recommendedPlaceListByDate = new ArrayList<>();
-			for(String recommendation : recommendationsByDate) { // 여행지 하나
+			for(String recommendation : recommendationsByDate) {
 				// 하나의 날짜 안에서의 특정 여행지
 				for(Place place : placeList) {
 					if(place.getTitle().equals(recommendation)) {
@@ -197,11 +197,11 @@ public class TourApiController {
 		
 		long start4 = System.currentTimeMillis();
 		// 각 여행지마다 근처 식당 목록 삽입 (orderedPlaceListAllDates -> orderedPlaceListAllDates)
-		ExcelReader excelReader = new ExcelReader();
+		ExcelReader excelReader = new ExcelReader(param.getFoodPreferences());
 		List<Restaurant> restaurantList;
 		for(ArrayList<Place> orderedPlaceList : orderedPlaceListAllDates) {
 			for (Place p : orderedPlaceList) {
-				restaurantList = excelReader.getRestaurantListWithinRadius(tourApiService.getAreaName(p.getAreaCode()), p.getMapX(), p.getMapY(), param.getFoodPreference(), (double)5);
+				restaurantList = excelReader.getRestaurantListWithinRadius(tourApiService.getAreaName(p.getAreaCode()), p.getMapX(), p.getMapY(), (double)5);
 				p.setNearByRestaurants(new ArrayList<Restaurant>(restaurantList));
 			}
 		}
@@ -241,15 +241,48 @@ public class TourApiController {
 	// 특정 지역의 특정 좌표 주변 음식점 리스트 조회
 	@PostMapping("/restaurant")
 	public List<Restaurant> excel(@RequestBody TourApiParam param) {
-		// 파라미터: area, mapX, mapY, radius
+		// 파라미터: area, mapX, mapY, foodPreferences, radius
 		
-		ExcelReader excelReader = new ExcelReader();
-		List<Restaurant> restaurantList = excelReader.getRestaurantListWithinRadius(param.getArea(), param.getMapX(), param.getMapY(), param.getFoodPreference(), param.getRadius()/1000.0);
+		ExcelReader excelReader = new ExcelReader(param.getFoodPreferences());
+		List<Restaurant> restaurantList = excelReader.getRestaurantListWithinRadius(param.getArea(), param.getMapX(), param.getMapY(), param.getRadius()/1000.0);
 		
 		// restaurantList 한번 더 필터링하는 작업 필요
 		// ...
 		
 		System.out.println(param.getRadius()/1000.0+"km 반경 이내에 있는 음식점 수 => "+restaurantList.size());
 		return restaurantList;
+	}
+	
+	
+	
+	@PostMapping("/test2")
+	public List<Place> test2(@RequestBody TourApiParam param){
+		
+		Map<String, String> areaCodeMap = tourApiService.getAreaCode(param.getAreaName(), param.getSigunguName());
+		
+		List<Place> placeList = new ArrayList<>();
+		if (areaCodeMap != null) {
+			placeList = tourApiService.getAreaBasedPlaceList((String) areaCodeMap.get("areaCode"), (String) areaCodeMap.get("sigunguCode"), param.getCat1(), param.getCat2(), param.getCat3());
+		} else {
+			placeList = tourApiService.getAreaBasedPlaceList();
+		}
+		
+		return placeList;
+	}
+	
+	@PostMapping("/test")
+	public List<Restaurant> test(@RequestBody TourApiParam param){
+		// 파라미터: area, mapX, mapY, foodPreferences, radius
+		
+		ExcelReader excelReader = new ExcelReader(param.getFoodPreferences());
+		List<Restaurant> restaurantList = excelReader.getRestaurantListWithinRadius(param.getArea(), param.getMapX(), param.getMapY(), param.getRadius()/1000.0);
+		
+		return restaurantList;
+	}
+	
+	@GetMapping("/hi")
+	public String hi() {
+		
+		return "hello everyone~";
 	}
 }

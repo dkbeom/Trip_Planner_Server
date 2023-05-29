@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="dd57d086-5ef2-4497-be4a-4dda28e34247" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/controller/TourApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/controller/TourApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/entity/Restaurant.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/entity/Restaurant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/entity/TourApiParam.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/entity/TourApiParam.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/util/ExcelReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/util/ExcelReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/resources/excel/Restaurant.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/resources/excel/Restaurant.xlsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2QTKzHcL6snpcrUYZMgDierWvWD" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="flattenPackages" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="dd57d086-5ef2-4497-be4a-4dda28e34247" name="변경" comment="" />
+      <created>1685372394296</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1685372394296</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
