@@ -81,9 +81,9 @@ const MapAPI = () => {
       backgroundColor: '#DDFFFF77'
     }}>
       <div id="map" style={{ width: '600px', height: '600px' }}></div>
-      <button type="button" class="btn btn-success" style={{ marginTop: '10px' }} onClick={handleZoomBack}>원래대로</button>
-    </div>
+      <button type="button" className="btn btn-success" style={{ marginTop: '10px' }} onClick={handleZoomBack}>원래대로</button>
+    </div> 
   );
-}; 
+};  
 
 export default MapAPI;

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import './font.css'
 import axios from 'axios';
-import { MyContext } from './provider';
+import { MyContext } from '../provider';
 
 export var isFormOK = false;
 
@@ -31,7 +31,9 @@ export function LoginForm() {
         console.log(formData);
 
         // axios를 사용하여 데이터 전송
-        axios.post('http://43.201.19.87:8080/member/login', formData)
+        // axios.post('http://43.201.19.87:8080/member/login', formData) -> EC2 Version
+        axios.post('http://10.210.60.44:8080/member/login', formData)
+        
             .then(response => {
                 console.log(response);
                 if(response.data.token==null){
@@ -41,6 +43,9 @@ export function LoginForm() {
                 else{
                     setIsLogin(true);
                     setaccountEmail(formData.id);
+                    localStorage.clear();
+                    localStorage.setItem("ID", formData.id);
+                    localStorage.setItem("token", response.data.token);
                 }
             })
             .catch(error => {

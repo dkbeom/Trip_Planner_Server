@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { RegisterForm, isFormOK } from './RegisterForm.js';
 import './font.css';
-import { MyContext } from './provider';
+import { MyContext } from '../provider';
 
 var tryRegister = false;
 function Register() {
@@ -12,7 +12,10 @@ function Register() {
   const { joinsuccess } = useContext(MyContext);
 
   useEffect(() => {
+    console.log(joinsuccess);
+    console.log(tryRegister);
     if (joinsuccess && tryRegister) {
+      console.log("hurray");
       setShowSuccessModal(true);
       tryRegister = false;
     }

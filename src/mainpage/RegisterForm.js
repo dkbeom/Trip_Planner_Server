@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './font.css';
 import axios from 'axios';
-import { MyContext } from './provider';
+import { MyContext } from '../provider';
 import { useContext } from 'react';
 
 export var isFormOK = false;
@@ -46,15 +46,17 @@ export function RegisterForm() {
         }
         setErrorMessage('');
 
-        axios.post('http://43.201.19.87:8080/member/join', formData)
+        //axios.post('http://43.201.19.87:8080/member/join', formData) //-> EC2 Version
+        axios.post('http://10.210.60.44:8080/member/join', formData)
             .then((response) => {
                 const response1 = response.data.result;
+                console.log(response);
 
                 if (response1 === "JOIN_SUCCESS") {
-                    console.log(response1);
+                    console.log("Register Result: %s",response1);
                     setJoinsuccess(true);
                 } else {
-                    console.log(response1);
+                    console.log("Register Result: %s", response1);
                     setJoinsuccess(false);
                 }
             })

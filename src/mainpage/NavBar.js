@@ -5,7 +5,7 @@ import Register from './Register';
 import Login from './Login';
 import './font.css';
 import { Link } from 'react-router-dom';
-import { MyContext } from './provider';
+import { MyContext } from '../provider';
 
 function ParentComponent() {
     const { isLogin, accountEmail } = useContext(MyContext);
@@ -19,7 +19,10 @@ function Greeting({ isLogin, accountEmail }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const handleLogin = () => setIsLoggedIn(true);
-    const handleLogout = () => setIsLoggedIn(false);
+    const handleLogout = () => {
+        setIsLoggedIn(false);
+        //localStorage.clear();
+    }
 
     useEffect(() => {
         if (isLogin) {
@@ -32,18 +35,18 @@ function Greeting({ isLogin, accountEmail }) {
     const [showModal, setShowModal] = useState(false);
     const handleModalClose = () => setShowModal(false);
 
-    if (isLoggedIn) {
+    if (localStorage.getItem("token")) {
         return (
             <Container>
                 <Col>
                     <div className='dd' style={{ fontSize: "20px", marginRight: "200px" }}>
-                        <button type="button" class="btn btn-outline-success" style={{ marginRight: "10px" }}>My Page</button>
-                        <button type="button" class="btn btn-outline-danger" onClick={handleLogout}>Logout</button>
+                        <button type="button" className="btn btn-outline-success" style={{ marginRight: "10px" }}>My Page</button>
+                        <button type="button" className="btn btn-outline-danger" onClick={handleLogout}>Logout</button>
                     </div>
                 </Col>
                 <Col style={{ paddingTop: "20px" }}>
                     <div className='sd'>
-                        {accountEmail}님 안녕하세요!
+                        {localStorage.getItem("ID")}님 안녕하세요!
                     </div>
                 </Col>
             </Container>
@@ -64,21 +67,6 @@ function Greeting({ isLogin, accountEmail }) {
                         로그인하세요.
                     </div>
                 </Col>
-                <Link to="/sample">
-                    <button
-                        type="button"
-                        className="btn btn-secondary btn-lg"
-                        style={{
-                            backgroundColor: "#F0CC90",
-                            color: "#121212",
-                            boxShadow: "0px 0px 10px 1px rgba(0,0,0,0.2)"
-                        }}
-                    >
-                        <div className='sd' style={{ fontSize: "10px" }}>
-                            debug
-                        </div>
-                    </button>
-                </Link>
             </Container>
         );
     }
