@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpServerErrorException;
 
 import com.example.tripPlanner.entity.Place;
 import com.example.tripPlanner.entity.Restaurant;
 import com.example.tripPlanner.entity.TourApiParam;
+import com.example.tripPlanner.service.GPTApiService;
 import com.example.tripPlanner.service.MemberService;
 import com.example.tripPlanner.service.PlaceService;
 import com.example.tripPlanner.service.SecurityService;
@@ -38,6 +38,8 @@ public class TourApiController {
 	@Autowired
     private MemberService memberService;
 	
+	@Autowired
+	private GPTApiService gptapiService;
 
 	// 키워드에 맞는 여행지 리스트 조회
 	@PostMapping("/keyword")
@@ -154,14 +156,28 @@ public class TourApiController {
 		}
 		long end1 = System.currentTimeMillis();
 		
-		// TEST
-		int a = 4;
-		int b = 6;
-		String[][] testArray = new String[a][b];
-		for(int i = 0; i < a; i++) {
-			for(int j = 0; j < b; j++) {
-				testArray[i][j] = placeList.get((b+3)*i+j).getTitle();
-			}
+//		// TEST
+//		int a = 4;
+//		int b = 6;
+//		String[][] testArray = new String[a][b];
+//		for(int i = 0; i < a; i++) {
+//			for(int j = 0; j < b; j++) {
+//				testArray[i][j] = placeList.get((b+3)*i+j).getTitle();
+//			}
+//		}
+		String[][] testArray;
+		try {
+		     testArray= gptapiService.sendQuestion(placeList);
+		    // 예외가 발생하지 않은 경우에 대한 처리
+		    // testArray를 사용하는 나머지 로직을 작성합니다.
+		} catch (HttpServerErrorException e) {
+		    // 500 Internal Server Error가 발생한 경우에 대한 처리
+		    // 예외 처리 로직을 작성합니다.
+		    // 예를 들어, 오류 메시지를 출력하거나 로그에 기록할 수 있습니다.
+		    System.out.println("서버에서 오류가 발생했습니다: " + e.getMessage());
+		    e.printStackTrace();
+		    // 필요한 경우 예외를 다시 던져서 상위 호출자에게 전파할 수도 있습니다.
+		    throw e;
 		}
 
 		long start2 = System.currentTimeMillis();

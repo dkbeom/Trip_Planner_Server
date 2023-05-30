@@ -18,4 +18,8 @@ public class TourApiParam {
 	private String cat2;             // 중분류
 	private String cat3;             // 소분류
 	private String[] foodPreference; // 음식 취향
+	
+	public String[] getFoodPreference() {
+	    return foodPreference;
+	}
 }

@@ -14,7 +14,5 @@ public interface GPTApiService {
 	HttpEntity<GptRequest> buildHttpEntity(GptRequest gptRequest);
 	GptResponse getResponse(HttpEntity<GptRequest> requestHttpEntity);
 	GptResponse askQuestion(List<Place> places);
-	List<List<String>> sendQuestion(List<Place> places);
+	String[][] sendQuestion(List<Place> places);
 	}
-
-//sendQuestion()리스트 보내면 됨 ㅇㅇ
