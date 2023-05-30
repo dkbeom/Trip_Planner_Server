@@ -31,17 +31,15 @@ export function LoginForm() {
         console.log(formData);
 
         // axios를 사용하여 데이터 전송
-        // axios.post('http://43.201.19.87:8080/member/login', formData) -> EC2 Version
-        axios.post('http://10.210.60.44:8080/member/login', formData)
+        axios.post('http://43.201.19.87:8080/member/login', formData) //-> EC2 Version
+        // axios.post('http://10.210.60.44:8080/member/login', formData)
         
             .then(response => {
                 console.log(response);
                 if(response.data.token==null){
-                    setIsLogin(false);
                     setaccountEmail("");
                 }
                 else{
-                    setIsLogin(true);
                     setaccountEmail(formData.id);
                     localStorage.clear();
                     localStorage.setItem("ID", formData.id);

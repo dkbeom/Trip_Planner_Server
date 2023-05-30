@@ -13,7 +13,7 @@ export function RegisterForm() {
         {
             "id": "",
             "pwd": "",
-            "name": "",
+            "name": "", //name은 중복 허용
             "nickname": "",
             "gender": "1",
             "age": 3
@@ -46,8 +46,8 @@ export function RegisterForm() {
         }
         setErrorMessage('');
 
-        //axios.post('http://43.201.19.87:8080/member/join', formData) //-> EC2 Version
-        axios.post('http://10.210.60.44:8080/member/join', formData)
+        axios.post('http://43.201.19.87:8080/member/join', formData) //-> EC2 Version
+        // axios.post('http://10.210.60.44:8080/member/join', formData)
             .then((response) => {
                 const response1 = response.data.result;
                 console.log(response);

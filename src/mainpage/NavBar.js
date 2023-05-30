@@ -4,38 +4,31 @@ import { Title } from './Title';
 import Register from './Register';
 import Login from './Login';
 import './font.css';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { MyContext } from '../provider';
 
-function ParentComponent() {
-    const { isLogin, accountEmail } = useContext(MyContext);
-
-    return (
-        <Greeting isLogin={isLogin} accountEmail={accountEmail} />
-    );
-}
-
-function Greeting({ isLogin, accountEmail }) {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    const handleLogin = () => setIsLoggedIn(true);
+function Greeting() {
     const handleLogout = () => {
-        setIsLoggedIn(false);
-        //localStorage.clear();
+        localStorage.clear();
+        window.location.reload();
     }
-
-    useEffect(() => {
-        if (isLogin) {
-            handleLogin();
-        } else {
-            handleLogout();
-        }
-    }, [isLogin]);
 
     const [showModal, setShowModal] = useState(false);
     const handleModalClose = () => setShowModal(false);
 
     if (localStorage.getItem("token")) {
+        const formData = {
+            key:localStorage.getItem("token")
+        }
+          axios.get('http://43.201.19.87:8080/member/get/subject', {headers:{Authorization:formData.key}})
+            .then(response => {
+              console.log(response);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+          
         return (
             <Container>
                 <Col>
@@ -100,7 +93,7 @@ function NavBar() {
                 </Container>
             </div>
             <div>
-            <ParentComponent />
+            <Greeting />
             </div>
         </Navbar>
     );

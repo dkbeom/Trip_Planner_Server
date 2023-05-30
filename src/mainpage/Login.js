@@ -17,7 +17,6 @@ function Login() {
         document.querySelector('.registerform button[type="submit"]').click();
         if (!isFormOK)
             return;
-        console.log(formData);
         handleClose();
     };
 
