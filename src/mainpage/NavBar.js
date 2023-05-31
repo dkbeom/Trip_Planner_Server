@@ -1,34 +1,47 @@
 import { Navbar, Container, Col } from 'react-bootstrap';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Title } from './Title';
 import Register from './Register';
 import Login from './Login';
 import './font.css';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { MyContext } from '../provider';
 
 function Greeting() {
     const handleLogout = () => {
         localStorage.clear();
-        window.location.reload();
+        window.location.href = "http://localhost:3000/";
     }
-
+    const [nickname, setNickname] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const handleModalClose = () => setShowModal(false);
 
-    if (localStorage.getItem("token")) {
-        const formData = {
-            key:localStorage.getItem("token")
+
+    useEffect(() => {
+        if (localStorage.getItem("token")) {
+            const formData = {
+                key: localStorage.getItem("token")
+            }
+            const fetchData = async () => {
+                try {
+                    await axios.get('http://43.201.19.87:8080/member/get/subject', { headers: { Authorization: formData.key } })
+                        .then(response => {
+                            localStorage.setItem("nickname", response.data.nickname);
+                            localStorage.setItem("name", response.data.name);
+                            setNickname(response.data.nickname);
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                }
+                catch (error) {
+                    console.log(error);
+                }
+            }
+            fetchData();
         }
-          axios.get('http://43.201.19.87:8080/member/get/subject', {headers:{Authorization:formData.key}})
-            .then(response => {
-              console.log(response);
-            })
-            .catch(error => {
-              console.log(error);
-            });
-          
+    }, [])
+
+    if (localStorage.getItem("token")) {
         return (
             <Container>
                 <Col>
@@ -39,12 +52,13 @@ function Greeting() {
                 </Col>
                 <Col style={{ paddingTop: "20px" }}>
                     <div className='sd'>
-                        {localStorage.getItem("ID")}님 안녕하세요!
+                        {nickname}님 안녕하세요!
                     </div>
                 </Col>
             </Container>
         );
-    } else {
+    }
+    else {
         return (
             <Container>
                 <Col style={{ paddingTop: "20px" }}>
@@ -63,6 +77,7 @@ function Greeting() {
             </Container>
         );
     }
+
 }
 
 function NavBar() {
@@ -93,7 +108,7 @@ function NavBar() {
                 </Container>
             </div>
             <div>
-            <Greeting />
+                <Greeting />
             </div>
         </Navbar>
     );

@@ -9,26 +9,22 @@ import { useEffect } from 'react';
 
 function Login() {
     const [showModal, setShowModal] = useState(false);
-
     const handleClose = () => setShowModal(false);
     const handleShow = () => setShowModal(true);
-    const { isLogin, accountEmail, setIsLogin } = useContext(MyContext);
+    const { accountEmail } = useContext(MyContext);
     const handleSubmit = (formData) => {
         document.querySelector('.registerform button[type="submit"]').click();
         if (!isFormOK)
             return;
         handleClose();
-    };
+    };  
+
 
     useEffect(() => {
         if(localStorage.getItem("token")){
-            setIsLogin(true);
+            window.location.reload();
         }
-        if (isLogin) {
-            console.log(isLogin);
-            console.log(accountEmail);
-        }
-    }, [isLogin, accountEmail]);
+    }, [accountEmail]);
 
 
     return (

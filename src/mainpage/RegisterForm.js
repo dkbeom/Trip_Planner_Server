@@ -19,8 +19,9 @@ export function RegisterForm() {
             "age": 3
         }
     )
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const {joinsuccess, setJoinsuccess} = useContext(MyContext);
+    const { joinsuccess, setJoinsuccess } = useContext(MyContext);
     const handleSubmit = (e) => {
         e.preventDefault();
         if (formData.nickname.length < 2) {
@@ -40,22 +41,25 @@ export function RegisterForm() {
             setErrorMessage('비밀번호는 5자 이상, 20자 미만이어야 합니다!');
             return;
         }
-        if (formData.pwd !== formData.name) {
+        if (formData.pwd !== confirmPassword) {
             setErrorMessage('비밀번호가 다릅니다!');
             return;
         }
         setErrorMessage('');
 
         axios.post('http://43.201.19.87:8080/member/join', formData) //-> EC2 Version
-        // axios.post('http://10.210.60.44:8080/member/join', formData)
             .then((response) => {
                 const response1 = response.data.result;
-                console.log(response);
-
                 if (response1 === "JOIN_SUCCESS") {
-                    console.log("Register Result: %s",response1);
+                    console.log("Register Result: %s", response1);
                     setJoinsuccess(true);
-                } else {
+                } else if (response1 === "JOIN_FAILURE_NICKNAME_DUPLICATE"){
+                    console.log("닉네임 중복!");
+                    setJoinsuccess(false);
+                } else if (response1 === "JOIN_FAILURE_ID_DUPLICATE"){
+                    console.log("이메일 중복!");
+                    setJoinsuccess(false);
+                } else{
                     console.log("Register Result: %s", response1);
                     setJoinsuccess(false);
                 }
@@ -81,9 +85,18 @@ export function RegisterForm() {
         });
     };
 
+    const handlePwd = (e) => {
+        setConfirmPassword(e.target.value);
+      }
 
     return (
         <form onSubmit={handleSubmit} className='registerform'>
+            <div>
+                <label style={{ paddingLeft: 10, paddingRight: 67.8 }}>
+                    성함:
+                </label>
+                <input type="text" name="name" value={formData.name} onChange={handleChange} style={{ width: '300px' }} placeholder="고객님의 성함을 입력해주세요." />
+            </div>
             <div>
                 <label style={{ paddingLeft: 10, paddingRight: 54 }}>
                     닉네임:
@@ -106,7 +119,7 @@ export function RegisterForm() {
                 <label style={{ paddingLeft: 10, paddingRight: 8.5 }}>
                     비밀번호 확인:
                 </label>
-                <input type="password" name="name" value={formData.name} onChange={handleChange} placeholder="비밀번호를 한 번 더 입력해주세요." style={{ width: '300px' }} />
+                <input type="password" name="cfpwd" value={confirmPassword} onChange={handlePwd} placeholder="비밀번호를 한 번 더 입력해주세요." style={{ width: '300px' }} />
             </div>
             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
             <button type="submit" style={{ opacity: 0, pointerEvents: 'none', height: '0' }}>JSON 파일 다운로드</button>
