@@ -18,6 +18,9 @@ public class ReviewServiceImp implements ReviewService {
 
 	@Autowired
 	private PlaceService placeService;
+	
+	@Autowired
+	private RestaurantService restaurantService;
 
 	
 	@Override
@@ -37,8 +40,18 @@ public class ReviewServiceImp implements ReviewService {
 			return false;
 		}
 		
-		// 여행지 DB에 있는 종합 평점에 반영
-		placeService.scorePlace(review.getPlaceId(), review.getScore());
+		// 음식점일 경우
+		if(review.getPlaceId().startsWith("R")) {
+			// 음식점 DB에 있는 종합 평점에 반영
+			restaurantService.scoreRestaurant(review.getPlaceId(), review.getScore());
+		}
+		// 여행지일 경우
+		else {
+			// 태그 달아주기
+			placeService.addTag(review.getPlaceId(), review.getTag());
+			// 여행지 DB에 있는 종합 평점에 반영
+			placeService.scorePlace(review.getPlaceId(), review.getScore());
+		}
 
 		return reviewDao.insertReview(review);
 	}
@@ -54,5 +67,4 @@ public class ReviewServiceImp implements ReviewService {
 
 		return reviewDao.deleteReview(reviewId);
 	}
-
 }

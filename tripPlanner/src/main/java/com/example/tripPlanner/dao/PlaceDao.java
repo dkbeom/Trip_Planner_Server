@@ -13,10 +13,6 @@ public interface PlaceDao {
 	
 	String getIdById(String placeId);
 	
-	Double getSumScore(String placeId);
-	
-	Integer getNumScore(String placeId);
-	
 	boolean insertPlace(Place place);
 
 	Double getSumOfScore(String placeId);
@@ -24,4 +20,8 @@ public interface PlaceDao {
 	Integer getNumOfScore(String placeId);
 	
 	boolean updatePlaceScore(Map<String, Object> newScore);
+	
+	String getTag(String placeId);
+	
+	boolean addTag(Map<String, String> newTag);
 }

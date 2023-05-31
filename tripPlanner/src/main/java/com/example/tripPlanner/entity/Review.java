@@ -1,5 +1,5 @@
 package com.example.tripPlanner.entity;
-
+ 
 import java.util.Date;
 
 import lombok.Data;
@@ -12,5 +12,6 @@ public class Review {
 	private String memberNickname;
 	private Integer score;
 	private String content;
+	private String tag;     // 태그
 	private Date regdate;
 }

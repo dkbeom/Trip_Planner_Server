@@ -12,7 +12,7 @@ public interface MemberService {
     Member getMemberById(String id);
 
     // 회원가입
-    boolean join(Member member);
+    int join(Member member);
 
     // 아이디 중복체크
     boolean checkIdDuplicate(String id);

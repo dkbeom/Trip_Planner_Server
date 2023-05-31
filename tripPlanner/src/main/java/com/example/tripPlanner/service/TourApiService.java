@@ -3,6 +3,7 @@ package com.example.tripPlanner.service;
 import java.util.List;
 import java.util.Map;
 
+import com.example.tripPlanner.entity.Area;
 import com.example.tripPlanner.entity.Category;
 import com.example.tripPlanner.entity.Place;
 
@@ -37,10 +38,6 @@ public interface TourApiService {
 	List<Category> getCategoryList(String cat1, String cat2, String cat3);
 	
 	// Tour API 지역기반 관광정보 조회
-	List<Place> getAreaBasedPlaceList();
-	List<Place> getAreaBasedPlaceList(String areaCode);
-	List<Place> getAreaBasedPlaceList(String areaCode, String sigunguCode);
-	List<Place> getAreaBasedPlaceList(String areaCode, String sigunguCode, String cat1);
-	List<Place> getAreaBasedPlaceList(String areaCode, String sigunguCode, String cat1, String cat2);
-	List<Place> getAreaBasedPlaceList(String areaCode, String sigunguCode, String cat1, String cat2, String cat3);
+	List<Place> getAreaBasedPlaceList(Area[] areas);
+	List<Place> getAreaBasedPlaceList(Area[] areas, String[] categories);
 }

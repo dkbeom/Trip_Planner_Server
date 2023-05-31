@@ -24,15 +24,19 @@ public class MemberServiceImp implements MemberService {
 	}
 
     @Override
-    public boolean join(Member member) {
+    public int join(Member member) {
     	
     	// id 중복이거나, 닉네임 중복인 경우, 회원가입 불가
-    	if(checkIdDuplicate(member.getId()) || checkNicknameDuplicate(member.getNickname())) {
-    		return false;
+    	if(checkIdDuplicate(member.getId())){
+    		return 1;
+    	}
+    	else if (checkNicknameDuplicate(member.getNickname())) {
+    		return 2;
     	}
     	// id 중복, 닉네임 중복이 모두 아닌 경우, 회원가입 허용
     	else {
-    		return memberDao.insertMember(member);
+    		memberDao.insertMember(member);
+    		return 0;
     	}
     }
 

@@ -61,8 +61,8 @@ public class ExcelReader {
 	
 	public void includeRestaurantWithinRadius(Row row, List<Restaurant> restaurantList, String currentX, String currentY, Double radiusKm) {
 		
-		String mapX = row.getCell(5) != null ? String.valueOf(row.getCell(5).getNumericCellValue()) : "";
-    	String mapY = row.getCell(6) != null ? String.valueOf(row.getCell(6).getNumericCellValue()) : "";
+		String mapX = row.getCell(6) != null ? String.valueOf(row.getCell(6).getNumericCellValue()) : "";
+    	String mapY = row.getCell(7) != null ? String.valueOf(row.getCell(7).getNumericCellValue()) : "";
 		
 		// 현재 "x,y 좌표"를 BigDecimal 형으로 변환
         BigDecimal currentXDecimal = new BigDecimal(currentX);
@@ -80,13 +80,14 @@ public class ExcelReader {
     	if(distance.doubleValue() <= radiusKm) {
     		Restaurant restaurant = new Restaurant(
     			row.getCell(0) == null ? null : (int)row.getCell(0).getNumericCellValue(),
-    			row.getCell(1) == null ? null : row.getCell(1).getStringCellValue(),
-				row.getCell(4) == null ? null : row.getCell(4).getStringCellValue(),
-				row.getCell(5) == null ? null : String.valueOf(row.getCell(5).getNumericCellValue()),
+    			row.getCell(1) == null ? null : row.getCell(2).getStringCellValue(),		
+    			row.getCell(2) == null ? null : row.getCell(2).getStringCellValue(),
+				row.getCell(5) == null ? null : row.getCell(5).getStringCellValue(),
 				row.getCell(6) == null ? null : String.valueOf(row.getCell(6).getNumericCellValue()),
-				row.getCell(8) == null ? null : row.getCell(8).getStringCellValue(),
-				row.getCell(10) == null ? null : row.getCell(10).getStringCellValue(),
-				row.getCell(9) == null ? null : (int)row.getCell(9).getNumericCellValue(),
+				row.getCell(7) == null ? null : String.valueOf(row.getCell(7).getNumericCellValue()),
+				row.getCell(9) == null ? null : row.getCell(9).getStringCellValue(),
+				row.getCell(11) == null ? null : row.getCell(11).getStringCellValue(),
+				row.getCell(10) == null ? null : (int)row.getCell(10).getNumericCellValue(),
 				distance.doubleValue()
 			);
     		restaurantList.add(restaurant);
@@ -113,14 +114,14 @@ public class ExcelReader {
             		break;
             	}
             	// 식당 리스트가 3개가 안되었는데, 행이 끝났을 때
-            	else if(row.getCell(0) == null) {
+            	else if(row.getCell(1) == null) {
             		// 첫번째 행(머리글)은 패스
             		for(Row row2 : sheet) {
             			if(row2.getRowNum() == 0) {
             				continue;
             			} else if(restaurantList.size() >= 3) {
             				break;
-            			} else if(row2.getCell(0) == null) {
+            			} else if(row2.getCell(1) == null) {
             				break;
             			}
             			includeRestaurantWithinRadius(row2, restaurantList, currentX, currentY, radiusKm);
@@ -128,9 +129,9 @@ public class ExcelReader {
             		break;
             	}
             	
-            	String rName = row.getCell(1) != null ? row.getCell(1).getStringCellValue() : "";
-            	String category = row.getCell(8) != null ? row.getCell(8).getStringCellValue() : "";
-            	String detail = row.getCell(10) != null ? row.getCell(10).getStringCellValue() : "";
+            	String rName = row.getCell(2) != null ? row.getCell(2).getStringCellValue() : "";
+            	String category = row.getCell(9) != null ? row.getCell(9).getStringCellValue() : "";
+            	String detail = row.getCell(11) != null ? row.getCell(11).getStringCellValue() : "";
             	
             	// 국물요리
             	if(findPreference("국물요리")
@@ -222,6 +223,7 @@ public class ExcelReader {
             			&& (rName.contains("일식") || detail.contains("일식")
             			|| rName.contains("일본") || detail.contains("일본")
             			|| rName.contains("초밥") || detail.contains("초밥")
+            			|| rName.contains("스시") || detail.contains("스시")
             			|| rName.contains("우동") || detail.contains("우동"))) {
             		
             		includeRestaurantWithinRadius(row, restaurantList, currentX, currentY, radiusKm);
@@ -257,7 +259,8 @@ public class ExcelReader {
                 		|| rName.contains("베이커리") || detail.contains("베이커리")
                 		|| rName.contains("도넛") || detail.contains("도넛")
                 		|| rName.contains("초콜릿") || detail.contains("초콜릿")
-                		|| rName.contains("샌드위치") || detail.contains("샌드위치"))) {
+                		|| rName.contains("샌드위치") || detail.contains("샌드위치")
+                		|| rName.contains("카페") || detail.contains("카페"))) {
             		
             		includeRestaurantWithinRadius(row, restaurantList, currentX, currentY, radiusKm);
             	}

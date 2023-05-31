@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.tripPlanner.dao.PlaceDao;
 import com.example.tripPlanner.entity.Place;
 import com.example.tripPlanner.entity.Restaurant;
 import com.example.tripPlanner.entity.TourApiParam;
@@ -77,8 +76,8 @@ public class TourApiController {
 			// 기존 여행지 DB에 해당 여행지 정보가 존재하는 경우
 			if (placeService.exist(p.getId())) {
 				// 기존 여행지 DB에 존재하는 여행지 각각의 평점 정보를 가져와서 삽입
-				p.setSumScore(placeService.getSumScore(p.getId()));
-				p.setNumScore(placeService.getNumScore(p.getId()));
+				p.setSumScore(placeService.getSumOfScore(p.getId()));
+				p.setNumScore(placeService.getNumOfScore(p.getId()));
 			}
 			// 기존 여행지 DB에 해당 여행지 정보가 존재하지 않은 경우
 			else {
@@ -120,8 +119,8 @@ public class TourApiController {
 			// 기존 여행지 DB에 해당 여행지 정보가 존재하는 경우
 			if (placeService.exist(p.getId())) {
 				// 기존 여행지 DB에 존재하는 여행지 각각의 평점 정보를 가져와서 삽입
-				p.setSumScore(placeService.getSumScore(p.getId()));
-				p.setNumScore(placeService.getNumScore(p.getId()));
+				p.setSumScore(placeService.getSumOfScore(p.getId()));
+				p.setNumScore(placeService.getNumOfScore(p.getId()));
 			}
 			// 기존 여행지 DB에 해당 여행지 정보가 존재하지 않은 경우
 			else {
@@ -136,27 +135,19 @@ public class TourApiController {
 	// 특정 지역에 있는 여행지 리스트 조회
 	@PostMapping("/areaBased")
 	public ArrayList<ArrayList<Place>> getAreaBasedPlaceList(@RequestBody TourApiParam param/*, @RequestHeader(value = "Authorization") String token*/) {
-		// 파라미터: currentX, currentY, areaName, sigunguName, cat1, cat2, cat3, foodPreferences, tag
+		// 파라미터: currentX, currentY, areas, categories, foodPreferences, tag
 		
 		// 개인정보 확인
 		//Member member = memberService.getMemberById(securityService.getSubject(token).get("id"));
 		
-		// TourAPI 에서 지역 코드 조회
-		Map<String, String> areaCodeMap = tourApiService.getAreaCode(param.getAreaName(), param.getSigunguName());
-		
 		long start1 = System.currentTimeMillis();
 		// TourAPI 에서 키워드에 맞는 여행지 리스트 조회
-		List<Place> placeList = new ArrayList<>();
-		if (areaCodeMap != null) {
-			placeList = tourApiService.getAreaBasedPlaceList((String) areaCodeMap.get("areaCode"), (String) areaCodeMap.get("sigunguCode"), param.getCat1(), param.getCat2(), param.getCat3());
-		} else {
-			placeList = tourApiService.getAreaBasedPlaceList();
-		}
+		List<Place> placeList = tourApiService.getAreaBasedPlaceList(param.getAreas(), param.getCategories());
 		long end1 = System.currentTimeMillis();
 		
 		// TEST
-		int a = 4;
-		int b = 6;
+		int a = 5;
+		int b = 7;
 		String[][] testArray = new String[a][b];
 		for(int i = 0; i < a; i++) {
 			for(int j = 0; j < b; j++) {
@@ -214,8 +205,8 @@ public class TourApiController {
 				// 기존 여행지 DB에 해당 여행지 정보가 존재하는 경우
 				if (placeService.exist(p.getId())) {
 					// 기존 여행지 DB에 존재하는 여행지 각각의 평점 정보를 가져와서 삽입
-					p.setSumScore(placeService.getSumScore(p.getId()));
-					p.setNumScore(placeService.getNumScore(p.getId()));
+					p.setSumScore(placeService.getSumOfScore(p.getId()));
+					p.setNumScore(placeService.getNumOfScore(p.getId()));
 				}
 				// 기존 여행지 DB에 해당 여행지 정보가 존재하지 않은 경우
 				else {
@@ -251,23 +242,6 @@ public class TourApiController {
 		
 		System.out.println(param.getRadius()/1000.0+"km 반경 이내에 있는 음식점 수 => "+restaurantList.size());
 		return restaurantList;
-	}
-	
-	
-	
-	@PostMapping("/test2")
-	public List<Place> test2(@RequestBody TourApiParam param){
-		
-		Map<String, String> areaCodeMap = tourApiService.getAreaCode(param.getAreaName(), param.getSigunguName());
-		
-		List<Place> placeList = new ArrayList<>();
-		if (areaCodeMap != null) {
-			placeList = tourApiService.getAreaBasedPlaceList((String) areaCodeMap.get("areaCode"), (String) areaCodeMap.get("sigunguCode"), param.getCat1(), param.getCat2(), param.getCat3());
-		} else {
-			placeList = tourApiService.getAreaBasedPlaceList();
-		}
-		
-		return placeList;
 	}
 	
 	@PostMapping("/test")

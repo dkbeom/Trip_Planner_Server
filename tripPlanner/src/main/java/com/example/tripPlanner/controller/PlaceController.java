@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.tripPlanner.entity.Place;
@@ -38,8 +39,8 @@ public class PlaceController {
 	@GetMapping("/score")
 	public Map<String, Double> getScore(String placeId) {
 		
-		Double sum = placeService.getSumScore(placeId);
-		Integer num = placeService.getNumScore(placeId);
+		Double sum = placeService.getSumOfScore(placeId);
+		Integer num = placeService.getNumOfScore(placeId);
 		
 		Map<String, Double> score = new HashMap<>();
 		score.put("score", sum/num);
@@ -57,6 +58,19 @@ public class PlaceController {
 			return "{\"result\" : \"INSERT_SUCCESS\"}";
 		} else {
 			return "{\"result\" : \"INSERT_FAILURE\"}";
+		}
+	}
+	
+	// place에 태그 추가
+	@PostMapping("/addTag")
+	public String addTag(@RequestBody Map<String, String> placeIdAndTag) {
+		
+		boolean isTagAdded = placeService.addTag(placeIdAndTag.get("placeId"), placeIdAndTag.get("tag"));
+		
+		if(isTagAdded) {
+			return "{\"result\" : \"TAG_ADDING_SUCCESS\"}";
+		} else {
+			return "{\"result\" : \"TAG_ADDING_FAILURE\"}";
 		}
 	}
 }

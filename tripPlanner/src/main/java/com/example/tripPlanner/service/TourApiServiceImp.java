@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.tripPlanner.entity.Area;
 import com.example.tripPlanner.entity.Category;
 import com.example.tripPlanner.entity.Place;
 
@@ -326,70 +327,69 @@ public class TourApiServiceImp implements TourApiService {
 	/////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public List<Place> getAreaBasedPlaceList() {
-		return getAreaBasedPlaceList("", "", "", "", "");
+	public List<Place> getAreaBasedPlaceList(Area[] areas) {
+		return getAreaBasedPlaceList(areas, new String[]{"A01", "A02", "A03", "C01"});
 	}
 
 	@Override
-	public List<Place> getAreaBasedPlaceList(String areaCode) {
-		return getAreaBasedPlaceList(areaCode, "", "", "", "");
-	}
-
-	@Override
-	public List<Place> getAreaBasedPlaceList(String areaCode, String sigunguCode) {
-		return getAreaBasedPlaceList(areaCode, sigunguCode, "", "", "");
-	}
-
-	@Override
-	public List<Place> getAreaBasedPlaceList(String areaCode, String sigunguCode, String cat1) {
-		return getAreaBasedPlaceList(areaCode, sigunguCode, cat1, "", "");
-	}
-
-	@Override
-	public List<Place> getAreaBasedPlaceList(String areaCode, String sigunguCode, String cat1, String cat2) {
-		return getAreaBasedPlaceList(areaCode, sigunguCode, cat1, cat2, "");
-	}
-
-	@Override
-	public List<Place> getAreaBasedPlaceList(String areaCode, String sigunguCode, String cat1, String cat2, String cat3) {
+	public List<Place> getAreaBasedPlaceList(Area[] areas, String[] categories) {
 		
-		String uriString = "https://apis.data.go.kr/B551011/KorService1/areaBasedList1"
-				+ "?serviceKey=" + tourApiKey
-				+ "&MobileApp=AppTest&MobileOS=ETC&pageNo=1&numOfRows=200&listYN=Y&_type=json&arrange=A"
-				+ "&cat1=" + cat1
-				+ "&cat2=" + (cat1 != null && cat2 != null && cat2.length() == 5 && cat1.equals(cat2.substring(0, 3)) ? cat2 : "")
-				+ "&cat3=" + (cat2 != null && cat3 != null && cat3.length() == 9 && cat2.equals(cat3.substring(0, 5)) ? cat3 : "")
-				+ "&areaCode=" + areaCode
-				+ "&sigunguCode=" + (areaCode == null || areaCode.equals("") ? "" : sigunguCode);
+		String uriString = "";
 		
-		Map<String, Object> itemsAndNumOfRows = getItemListAndNumOfRows(uriString);
+		Map<String, String> areaCodeMap = new HashMap<>();
+		Map<String, Object> itemsAndNumOfRows = new HashMap<>();
 		
 		// List<Place> 생성
 		List<Place> placeList = new ArrayList<>();
-		if(itemsAndNumOfRows != null) {
-			for (int i = 0; i < (Integer)itemsAndNumOfRows.get("numOfRows"); i++) {
-				JSONObject eachItem = (JSONObject) ((JSONArray)itemsAndNumOfRows.get("item")).get(i);
-				// 쇼핑, 음식, 숙박 제외
-				if(!((String)eachItem.get("cat1")).equals("A04") && !((String)eachItem.get("cat1")).equals("A05") && !((String)eachItem.get("cat1")).equals("B02")) {
-					Place place = new Place();
-					place.setId((String) eachItem.get("contentid"));
-					place.setTitle((String) eachItem.get("title"));
-					place.setAddr((String) eachItem.get("addr1"));
-					place.setMapX((String) eachItem.get("mapx"));
-					place.setMapY((String) eachItem.get("mapy"));
-					place.setImage((String) eachItem.get("firstimage"));
-					place.setContentTypeId((String) eachItem.get("contenttypeid"));
-					place.setCat1((String) eachItem.get("cat1"));
-					place.setCat2((String) eachItem.get("cat2"));
-					place.setCat3((String) eachItem.get("cat3"));
-					place.setAreaCode((String) eachItem.get("areacode"));
-					place.setSigunguCode((String) eachItem.get("sigungucode"));
-					place.setTel((String) eachItem.get("tel"));
-					placeList.add(place);
+		
+		for(Area area : areas) {
+			areaCodeMap = getAreaCode(area.getAreaName() , area.getSigunguName());
+			if(areaCodeMap != null) {
+				uriString = "https://apis.data.go.kr/B551011/KorService1/areaBasedList1"
+						+ "?serviceKey=" + tourApiKey
+						+ "&MobileApp=AppTest&MobileOS=ETC&pageNo=1&numOfRows=200&listYN=Y&_type=json&arrange=A"
+						+ "&areaCode=" + areaCodeMap.get("areaCode")
+						+ "&sigunguCode=" + (areaCodeMap.get("areaCode") == null || areaCodeMap.get("areaCode").equals("") ? "" : areaCodeMap.get("sigunguCode"));
+				
+				itemsAndNumOfRows = getItemListAndNumOfRows(uriString);
+				
+				if(itemsAndNumOfRows != null) {
+					for (int i = 0; i < (Integer)itemsAndNumOfRows.get("numOfRows"); i++) {
+						JSONObject eachItem = (JSONObject) ((JSONArray)itemsAndNumOfRows.get("item")).get(i);
+						// 쇼핑, 음식, 숙박 제외
+						if(!((String)eachItem.get("cat1")).equals("A04") && !((String)eachItem.get("cat1")).equals("A05") && !((String)eachItem.get("cat1")).equals("B02")) {
+							
+							boolean isMatch = false;
+							
+							for(String category : categories) {
+								if(category.equals((String)eachItem.get("cat1"))) {
+									isMatch = true;
+									break;
+								}
+							}
+							
+							if(isMatch) {
+								Place place = new Place();
+								place.setId((String) eachItem.get("contentid"));
+								place.setTitle((String) eachItem.get("title"));
+								place.setAddr((String) eachItem.get("addr1"));
+								place.setMapX((String) eachItem.get("mapx"));
+								place.setMapY((String) eachItem.get("mapy"));
+								place.setImage((String) eachItem.get("firstimage"));
+								place.setContentTypeId((String) eachItem.get("contenttypeid"));
+								place.setCat1((String) eachItem.get("cat1"));
+								place.setCat2((String) eachItem.get("cat2"));
+								place.setCat3((String) eachItem.get("cat3"));
+								place.setAreaCode((String) eachItem.get("areacode"));
+								place.setSigunguCode((String) eachItem.get("sigungucode"));
+								place.setTel((String) eachItem.get("tel"));
+								placeList.add(place);
+							}
+						}
+					}
 				}
 			}
 		}
-		
 		return placeList;
 	}
 }

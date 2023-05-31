@@ -23,6 +23,7 @@ public class Restaurant {
 //		super.setContentTypeId("39"); // 관광타입: 음식점(39)
 //	}
 	
+	private String id;             // id
 	private Integer rank;          // 순위
 	private String title;          // 제목
 	private String addr;           // 주소
@@ -31,11 +32,12 @@ public class Restaurant {
 	private String category;       // 소분류 카테고리
 	private String detailCategory; // 상세 카테고리
 	private Integer searchCount;   // 검색 건수
-	private Double distance;       // 떨어진 거리(km)
 	private Double sumScore;       // 평점 총점
 	private Integer numScore;      // 평점 갯수
+	private Double distance;       // 떨어진 거리(km)
 	
-	public Restaurant(Integer rank, String title, String addr, String mapX, String mapY, String category, String detailCategory, Integer searchCount, Double distance) {
+	public Restaurant(Integer rank, String id, String title, String addr, String mapX, String mapY, String category, String detailCategory, Integer searchCount, Double distance) {
+		this.id = id;
 		this.rank = rank;
 		this.title = title;
 		this.addr = addr;

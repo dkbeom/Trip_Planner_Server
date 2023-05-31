@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tripPlanner.dao.RestaurantDao">
+
+	<select id="getRestaurantList" resultType="com.example.tripPlanner.entity.Restaurant">
+		SELECT * FROM RESTAURANT
+	</select>
+	
+	<select id="getRestaurant" resultType="com.example.tripPlanner.entity.Restaurant">
+		SELECT * FROM RESTAURANT
+		WHERE ID = #{restaurantId}
+	</select>
+	
+	<select id="getIdById" resultType="String">
+		SELECT ID FROM RESTAURANT
+		WHERE ID = #{restaurantId}
+	</select>
+
+	<insert id="insertRestaurant" parameterType="com.example.tripPlanner.entity.Restaurant" >
+		INSERT INTO RESTAURANT(ID, RANK, TITLE, ADDR, MAPX, MAPY, CATEGORY, DETAILCATEGORY, SEARCHCOUNT)
+		VALUES(#{id}, #{rank}, #{title}, #{addr}, #{mapX}, #{mapY}, #{category}, #{detailCategory}, #{searchCount})
+	</insert>
+
+    <select id="getSumOfScore" resultType="Double">
+		SELECT SUMSCORE
+		FROM RESTAURANT
+		WHERE ID = #{restaurantId}
+	</select>
+	
+	<select id="getNumOfScore" resultType="Integer">
+		SELECT NUMSCORE
+		FROM RESTAURANT
+		WHERE ID = #{restaurantId}
+	</select>
+	
+	<select id="getTag" resultType="String">
+		SELECT TAG
+		FROM RESTAURANT
+		WHERE ID = #{restaurantId}
+	</select>
+	
+	<update id="updateRestaurantScore">
+		UPDATE RESTAURANT
+		SET
+			SUMSCORE = #{new_sum_score},
+			NUMSCORE = #{new_num_score}
+		WHERE ID = #{restaurantId}
+	</update>
+
+</mapper>
