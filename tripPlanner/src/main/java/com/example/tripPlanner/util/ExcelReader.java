@@ -79,15 +79,15 @@ public class ExcelReader {
     	// 음식점이 설정한 반경 안에 있는 경우
     	if(distance.doubleValue() <= radiusKm) {
     		Restaurant restaurant = new Restaurant(
-    			row.getCell(0) == null ? null : (int)row.getCell(0).getNumericCellValue(),
-    			row.getCell(1) == null ? null : row.getCell(2).getStringCellValue(),		
-    			row.getCell(2) == null ? null : row.getCell(2).getStringCellValue(),
-				row.getCell(5) == null ? null : row.getCell(5).getStringCellValue(),
-				row.getCell(6) == null ? null : String.valueOf(row.getCell(6).getNumericCellValue()),
-				row.getCell(7) == null ? null : String.valueOf(row.getCell(7).getNumericCellValue()),
-				row.getCell(9) == null ? null : row.getCell(9).getStringCellValue(),
-				row.getCell(11) == null ? null : row.getCell(11).getStringCellValue(),
-				row.getCell(10) == null ? null : (int)row.getCell(10).getNumericCellValue(),
+    			row.getCell(1) == null ? "" : row.getCell(1).getStringCellValue(),
+    			row.getCell(0) == null ? 0 : (int)row.getCell(0).getNumericCellValue(),		
+    			row.getCell(2) == null ? "" : row.getCell(2).getStringCellValue(),
+				row.getCell(5) == null ? "" : row.getCell(5).getStringCellValue(),
+				row.getCell(6) == null ? "" : String.valueOf(row.getCell(6).getNumericCellValue()),
+				row.getCell(7) == null ? "" : String.valueOf(row.getCell(7).getNumericCellValue()),
+				row.getCell(9) == null ? "" : row.getCell(9).getStringCellValue(),
+				row.getCell(11) == null ? "" : row.getCell(11).getStringCellValue(),
+				row.getCell(10) == null ? 0 : (int)row.getCell(10).getNumericCellValue(),
 				distance.doubleValue()
 			);
     		restaurantList.add(restaurant);

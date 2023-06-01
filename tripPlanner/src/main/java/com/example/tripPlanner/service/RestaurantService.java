@@ -28,5 +28,5 @@ public interface RestaurantService {
 	boolean scoreRestaurant(String restaurantId, Integer score);
 	
 	// 특정 음식점의 특정 평점 제거
-	boolean cancelScore(String placeId, Integer score);
+	boolean cancelScore(String restaurantId, Integer score);
 }

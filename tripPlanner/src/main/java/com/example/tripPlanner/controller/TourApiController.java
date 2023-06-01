@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,11 +17,13 @@ import com.example.tripPlanner.entity.Restaurant;
 import com.example.tripPlanner.entity.TourApiParam;
 import com.example.tripPlanner.service.MemberService;
 import com.example.tripPlanner.service.PlaceService;
+import com.example.tripPlanner.service.RestaurantService;
 import com.example.tripPlanner.service.SecurityService;
 import com.example.tripPlanner.service.TourApiService;
 import com.example.tripPlanner.util.ExcelReader;
 import com.example.tripPlanner.util.TSPAlgorithmGreedy;
 
+@Transactional
 @RestController
 @RequestMapping("/tourApi")
 public class TourApiController {
@@ -30,6 +33,9 @@ public class TourApiController {
 
 	@Autowired
 	private PlaceService placeService;
+	
+	@Autowired
+	private RestaurantService restaurantService;
 	
 	@Autowired
     private SecurityService securityService;
@@ -146,8 +152,8 @@ public class TourApiController {
 		long end1 = System.currentTimeMillis();
 		
 		// TEST
-		int a = 5;
-		int b = 7;
+		int a = 4;
+		int b = 6;
 		String[][] testArray = new String[a][b];
 		for(int i = 0; i < a; i++) {
 			for(int j = 0; j < b; j++) {
@@ -197,7 +203,7 @@ public class TourApiController {
 			}
 		}
 		long end4 = System.currentTimeMillis();
-
+		
 		long start5 = System.currentTimeMillis();
 		// 여행지 DB 조회 및 삽입 (orderedPlaceListAllDates -> orderedPlaceListAllDates)
 		for(ArrayList<Place> orderedPlaceList : orderedPlaceListAllDates) {
@@ -212,6 +218,20 @@ public class TourApiController {
 				else {
 					// 여행지 DB에 해당 여행지 삽입
 					placeService.insertPlace(p);
+				}
+				// 해당 여행지의 근처 음식점 DB 조회 및 삽입
+				for(Restaurant r : p.getNearByRestaurants()) {
+					// 근처 음식점들이 음식점 DB에 존재하는 경우
+					if (restaurantService.exist(r.getId())) {
+						// 기존 여행지 DB에 존재하는 여행지 각각의 평점 정보를 가져와서 삽입
+						r.setSumScore(restaurantService.getSumOfScore(r.getId()));
+						r.setNumScore(restaurantService.getNumOfScore(r.getId()));
+					}
+					// 근처 음식점들이 음식점 DB에 존재하지 않은 경우
+					else {
+						// 음식점 DB에 해당 음식점 삽입
+						restaurantService.insertRestaurant(r);
+					}
 				}
 			}
 		}
@@ -229,6 +249,8 @@ public class TourApiController {
 		return orderedPlaceListAllDates;
 	}
 	
+	
+	
 	// 특정 지역의 특정 좌표 주변 음식점 리스트 조회
 	@PostMapping("/restaurant")
 	public List<Restaurant> excel(@RequestBody TourApiParam param) {
@@ -242,6 +264,18 @@ public class TourApiController {
 		
 		System.out.println(param.getRadius()/1000.0+"km 반경 이내에 있는 음식점 수 => "+restaurantList.size());
 		return restaurantList;
+	}
+	
+	@PostMapping("/insertRestaurant")
+	public String ir(@RequestBody Restaurant restaurant) {
+		
+		boolean isInsert = restaurantService.insertRestaurant(restaurant);
+		
+		if(isInsert) {
+			return "{\"result\" : \"INSERT_SUCCESS\"}";
+		} else {
+			return "{\"result\" : \"INSERT_FAILURE\"}";
+		}
 	}
 	
 	@PostMapping("/test")

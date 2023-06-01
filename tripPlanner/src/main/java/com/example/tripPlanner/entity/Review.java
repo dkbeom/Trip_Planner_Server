@@ -6,8 +6,8 @@ import lombok.Data;
 
 @Data
 public class Review {
-	private Integer id;
-	private String placeId; // 콘텐츠ID
+	private Integer id;     // 시퀀스 번호
+	private String placeId; // placeId 또는 restaurantId
 	private String memberId;
 	private String memberNickname;
 	private Integer score;

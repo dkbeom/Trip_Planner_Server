@@ -347,7 +347,7 @@ public class TourApiServiceImp implements TourApiService {
 			if(areaCodeMap != null) {
 				uriString = "https://apis.data.go.kr/B551011/KorService1/areaBasedList1"
 						+ "?serviceKey=" + tourApiKey
-						+ "&MobileApp=AppTest&MobileOS=ETC&pageNo=1&numOfRows=200&listYN=Y&_type=json&arrange=A"
+						+ "&MobileApp=AppTest&MobileOS=ETC&pageNo=1&numOfRows=100&listYN=Y&_type=json&arrange=A"
 						+ "&areaCode=" + areaCodeMap.get("areaCode")
 						+ "&sigunguCode=" + (areaCodeMap.get("areaCode") == null || areaCodeMap.get("areaCode").equals("") ? "" : areaCodeMap.get("sigunguCode"));
 				

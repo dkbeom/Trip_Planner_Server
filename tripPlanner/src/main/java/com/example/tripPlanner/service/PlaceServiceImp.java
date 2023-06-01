@@ -91,13 +91,18 @@ public class PlaceServiceImp implements PlaceService {
 	@Override
 	public boolean addTag(String placeId, String tag) {
 		
-		String old_tag = placeDao.getTag(placeId);
-		String new_tag = (old_tag != null) ? (old_tag+"/"+tag) : tag;
+		if(exist(placeId)) {
+			String old_tag = placeDao.getTag(placeId);
+			String new_tag = (old_tag != null) ? (old_tag+"/"+tag) : tag;
+			
+			Map<String, String> newTagMap = new HashMap<>();
+			newTagMap.put("placeId", placeId);
+			newTagMap.put("new_tag", new_tag);
+			
+			return placeDao.addTag(newTagMap);
+		} else {
+			return false;
+		}
 		
-		Map<String, String> newTagMap = new HashMap<>();
-		newTagMap.put("placeId", placeId);
-		newTagMap.put("new_tag", new_tag);
-		
-		return placeDao.addTag(newTagMap);
 	}
 }

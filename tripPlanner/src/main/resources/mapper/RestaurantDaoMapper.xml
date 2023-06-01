@@ -35,12 +35,6 @@
 		WHERE ID = #{restaurantId}
 	</select>
 	
-	<select id="getTag" resultType="String">
-		SELECT TAG
-		FROM RESTAURANT
-		WHERE ID = #{restaurantId}
-	</select>
-	
 	<update id="updateRestaurantScore">
 		UPDATE RESTAURANT
 		SET
