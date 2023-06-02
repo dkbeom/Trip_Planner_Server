@@ -11,6 +11,7 @@ function Greeting() {
     const handleLogout = () => {
         localStorage.clear();
         window.location.href = "http://localhost:3000/";
+    }
     const [nickname, setNickname] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const handleModalClose = () => setShowModal(false);
@@ -46,7 +47,7 @@ function Greeting() {
             <Container>
                 <Col>
                     <div className='dd' style={{ fontSize: "20px", marginRight: "200px" }}>
-                    <Link to="/mypage"><button onclick = "location.href = '/mypage'"  type="button" className="btn btn-outline-success" style={{ marginRight: "10px" }}>My Page</button></Link>
+                    <Link to="/mypage"><button type="button" className="btn btn-outline-success" style={{ marginRight: "10px" }}>My Page</button></Link>
                         <button type="button" className="btn btn-outline-danger" onClick={handleLogout}>Logout</button>
                     </div>
                 </Col>
