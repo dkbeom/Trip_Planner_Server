@@ -11,7 +11,7 @@ export function LoginForm() {
         pwd: '',
     });
     const [errorMessage, setErrorMessage] = useState('');
-    const {setIsLogin, setaccountEmail} = useContext(MyContext);
+    const {setaccountEmail} = useContext(MyContext);
     isFormOK = false;
 
     const handleSubmit = (e) => {
@@ -27,21 +27,16 @@ export function LoginForm() {
             return;
         }
         setErrorMessage('');
-        // 여기서 폼 데이터를 서버로 전송할 수 있습니다.
-        console.log(formData);
 
         // axios를 사용하여 데이터 전송
-        // axios.post('http://43.201.19.87:8080/member/login', formData) -> EC2 Version
-        axios.post('http://10.210.60.44:8080/member/login', formData)
+        axios.post('http://43.201.19.87:8080/member/login', formData) //-> EC2 Version
         
             .then(response => {
                 console.log(response);
                 if(response.data.token==null){
-                    setIsLogin(false);
                     setaccountEmail("");
                 }
                 else{
-                    setIsLogin(true);
                     setaccountEmail(formData.id);
                     localStorage.clear();
                     localStorage.setItem("ID", formData.id);
@@ -60,7 +55,6 @@ export function LoginForm() {
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
         link.download = 'formData.json';
-        //link.click();
     };
 
 

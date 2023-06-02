@@ -27,7 +27,7 @@ const MainWrapper = styled.div`
 `;
 
 const MapWrapper = styled.div`
-  width: 600px;
+  width: 640px;
   height: 300px;
   margin-right: 20px;
   background-color: #DDFFFF77;

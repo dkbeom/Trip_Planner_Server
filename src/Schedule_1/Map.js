@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { MyContext } from './provider';
 import TMAP from './Tmap';
+import { Container } from 'react-bootstrap';
 
 const MapAPI = () => {
   const [zoomLevel, setZoomLevel] = useState(13);
@@ -72,7 +73,7 @@ const MapAPI = () => {
 
 
   return (
-    <div style={{
+    <Container style={{
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -82,8 +83,8 @@ const MapAPI = () => {
     }}>
       <div id="map" style={{ width: '600px', height: '600px' }}></div>
       <button type="button" className="btn btn-success" style={{ marginTop: '10px' }} onClick={handleZoomBack}>원래대로</button>
-    </div> 
+    </Container> 
   );
 };  
-
-export default MapAPI;
+ 
+export default MapAPI; 

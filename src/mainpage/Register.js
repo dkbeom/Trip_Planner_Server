@@ -4,24 +4,21 @@ import { RegisterForm, isFormOK } from './RegisterForm.js';
 import './font.css';
 import { MyContext } from '../provider';
 
-var tryRegister = false;
 function Register() {
   const [showModal, setShowModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showFailureModal, setShowFailureModal] = useState(false);
   const { joinsuccess } = useContext(MyContext);
+  const [tryRegister, setTryRegister] = useState(0);
 
   useEffect(() => {
-    console.log(joinsuccess);
-    console.log(tryRegister);
-    if (joinsuccess && tryRegister) {
-      console.log("hurray");
-      setShowSuccessModal(true);
-      tryRegister = false;
-    }
-    else if (!joinsuccess && tryRegister) {
-      setShowFailureModal(true);
-      tryRegister = false;
+    if (tryRegister) {
+      if (joinsuccess) {
+        setShowSuccessModal(true);
+      }
+      else {
+        setShowFailureModal(true);
+      }
     }
   }, [joinsuccess, tryRegister]);
 
@@ -29,7 +26,6 @@ function Register() {
     setShowModal(false);
     setShowSuccessModal(false);
     setShowFailureModal(false);
-    tryRegister = false;
   };
 
   const handleShow = () => setShowModal(true);
@@ -37,8 +33,8 @@ function Register() {
   const handleSubmit = () => {
     document.querySelector('.registerform button[type="submit"]').click();
     if (!isFormOK) return;
+    setTryRegister(tryRegister + 1);
     handleClose();
-    tryRegister = true;
   };
 
   return (

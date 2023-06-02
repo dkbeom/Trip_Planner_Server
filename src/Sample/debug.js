@@ -20,7 +20,7 @@ function Api() {
 
 
     useEffect(() => {
-        axios.post('http://10.210.60.44:8080/tourApi/areaBased/', formData)
+        axios.post('http://43.201.19.87:8080/tourApi/areaBased/', formData)
             .then((response) => {
                 console.log(response);
             })

@@ -11,7 +11,6 @@ function Greeting() {
     const handleLogout = () => {
         localStorage.clear();
         window.location.href = "http://localhost:3000/";
-    }
     const [nickname, setNickname] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const handleModalClose = () => setShowModal(false);
