@@ -41,6 +41,12 @@ public class MybatisMemberDao implements MemberDao {
     public String getIdById(String id) {
         return mapper.getIdById(id);
     }
+    
+    @Override
+    public String getIdByName(String name) {
+        return mapper.getIdByName(name);
+    }
+    
 
     @Override
     public String getIdByNickname(String nickname) {

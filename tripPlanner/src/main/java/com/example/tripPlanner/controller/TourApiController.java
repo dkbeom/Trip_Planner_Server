@@ -179,6 +179,8 @@ public class TourApiController {
 		    // 필요한 경우 예외를 다시 던져서 상위 호출자에게 전파할 수도 있습니다.
 		    throw e;
 		}
+		
+		System.out.println("여기는 tourapicontroller "+testArray[0][0]);
 
 		long start2 = System.currentTimeMillis();
 		// ChatGPT에서 추천 여행지로 받은 2차원 배열 다시 PlaceList로 매핑 (recommendationsAllDates -> recommendedPlaceListAllDates)

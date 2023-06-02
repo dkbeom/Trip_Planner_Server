@@ -115,7 +115,7 @@ public class MemberController {
         
         parameterMap.put("username", UpdateDto.getUsername());
         parameterMap.put("nickname", UpdateDto.getNickname());
-        if(UpdateDto.getNewPassword()!=null) {
+        if(UpdateDto.getNewPassword()!=null||UpdateDto.getNewPassword()=="") {
         parameterMap.put("oldPassword", UpdateDto.getOldPassword());
         parameterMap.put("newPassword", UpdateDto.getNewPassword());
         int row1 = memberDao.updatePassword(parameterMap);
@@ -124,8 +124,11 @@ public class MemberController {
             return ResponseEntity.badRequest().body("기존 비밀번호가 일치하지 않습니다.");
         	}
         }
+        if(memberService.canChangeNickname(UpdateDto.getNickname(),UpdateDto.getUsername())) {
         int row2 = memberDao.updateNickname(parameterMap);
-        
+        }else {
+        	return ResponseEntity.badRequest().body("중복된 닉네임 입니다.");
+        }
         return ResponseEntity.ok().build();
     }
 }
