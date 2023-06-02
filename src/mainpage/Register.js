@@ -18,7 +18,7 @@ function Register() {
       }
       else {
         setShowFailureModal(true);
-      }
+      } 
     }
   }, [joinsuccess, tryRegister]);
 

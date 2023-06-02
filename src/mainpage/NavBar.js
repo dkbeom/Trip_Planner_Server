@@ -1,6 +1,7 @@
 import { Navbar, Container, Col } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import { Title } from './Title';
+import { Link } from 'react-router-dom';
 import Register from './Register';
 import Login from './Login';
 import './font.css';
@@ -9,8 +10,7 @@ import axios from 'axios';
 function Greeting() {
     const handleLogout = () => {
         localStorage.clear();
-        // window.location.href = "https://leekangeun1.github.io/";
-        window.location.href = "http://localhost:3000"
+        window.location.href = "http://localhost:3000/";
     }
     const [nickname, setNickname] = useState(null);
     const [showModal, setShowModal] = useState(false);
@@ -47,7 +47,7 @@ function Greeting() {
             <Container>
                 <Col>
                     <div className='dd' style={{ fontSize: "20px", marginRight: "200px" }}>
-                        <button type="button" className="btn btn-outline-success" style={{ marginRight: "10px" }}>My Page</button>
+                    <Link to="/mypage"><button type="button" className="btn btn-outline-success" style={{ marginRight: "10px" }}>My Page</button></Link>
                         <button type="button" className="btn btn-outline-danger" onClick={handleLogout}>Logout</button>
                     </div>
                 </Col>
