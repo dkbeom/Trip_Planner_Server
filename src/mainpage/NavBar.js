@@ -1,57 +1,65 @@
 import { Navbar, Container, Col } from 'react-bootstrap';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Title } from './Title';
+import { Link } from 'react-router-dom';
 import Register from './Register';
 import Login from './Login';
 import './font.css';
-import { Link } from 'react-router-dom';
-import { MyContext } from '../provider';
+import axios from 'axios';
 
-function ParentComponent() {
-    const { isLogin, accountEmail } = useContext(MyContext);
-
-    return (
-        <Greeting isLogin={isLogin} accountEmail={accountEmail} />
-    );
-}
-
-function Greeting({ isLogin, accountEmail }) {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    const handleLogin = () => setIsLoggedIn(true);
+function Greeting() {
     const handleLogout = () => {
-        setIsLoggedIn(false);
-        //localStorage.clear();
+        localStorage.clear();
+        window.location.href = "http://localhost:3000/";
     }
-
-    useEffect(() => {
-        if (isLogin) {
-            handleLogin();
-        } else {
-            handleLogout();
-        }
-    }, [isLogin]);
-
+    const [nickname, setNickname] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const handleModalClose = () => setShowModal(false);
+
+
+    useEffect(() => {
+        if (localStorage.getItem("token")) {
+            const formData = {
+                key: localStorage.getItem("token")
+            }
+            const fetchData = async () => {
+                try {
+                    await axios.get('http://43.201.19.87:8080/member/get/subject', { headers: { Authorization: formData.key } })
+                        .then(response => {
+                            localStorage.setItem("nickname", response.data.nickname);
+                            localStorage.setItem("name", response.data.name);
+                            setNickname(response.data.nickname);
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                }
+                catch (error) {
+                    console.log(error);
+                }
+            }
+            fetchData();
+        }
+    }, [])
 
     if (localStorage.getItem("token")) {
         return (
             <Container>
                 <Col>
                     <div className='dd' style={{ fontSize: "20px", marginRight: "200px" }}>
-                        <button type="button" className="btn btn-outline-success" style={{ marginRight: "10px" }}>My Page</button>
+                    <Link to="/mypage"><button onclick = "location.href = '/mypage'"  type="button" className="btn btn-outline-success" style={{ marginRight: "10px" }}>My Page</button></Link>
                         <button type="button" className="btn btn-outline-danger" onClick={handleLogout}>Logout</button>
                     </div>
                 </Col>
                 <Col style={{ paddingTop: "20px" }}>
                     <div className='sd'>
-                        {localStorage.getItem("ID")}님 안녕하세요!
+                        {nickname}님 안녕하세요!
                     </div>
                 </Col>
             </Container>
         );
-    } else {
+    }
+    else {
         return (
             <Container>
                 <Col style={{ paddingTop: "20px" }}>
@@ -70,6 +78,7 @@ function Greeting({ isLogin, accountEmail }) {
             </Container>
         );
     }
+
 }
 
 function NavBar() {
@@ -100,7 +109,7 @@ function NavBar() {
                 </Container>
             </div>
             <div>
-            <ParentComponent />
+                <Greeting />
             </div>
         </Navbar>
     );
