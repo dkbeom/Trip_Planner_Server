@@ -12,7 +12,7 @@ function MyPageMenu() {
 
   return (
     <div>
-      <h1>마이페이지</h1>
+      <h1>My Page</h1>
       <div>
      
       <div className='dd' style={{ fontSize: "20px", marginRight: "200px" }}>

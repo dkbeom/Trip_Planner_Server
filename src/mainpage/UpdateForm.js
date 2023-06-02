@@ -7,15 +7,14 @@ export var isFormOK = false;
 
  export function UpdateForm() {
   const [formData, setFormData] = useState({
-    username: '',
-    nickname: '',
+    username: localStorage.getItem("name"),
+    nickname: localStorage.getItem("nickname"),
     oldPassword: '',
     newPassword: '',
     confirmNewPassword: ''
   });
 
   const [errorMessage, setErrorMessage] = useState('');
-  const {setaccountEmail} = useContext(MyContext);
   isFormOK = false;
 
   const handleChange = (e) => {
@@ -29,7 +28,8 @@ export var isFormOK = false;
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put('http://43.201.19.87:8080/member/modify', formData);
+     const response = await axios.put('http://43.201.19.87:8080/member/modify', formData);
+      //const response = await axios.put('http://localhost:8080/member/modify', formData);
       console.log(response.data); // 처리 결과 확인
       // 여기서 필요한 처리를 수행할 수 있습니다.
     } catch (error) {
@@ -49,7 +49,7 @@ export var isFormOK = false;
             name="username"
             value={formData.username}
             onChange={handleChange}
-          />
+          readOnly/>
         </label>
         <br />
         <label>
@@ -92,7 +92,6 @@ export var isFormOK = false;
           />
         </label>
         <br />
-        <button type="submit">Submit</button>
       </form>
     </div>
   );

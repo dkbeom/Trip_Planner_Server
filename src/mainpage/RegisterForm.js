@@ -48,6 +48,7 @@ export function RegisterForm() {
         setErrorMessage('');
 
         axios.post('http://43.201.19.87:8080/member/join', formData) //-> EC2 Version
+        
             .then((response) => {
                 const response1 = response.data.result;
                 if (response1 === "JOIN_SUCCESS") {
