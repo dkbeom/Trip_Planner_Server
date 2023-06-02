@@ -68,7 +68,7 @@ const MapAPI = () => {
       center: new kakao.maps.LatLng(35.8714, 128.55),
       level: 13
     });
-  }
+  } 
 
 
 

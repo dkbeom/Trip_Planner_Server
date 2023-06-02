@@ -4,13 +4,14 @@ import styled from 'styled-components';
 import NavBar from '../mainpage/NavBar';
 import MapAPI from './Tmap';
 import ScheduleTable from './ScheduleTable';
-import JoinButton from './HSH';
 import SmallExample from './Table';
 import TableComponent from './Table';
 import TripList from './tripList';
 import { Row, Col } from 'react-bootstrap';
 import { MyContextProvider } from './provider';
-import Departure from './Departure';
+import Departure from './Departure/Departure';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 
 const Background = styled.div`
   background-image: url('/loginpage_background.png');
@@ -20,41 +21,29 @@ const Background = styled.div`
   background-position: center center;
 `;
 
-const MainWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-`;
-
-const MapWrapper = styled.div`
-  width: 640px;
-  height: 300px;
-  margin-right: 20px;
-  background-color: #DDFFFF77;
-`;
-
-const ScheduleWrapper = styled.div`
-  display: flex;
-  flex: 1;
-`;
-
 function MainPage() {
   return (
     <Background>
       <NavBar />
-      <MainWrapper>
-        <Row>
-          <MyContextProvider>
-            <MapWrapper>
-              <MapAPI />
-            </MapWrapper>
-            <ScheduleWrapper>
-              <TableComponent />
-              <TripList />
-            </ScheduleWrapper>
-          </MyContextProvider>
-        </Row>
-      </MainWrapper>
+      <Tabs
+        style={{background: "#FFFFFFAA"}}
+        defaultActiveKey="home"
+        id="fill-tab-example"
+        className="mb-4"
+        fill
+      >
+        <Tab eventKey="home" title="출발지 고르기">
+          <Departure/>
+        </Tab>
+        <Tab eventKey="profile" title="여행지 고르기">
+        </Tab>
+        <Tab eventKey="longer-tab" title="추가 입력 1">
+          Tab content for Loooonger Tab
+        </Tab>
+        <Tab eventKey="contact" title="추가 입력 2">
+          Tab content for Contact
+        </Tab>
+      </Tabs>
     </Background>
   );
 }
