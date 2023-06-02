@@ -7,8 +7,8 @@ var coords = [0, 0];
 function App() {
     const [mapOptions, setMapOptions] = useState({
         center: new window.Tmapv3.LatLng(35.8714, 128.75),
-        width: "1000px",
-        height: "600px",
+        width: "95vh",
+        height: "60vh",
         zoom: 6
     });
     const { tripList, displayValue, departure, option, setDeparture, setOption } = useContext(MyContext);
@@ -101,7 +101,7 @@ function App() {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            height: 'calc(100vh - 250px)',
+            height: '70vh',
         }}>
             <div id="map" />
             <button type="button" className="btn btn-success" style={{ marginTop: '10px' }} onClick={resetMap}>원래대로</button>
