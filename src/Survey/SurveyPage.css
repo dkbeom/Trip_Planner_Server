@@ -1,0 +1,27 @@
+/* SurveyPage.css */
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+  .option-button {
+    border: none;
+    background-color: #e6e6e6;
+    color: #333;
+    font-size: 16px;
+    padding: 10px 20px;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  
+  .option-button:hover {
+    background-color: #ccc;
+  }
+  
+  .option-button.active {
+    background-color: #333;
+    color: #fff;
+  }
+  

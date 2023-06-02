@@ -7,6 +7,7 @@ import MyPage from './mainpage/MyPage';
 import MyProfile from './mainpage/MyProfile';
 import SamplePage from './Sample/SamplePage';
 import { MyContextProvider } from './provider';
+import SurveyPage from './Survey/SurveyPage';
 
 
 
@@ -20,6 +21,7 @@ function AppStart() {
           <Route path="/sample" element={<SamplePage />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/myprofile" element={<MyProfile />} />
+          <Route path="/survey" element={<SurveyPage />} />
         </Routes>
       </BrowserRouter>
     </MyContextProvider>
