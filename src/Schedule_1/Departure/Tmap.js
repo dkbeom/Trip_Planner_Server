@@ -25,17 +25,18 @@ function App() {
                     const kakao_coords = new kakao.maps.LatLng(result[0].y, result[0].x);
                     coords[0] = result[0].y;
                     coords[1] = result[0].x;
-                    console.log(result[0]);
-                    console.log(result[1]);
+                    console.log(result);
                     const geocoder2 = new kakao.maps.services.Geocoder();
                     geocoder2.coord2Address(kakao_coords.getLng(), kakao_coords.getLat(), function (result, status) {
                         if (status === kakao.maps.services.Status.OK) {
                             var address = "주소를 찾을 수 없습니다.";
-                            if(result[0].address.address_name != null){
-                                address = result[0].address.address_name;
-                            }
-                            if (result[0].road_address != null) {
-                                address = result[0].road_address.address_name;
+                            if(result.length > 0){
+                                if(result[0].address.address_name != null){
+                                    address = result[0].address.address_name;
+                                }
+                                if (result[0].road_address != null) {
+                                    address = result[0].road_address.address_name;
+                                }
                             }
                             // 주소를 이용하여 원하는 작업을 수행할 수 있습니다.
                             setDeparture(address);
