@@ -9,7 +9,7 @@ import axios from 'axios';
 function Greeting() {
     const handleLogout = () => {
         localStorage.clear();
-        window.location.href = "http://localhost:3000/";
+        window.location.href = "https://leekangeun1.github.io/";
     }
     const [nickname, setNickname] = useState(null);
     const [showModal, setShowModal] = useState(false);
