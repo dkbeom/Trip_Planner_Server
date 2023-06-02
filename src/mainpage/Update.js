@@ -7,17 +7,16 @@ import { useContext } from 'react';
 import { useEffect } from 'react';
 
 
-function Login() {
+function Update() {
     const [showModal, setShowModal] = useState(false);
     const handleClose = () => setShowModal(false);
     const handleShow = () => setShowModal(true);
     const { accountEmail } = useContext(MyContext);
     const handleSubmit = (formData) => {
-        document.querySelector('.registerform button[type="submit"]').click();
         if (!isFormOK)
-            return;
+          return;
         handleClose();
-    };  
+      };
 
 
     useEffect(() => {
@@ -45,7 +44,7 @@ function Login() {
                         Close
                     </Button>
                     <Button variant="primary" onClick={handleSubmit}>
-                        Login
+                        Apply
                     </Button>
                 </Modal.Footer>
             </Modal>
@@ -53,4 +52,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default Update;
