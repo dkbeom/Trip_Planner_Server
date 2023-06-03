@@ -13,12 +13,13 @@ const MainWrapper = styled.div`
 
 const MapWrapper = styled.div`
   background-color: #DDFFFF77;
-  width: 1100px;
-  height: 680px;
+  width: 100vh;
+  height: 70vh;
 `;
 
 const ScheduleWrapper = styled.div`
-  margin-right: 20px;
+  margin-right: 70vh;
+  width: 30vh;
 `;
 
 function Departure() {
