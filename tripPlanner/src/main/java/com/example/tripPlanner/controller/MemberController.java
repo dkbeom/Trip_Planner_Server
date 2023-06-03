@@ -110,7 +110,7 @@ public class MemberController {
         if(UpdateDto.getNewPassword()!=null&&!UpdateDto.getNewPassword().equals(UpdateDto.getConfirmNewPassword())) {
             return ResponseEntity.badRequest().body("password wrong.");
         }
-
+        System.out.println("일단 실행됨");
         Map<String, Object> parameterMap = new HashMap<>();
         
         parameterMap.put("username", UpdateDto.getUsername());

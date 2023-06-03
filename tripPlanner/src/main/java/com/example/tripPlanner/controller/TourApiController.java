@@ -180,8 +180,6 @@ public class TourApiController {
 		    throw e;
 		}
 		
-		System.out.println("여기는 tourapicontroller "+testArray[0][0]);
-
 		long start2 = System.currentTimeMillis();
 		// ChatGPT에서 추천 여행지로 받은 2차원 배열 다시 PlaceList로 매핑 (recommendationsAllDates -> recommendedPlaceListAllDates)
 		String[][] recommendationsAllDates = testArray; // ChatGPT에서 배열을 받음
