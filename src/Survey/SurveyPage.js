@@ -32,7 +32,7 @@ const MyPage = () => {
         <NavBar />
         <MainWrapper>
           <Row>
-            <SurveyPaper />
+            <SurveyPaper  />
           </Row>
         </MainWrapper>
       </Background>
