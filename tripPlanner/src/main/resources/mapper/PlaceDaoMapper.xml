@@ -17,18 +17,6 @@
 		SELECT ID FROM PLACE
 		WHERE ID = #{placeId}
 	</select>
-	
-	<select id="getSumScore" resultType="Double">
-		SELECT SUMSCORE
-		FROM PLACE
-		WHERE ID = #{placeId}
-	</select>
-	
-	<select id="getNumScore" resultType="Integer">
-		SELECT NUMSCORE
-		FROM PLACE
-		WHERE ID = #{placeId}
-	</select>
 
 	<insert id="insertPlace" parameterType="com.example.tripPlanner.entity.Place" >
 		INSERT INTO PLACE(ID, TITLE, ADDR, MAPX, MAPY, IMAGE, CONTENTTYPEID, CAT1, CAT2, CAT3, AREACODE, SIGUNGUCODE, TEL)
@@ -52,6 +40,19 @@
 		SET
 			SUMSCORE = #{new_sum_score},
 			NUMSCORE = #{new_num_score}
+		WHERE ID = #{placeId}
+	</update>
+	
+	<select id="getTag" resultType="String">
+		SELECT TAG
+		FROM PLACE
+		WHERE ID = #{placeId}
+	</select>
+	
+	<update id="addTag">
+		UPDATE PLACE
+		SET
+			TAG = #{new_tag}
 		WHERE ID = #{placeId}
 	</update>
 

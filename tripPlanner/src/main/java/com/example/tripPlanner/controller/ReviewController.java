@@ -35,7 +35,7 @@ public class ReviewController {
 	// 리뷰 DB에 리뷰 하나 삽입
 	@PostMapping("/insert")
 	public String insert(@RequestBody Review review) {
-		// 파라미터: placeId, memberId, memberNickname, score, content
+		// 파라미터: placeId, memberId, memberNickname, score, content, tag
 		
 		boolean isInsert = reviewService.insertReview(review);
 		

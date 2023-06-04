@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="dd57d086-5ef2-4497-be4a-4dda28e34247" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/controller/MemberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/controller/MemberController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/controller/PlaceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/controller/PlaceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/controller/ReviewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/controller/ReviewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/controller/TourApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/controller/TourApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/dao/PlaceDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/dao/PlaceDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/dao/mybatis/MybatisPlaceDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/dao/mybatis/MybatisPlaceDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/entity/Restaurant.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/entity/Restaurant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/entity/Review.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/entity/Review.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/entity/TourApiParam.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/entity/TourApiParam.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/service/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/service/MemberService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/service/MemberServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/service/MemberServiceImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/service/PlaceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/service/PlaceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/service/PlaceServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/service/PlaceServiceImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/service/ReviewServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/service/ReviewServiceImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/service/SecurityServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/service/SecurityServiceImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/service/TourApiService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/service/TourApiService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/service/TourApiServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/service/TourApiServiceImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/util/ExcelReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/java/com/example/tripPlanner/util/ExcelReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/resources/excel/Restaurant.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/resources/excel/Restaurant.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripPlanner/src/main/resources/mapper/PlaceDaoMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tripPlanner/src/main/resources/mapper/PlaceDaoMapper.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2QTKzHcL6snpcrUYZMgDierWvWD" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="flattenPackages" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="dd57d086-5ef2-4497-be4a-4dda28e34247" name="변경" comment="" />
+      <created>1685372394296</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1685372394296</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

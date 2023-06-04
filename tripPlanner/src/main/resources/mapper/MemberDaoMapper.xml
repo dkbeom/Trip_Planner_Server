@@ -19,8 +19,8 @@
     <!-- join -->
     <insert id="insertMember" parameterType="com.example.tripPlanner.entity.Member" >
         INSERT INTO
-        MEMBER(ID, PWD, NAME, NICKNAME, GENDER, AGE, TOURATTR, CULTUREATTR, FESTIVALATTR, JOURNEYATTR, LEISUREATTR, SHOPPINGATTR, RESTAURANTATTR)
-        VALUES(#{id}, #{pwd}, #{name}, #{nickname}, #{gender}, #{age}, #{tourAttr}, #{cultureAttr}, #{festivalAttr}, #{journeyAttr}, #{leisureAttr}, #{shoppingAttr}, #{restaurantAttr})
+        MEMBER(ID, PWD, NAME, NICKNAME, GENDER, AGE)
+        VALUES(#{id}, #{pwd}, #{name}, #{nickname}, #{gender}, #{age})
     </insert>
 
     <!-- checkIdDuplicate -->

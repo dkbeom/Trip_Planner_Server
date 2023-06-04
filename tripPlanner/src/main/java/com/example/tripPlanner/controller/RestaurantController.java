@@ -9,39 +9,38 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.tripPlanner.entity.Place;
-import com.example.tripPlanner.service.PlaceService;
+import com.example.tripPlanner.entity.Restaurant;
+import com.example.tripPlanner.service.RestaurantService;
 
 @RestController
-@RequestMapping("/place")
-public class PlaceController {
+@RequestMapping("/restaurant")
+public class RestaurantController {
 	
 	@Autowired
-	private PlaceService placeService;
+	private RestaurantService restaurantService;
 	
 	
 	// 여행지 DB에 저장된 여행지 목록 조회
 	@GetMapping("/get/list")
-	public List<Place> getPlaceList() {
-		return placeService.getPlaceList();
+	public List<Restaurant> getRestaurantList() {
+		return restaurantService.getRestaurantList();
 	}
 	
 	// 여행지 DB에 저장된 여행지 중, 특정 여행지 조회
 	@GetMapping("/get")
-	public Place getPlace(String placeId) {
-		return placeService.getPlace(placeId);
+	public Restaurant getRestaurant(String restaurantId) {
+		return restaurantService.getRestaurant(restaurantId);
 	}
 	
 	// 여행지 DB에 저장된 여행지 중, 특정 여행지 평점 조회
 	@GetMapping("/get/score")
-	public Map<String, Double> getScore(String placeId) {
+	public Map<String, Double> getScore(String restaurantId) {
 		
-		if(placeService.exist(placeId)) {
-			Double sum = placeService.getSumOfScore(placeId);
-			Integer num = placeService.getNumOfScore(placeId);
+		if(restaurantService.exist(restaurantId)) {
+			Double sum = restaurantService.getSumOfScore(restaurantId);
+			Integer num = restaurantService.getNumOfScore(restaurantId);
 			
 			Map<String, Double> score = new HashMap<>();
 			score.put("score", (num != null && num != 0) ? sum/num : 0);
@@ -54,28 +53,13 @@ public class PlaceController {
 	
 	// 여행지 DB에 여행지 삽입
 	@PostMapping("/insert")
-	public String insertPlace(@RequestBody Place place) {
-		
-		boolean isInsert = placeService.insertPlace(place);
+	public String insertRestaurant(@RequestBody Restaurant restaurant) {
+		boolean isInsert = restaurantService.insertRestaurant(restaurant);
 		
 		if(isInsert) {
 			return "{\"result\" : \"INSERT_SUCCESS\"}";
 		} else {
 			return "{\"result\" : \"INSERT_FAILURE\"}";
-		}
-	}
-	
-	// place에 태그 추가
-	@PostMapping("/addTag")
-	public String addTag(@RequestBody Map<String, String> placeIdAndTag) {
-		// 파라미터: placeId, tag
-		
-		boolean isTagAdded = placeService.addTag(placeIdAndTag.get("placeId"), placeIdAndTag.get("tag"));
-		
-		if(isTagAdded) {
-			return "{\"result\" : \"TAG_ADDING_SUCCESS\"}";
-		} else {
-			return "{\"result\" : \"TAG_ADDING_FAILURE\"}";
 		}
 	}
 }

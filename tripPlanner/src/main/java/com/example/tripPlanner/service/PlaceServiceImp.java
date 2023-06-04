@@ -40,13 +40,13 @@ public class PlaceServiceImp implements PlaceService {
 	}
 	
 	@Override
-	public Double getSumScore(String placeId) {
-		return placeDao.getSumScore(placeId);
+	public Double getSumOfScore(String placeId) {
+		return placeDao.getSumOfScore(placeId);
 	}
 	
 	@Override
-	public Integer getNumScore(String placeId) {
-		return placeDao.getNumScore(placeId);
+	public Integer getNumOfScore(String placeId) {
+		return placeDao.getNumOfScore(placeId);
 	}
 
 	@Override
@@ -86,5 +86,23 @@ public class PlaceServiceImp implements PlaceService {
 		newScore.put("new_num_score", new_num_score);
 		
 		return placeDao.updatePlaceScore(newScore);
+	}
+
+	@Override
+	public boolean addTag(String placeId, String tag) {
+		
+		if(exist(placeId)) {
+			String old_tag = placeDao.getTag(placeId);
+			String new_tag = (old_tag != null) ? (old_tag+"/"+tag) : tag;
+			
+			Map<String, String> newTagMap = new HashMap<>();
+			newTagMap.put("placeId", placeId);
+			newTagMap.put("new_tag", new_tag);
+			
+			return placeDao.addTag(newTagMap);
+		} else {
+			return false;
+		}
+		
 	}
 }

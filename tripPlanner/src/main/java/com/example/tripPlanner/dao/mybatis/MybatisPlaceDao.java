@@ -34,16 +34,6 @@ public class MybatisPlaceDao implements PlaceDao {
 	public String getIdById(String placeId) {
 		return mapper.getIdById(placeId);
 	}
-	
-	@Override
-	public Double getSumScore(String placeId) {
-		return mapper.getSumScore(placeId);
-	}
-	
-	@Override
-	public Integer getNumScore(String placeId) {
-		return mapper.getNumScore(placeId);
-	}
 
 	@Override
 	public boolean insertPlace(Place place) {
@@ -65,4 +55,13 @@ public class MybatisPlaceDao implements PlaceDao {
 		return mapper.updatePlaceScore(newScore);
 	}
 	
+	@Override
+	public String getTag(String placeId) {
+		return mapper.getTag(placeId);
+	}
+
+	@Override
+	public boolean addTag(Map<String, String> newTag) {
+		return mapper.addTag(newTag);
+	}
 }

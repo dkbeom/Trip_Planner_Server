@@ -38,14 +38,18 @@ public class MemberController {
     @PostMapping("/join")
     public String join(@RequestBody Member member) {
     // 파라미터: id, pwd, name, nickname, gender, age
-    	
-        boolean isJoin = memberService.join(member);
 
-        if (isJoin == true) {
+    	int isJoin = memberService.join(member);
+    	
+        if (isJoin == 0) {
             return "{\"result\" : \"JOIN_SUCCESS\"}";
-        } else {
-            return "{\"result\" : \"JOIN_FAILURE\"}";
+        } else if (isJoin == 1) {
+            return "{\"result\" : \"JOIN_FAILURE_ID_DUPLICATE\"}";
+        } else if (isJoin == 2) {
+        	return "{\"result\" : \"JOIN_FAILURE_NICKNAME_DUPLICATE\"}";
         }
+        
+        return "{\"result\" : \"JOIN_FAILURE\"}";
     }
 
     @PostMapping("/login")
