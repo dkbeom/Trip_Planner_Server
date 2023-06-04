@@ -125,8 +125,8 @@ public class MemberController {
         parameterMap.put("id",UpdateDto.getId());
         parameterMap.put("username", UpdateDto.getUsername());
         parameterMap.put("nickname", UpdateDto.getNickname());
-      
-        if(memberService.canChangeNickname(UpdateDto.getNickname(),UpdateDto.getId())) {
+        int ablenickname=memberService.canChangeNickname(UpdateDto.getNickname(),UpdateDto.getId());
+        if(ablenickname>0) {
             
         if(UpdateDto.getNewPassword()!="") {
         parameterMap.put("oldPassword", UpdateDto.getOldPassword());
@@ -140,11 +140,12 @@ public class MemberController {
         }
         
        // System.out.println(memberService.canChangeNickname(UpdateDto.getNickname(),UpdateDto.getId()));
-        
+        if(ablenickname<2){
         int row2 = memberDao.updateNickname(parameterMap);
-        System.out.println("   "+row2);
+        System.out.println(" 변경가능"+row2);
         }else {
         	return ResponseEntity.badRequest().body("중복된 닉네임 입니다.");
+        	}
         }
         
         

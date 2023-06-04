@@ -20,5 +20,5 @@ public interface MemberService {
     // 닉네임 중복체크
     boolean checkNicknameDuplicate(String nickname);
 
-    boolean canChangeNickname(String nickname,String name);
+    int canChangeNickname(String nickname,String name);
 }

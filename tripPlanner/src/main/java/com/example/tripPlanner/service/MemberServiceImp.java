@@ -74,17 +74,19 @@ public class MemberServiceImp implements MemberService {
         return isNicknameDuplicate;
     }
     @Override
-    public boolean canChangeNickname(String nickname,String id) {
+    public int canChangeNickname(String nickname,String id) {
 
-        boolean canChange;
+        int canChange;
         Member member=memberDao.getMemberById(id);
         // 받은 닉네임이 기존 닉네임과 같거나 바뀌었을때 그닉네임이 미사용중이라면 ok
-
-        if (nickname == member.getNickname() || memberDao.getIdByNickname(nickname)==null) {
-        	canChange = true;
-        }
-        else {
-        	canChange = false;
+        System.out.println(nickname+"이랑 "+member.getNickname()+"이랑 다름?");
+        System.out.println(memberDao.getIdByNickname(nickname));
+        if (memberDao.getIdByNickname(nickname)==null) {
+        	canChange = 1;
+        }else if(nickname == member.getNickname()) {
+        	canChange=2;
+        }else {
+        	canChange = 0;
         }
 
         return canChange;
