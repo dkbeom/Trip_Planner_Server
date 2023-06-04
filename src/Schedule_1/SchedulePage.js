@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
 import NavBar from '../mainpage/NavBar';
@@ -6,7 +6,8 @@ import Departure from './Departure/Departure';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import {MyContext, MyContextProvider} from './provider'
-import Survey from './Survey/Departure'
+import Survey from './Survey/Survey'
+import '../mainpage/font.css'
 
 const Background = styled.div`
   background-image: url('/loginpage_background.png');
@@ -47,7 +48,10 @@ function MainPage() {
           Tab content for Loooonger Tab
         </Tab>
         <Tab eventKey="contact" title="추가 입력 2" disabled>
+          <div className = "sd">
+
           Tab content for Contact
+          </div>
         </Tab>
       </Tabs>
     </Background>

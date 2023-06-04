@@ -1,7 +1,7 @@
 /*global kakao*/
 import React, { useEffect, useRef, useState, useContext } from 'react';
 import { MyContext } from '../provider';
-import { Container, Row } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 
 var coords = [0, 0];
 var x = 0.0;
@@ -14,7 +14,7 @@ function App() {
         height: "60vh",
         zoom: 6
     });
-    const { tripList, displayValue, departure, option, finalDeparture, setDeparture, setOption } = useContext(MyContext);
+    const { displayValue, option, finalDeparture, setDeparture, setOption } = useContext(MyContext);
     const imageSrc = ["https://cdn-icons-png.flaticon.com/512/3771/3771140.png", "https://cdn.icon-icons.com/icons2/3015/PNG/512/backpack_rucksack_excursion_trip_icon_188537.png"];
     const mapRef = useRef(null);
 
@@ -24,7 +24,6 @@ function App() {
             setOption(1);
             geocoder.addressSearch(displayValue, function (result, status) {
                 if (status === kakao.maps.services.Status.OK) {
-                    const kakao_coords = new kakao.maps.LatLng(result[0].y, result[0].x);
                     coords[0] = result[0].y;
                     coords[1] = result[0].x;
 
@@ -37,7 +36,7 @@ function App() {
                         if (result[i].address != null) {
                             address = result[i].address.address_name;
                         }
-                        if (result[i].road_address != null || result[i].road_address != null && address === "") {
+                        if (result[i].road_address != null || (result[i].road_address != null && address === "")) {
                             address = result[i].road_address.address_name;
                         } 
                         addressList.push(address);
@@ -46,7 +45,7 @@ function App() {
                 }
             });
         }
-        if (finalDeparture != "") {
+        if (finalDeparture !== "") {
             geocoder.addressSearch(finalDeparture, function (result, status) {
                 // 정상적으로 검색이 완료됐으면 
                 if (status === kakao.maps.services.Status.OK) {
@@ -113,11 +112,11 @@ function App() {
             justifyContent: 'space-between',
           }}>
             <button type="button" className="btn btn-success" style={{ marginTop: '10px' }} onClick={resetMap}>
-              원래대로
+              <div className='sd'>원래대로</div>
             </button>
             <Container style={{width:"3vh"}}/>
-            <button type="button" className="btn btn-warning" style={{ marginTop: '10px' }} onClick={detail}>
-              출발지 자세히 보기
+            <button type="button" className="btn btn-warning" style={{ marginTop: '10px' }} onClick={detail} >
+              <div className= 'sd'> 출발지 자세히 보기 </div>
             </button>
           </div>
         </div>

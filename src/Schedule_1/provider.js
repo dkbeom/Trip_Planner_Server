@@ -7,6 +7,8 @@ const initialSharedState = {
   departure: [],
   option: 0,
   finalDeparture: "",
+  departureDate1: "",
+  departureDate2: "",
   setTripList: () => {},
   deleteTripList: () => {},
   setInputValue: () => {},
@@ -14,6 +16,8 @@ const initialSharedState = {
   setDeparture: () => {},
   setOption: () => {},
   setFinalDeparture: () => {},
+  setDepartureDate1: () => {},
+  setDepartureDate2: () => {},
 };
 
 export const MyContext = createContext(initialSharedState);
@@ -25,6 +29,8 @@ export const MyContextProvider = ({ children }) => {
   const [departure, setDeparture] = useState(initialSharedState.departure);
   const [option, setOption] = useState(initialSharedState.option);
   const [finalDeparture, setFinalDeparture] = useState(initialSharedState.finalDeparture);
+  const [departureDate1, setDepartureDate1] = useState(initialSharedState.departureDate);
+  const [departureDate2, setDepartureDate2] = useState(initialSharedState.departureDate);
   const deleteTripList = (index) => {
     // 해당 인덱스의 항목을 삭제하고 새로운 배열 생성
     const updatedTripList = tripList.filter((_, i) => i !== index);
@@ -38,6 +44,8 @@ export const MyContextProvider = ({ children }) => {
     departure,
     option,
     finalDeparture,
+    departureDate1,
+    departureDate2,
     setTripList,
     deleteTripList,
     setInputValue,
@@ -45,6 +53,8 @@ export const MyContextProvider = ({ children }) => {
     setDeparture,
     setOption,
     setFinalDeparture,
+    setDepartureDate1,
+    setDepartureDate2,
   };
   
   return (

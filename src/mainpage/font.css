@@ -12,6 +12,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: '잠실체1';
+    src: url('../../public/font/The\ Jamsil\ 3\ Regular.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
 
 .sd {
     font-family: "SingleDay", sans-serif;
@@ -19,6 +26,10 @@
 
 .dd {
     font-family: "돋움체", sans-serif;
+}
+
+.fd {
+    font-family: "잠실체1", sans-serif;
 }
 
 .textarrange {

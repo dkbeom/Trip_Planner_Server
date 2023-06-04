@@ -42,7 +42,7 @@ function NextPageButton() {
                                 boxShadow: '0px 0px 10px 1px rgba(0,0,0,0.2)',
                             }}
                         >
-                            <div className="sd" style={{ fontSize: '30px' }}>
+                            <div className="fd" style={{ fontSize: '30px' }}>
                                 스케줄 만들기
                             </div>
                         </button>
@@ -60,7 +60,7 @@ function NextPageButton() {
                         }}
                         onClick={setShowModal}
                     >
-                        <div className="sd" style={{ fontSize: '30px' }}>
+                        <div className='fd' style={{ fontSize: '30px' }}>
                             스케줄 만들기
                         </div>
                     </button>
