@@ -39,14 +39,14 @@
 	<update id="updatePassword" parameterType="map">
     UPDATE MEMBER
     SET PWD = #{newPassword}
-    WHERE ID = #{username} AND PWD = #{oldPassword}
+    WHERE ID = #{id} AND PWD = #{oldPassword}
 	</update>
 	
 	 <!-- update nickname -->
 	<update id="updateNickname" parameterType="map">
     UPDATE MEMBER
     SET nickname = #{nickname}
-    WHERE ID = #{username}
+    WHERE ID = #{id}
 	</update>
 
 </mapper>

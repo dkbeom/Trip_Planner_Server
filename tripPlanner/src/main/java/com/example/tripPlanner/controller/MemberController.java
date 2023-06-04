@@ -111,28 +111,43 @@ public class MemberController {
     @PutMapping("/modify")
     public ResponseEntity<?> updateMember(
                                              @RequestBody UpdateDto UpdateDto) {
-        if(UpdateDto.getNewPassword()!=null&&!UpdateDto.getNewPassword().equals(UpdateDto.getConfirmNewPassword())) {
-            return ResponseEntity.badRequest().body("password wrong.");
+    	System.out.println(UpdateDto.getId());
+    	System.out.println(UpdateDto.getUsername());
+    	System.out.println(UpdateDto.getNickname());
+    	System.out.println(UpdateDto.getOldPassword());
+    	System.out.println(UpdateDto.getNewPassword());
+        if(UpdateDto.getNewPassword()!=""&&!UpdateDto.getNewPassword().equals(UpdateDto.getConfirmNewPassword())) {
+            return ResponseEntity.badRequest().body("비밀번호 확인이 일치하지 않습니다..");
         }
         System.out.println("일단 실행됨");
         Map<String, Object> parameterMap = new HashMap<>();
-        
+        Member member = memberDao.getMemberById(UpdateDto.getId());
+        parameterMap.put("id",UpdateDto.getId());
         parameterMap.put("username", UpdateDto.getUsername());
         parameterMap.put("nickname", UpdateDto.getNickname());
-        if(UpdateDto.getNewPassword()!=null||UpdateDto.getNewPassword()=="") {
+      
+        if(memberService.canChangeNickname(UpdateDto.getNickname(),UpdateDto.getId())) {
+            
+        if(UpdateDto.getNewPassword()!="") {
         parameterMap.put("oldPassword", UpdateDto.getOldPassword());
         parameterMap.put("newPassword", UpdateDto.getNewPassword());
-        int row1 = memberDao.updatePassword(parameterMap);
         
+        
+        int row1 = memberDao.updatePassword(parameterMap);
         if(row1 == 0) {
             return ResponseEntity.badRequest().body("기존 비밀번호가 일치하지 않습니다.");
         	}
         }
-        if(memberService.canChangeNickname(UpdateDto.getNickname(),UpdateDto.getUsername())) {
+        
+       // System.out.println(memberService.canChangeNickname(UpdateDto.getNickname(),UpdateDto.getId()));
+        
         int row2 = memberDao.updateNickname(parameterMap);
+        System.out.println("   "+row2);
         }else {
         	return ResponseEntity.badRequest().body("중복된 닉네임 입니다.");
         }
+        
+        
         return ResponseEntity.ok().build();
     }
 }
