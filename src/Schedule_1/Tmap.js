@@ -11,7 +11,7 @@ function App() {
         height: "600px",
         zoom: 6
     });
-    const { tripList, displayValue, departure, option, setDeparture, setOption } = useContext(MyContext);
+    const { tripList, displayValue, departure, option, touchHome, setDeparture, setOption } = useContext(MyContext);
     const imageSrc = ["https://cdn-icons-png.flaticon.com/512/3771/3771140.png", "https://cdn.icon-icons.com/icons2/3015/PNG/512/backpack_rucksack_excursion_trip_icon_188537.png"];
     const mapRef = useRef(null);
 
@@ -81,11 +81,11 @@ function App() {
             //mapRef.current.destroy();
             initialization();
         }
-    }, [tripList, displayValue, departure, mapOptions]);
+    }, [tripList, displayValue, departure, mapOptions, touchHome]);
 
 
     function resetMap() {
-        setOption(1);
+        setOption(1); 
         setMapOptions({
             center: new window.Tmapv3.LatLng(35.8714, 128.75),
             zoom: 6

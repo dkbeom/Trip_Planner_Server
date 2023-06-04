@@ -32,7 +32,7 @@ function NextPageButton() {
         <Container style={{ paddingTop: '50px', textAlign: 'center' }}>
             {isLoggedIn ? (
                 <div className={`item ${showButton ? 'show' : ''}`}>
-                    <Link to="/schedule">
+                    <Link to="/departure">
                         <button
                             type="button"
                             className="btn btn-secondary btn-lg"

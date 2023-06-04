@@ -12,7 +12,7 @@ function Forms() {
     const [message3, setMessage3] = useState("");
     const [message4, setMessage4] = useState("");
     const [comment1, setComment1] = useState("위에서 교통수단을 선택해 주세요.");
-    const { finalDeparture, departureDate1, setDepartureDate1, departureDate2, setDepartureDate2 } = useContext(MyContext);
+    const { departureDate1, setDepartureDate1, departureDate2, setDepartureDate2, transport, setTransport } = useContext(MyContext);
     const [value1, onChange1] = useState(new Date());
     const [value2, onChange2] = useState(new Date());
     const [showModal1, setShowModal1] = useState(false);
@@ -20,6 +20,7 @@ function Forms() {
     var antiInfiniteError = 0;
     useEffect(() => {
         const name = localStorage.getItem('name');
+        const finalDeparture = localStorage.getItem('finalDeparture');
         if (name) {
             setMessage1(`${name}님, 안녕하세요!`);
         }
@@ -30,29 +31,35 @@ function Forms() {
             setMessage3("날짜를 선택하세요.");
         }
         else{
+            localStorage.setItem("departureDate1", departureDate1);
             setMessage3(departureDate1);
         }
         if(departureDate2 === ""){
             setMessage4("날짜를 선택하세요.");
         }
         else{
+            localStorage.setItem("departureDate2", departureDate2);
             setMessage4(departureDate2);
         }
         setMessage4(departureDate2);
-    }, [finalDeparture, departureDate1, departureDate2]);
+    }, [departureDate1, departureDate2]);
 
     const handleSelectChange = (event) => {
         const value = event.target.value;
         if (value === "0") {
+            setTransport("");
             setComment1("위에서 교통수단을 선택해 주세요.");
         }
         if (value === "1") {
+            setTransport("대중교통");
             setComment1("대중교통: 대중교통을 이용하여 여행하며, 불가피할 시에는 택시를 이용합니다.");
         }
         if (value === "2") {
+            setTransport("자동차");
             setComment1("자동차: 여행의 시작부터 끝까지 모두 자차를 이용하여 여행합니다.");
         }
         if (value === "3") {
+            setTransport("렌트카");
             setComment1("렌트카: 여행지까지는 대중교통을 이용하며, 여행지 내에서는 렌트카를 이용하여 여행합니다.");
         }
     };

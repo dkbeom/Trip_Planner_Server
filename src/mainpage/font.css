@@ -19,6 +19,12 @@
     font-style: normal;
 }
 
+@font-face{
+    font-family: 'KKC';
+    src: url('../../public/font/KCC-Chassam.ttf');
+    font-weight: normal;
+    font-style:normal;
+}
 
 .sd {
     font-family: "SingleDay", sans-serif;
@@ -30,6 +36,10 @@
 
 .fd {
     font-family: "잠실체1", sans-serif;
+}
+
+.ad {
+    font-family: "KKC", sans-serif;
 }
 
 .textarrange {

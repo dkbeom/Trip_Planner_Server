@@ -57,7 +57,12 @@ function TripList() {
           <div className='dd'> 출발지</div>
         </ListGroup.Item>
         <ListGroup.Item style={{ textAlign: 'center' }}>
+          
+        {localStorage.getItem("finalDeparture") === "" ? (
           <div className='sd'>{finalDeparture}</div>
+        ) : (
+          <div className='sd'>{localStorage.getItem("finalDeparture")}</div>
+        )}
         </ListGroup.Item>
       </ListGroup>
     </Col>

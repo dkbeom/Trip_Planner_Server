@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
 import { MyContext } from '../provider';
 import { Container } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 
 var coords = [0, 0];
 var x = 0.0;
@@ -14,16 +15,15 @@ function App() {
         height: "60vh",
         zoom: 6
     });
-    const { displayValue, option, finalDeparture, setDeparture, setOption } = useContext(MyContext);
+    const { displayValue, option, finalDeparture, touchHome, mapRef, setTouchHome, setDeparture, setOption, setFinalDeparture } = useContext(MyContext);
     const imageSrc = ["https://cdn-icons-png.flaticon.com/512/3771/3771140.png", "https://cdn.icon-icons.com/icons2/3015/PNG/512/backpack_rucksack_excursion_trip_icon_188537.png"];
-    const mapRef = useRef(null);
 
     useEffect(() => {
         const geocoder = new kakao.maps.services.Geocoder();
         if (displayValue !== "") {
             setOption(1);
             geocoder.addressSearch(displayValue, function (result, status) {
-                if (status === kakao.maps.services.Status.OK) {
+                if (status === kakao.maps.services.Status.OK) { 
                     coords[0] = result[0].y;
                     coords[1] = result[0].x;
 
@@ -59,6 +59,25 @@ function App() {
                     x = coords.getLng();
                     y = coords.getLat();
                     marker.setMap(mapRef.current);
+                    localStorage.setItem("x", x);
+                    localStorage.setItem("y", y);
+                }
+            });
+        }
+        else if(localStorage.getItem("finalDeparture") !== ""){
+            geocoder.addressSearch(localStorage.getItem("finalDeparture"), function (result, status) {
+                // 정상적으로 검색이 완료됐으면 
+                if (status === kakao.maps.services.Status.OK) {
+                    const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                    // 결과값으로 받은 위치를 마커로 표시합니다
+                    var marker = new window.Tmapv3.Marker({
+                        position: new window.Tmapv3.LatLng(coords.getLat(), coords.getLng()),
+                        icon: imageSrc[0],
+                        iconSize: new window.Tmapv3.Size(32, 32),
+                    });
+                    x = coords.getLng();
+                    y = coords.getLat();
+                    marker.setMap(mapRef.current);
                 }
             });
         }
@@ -71,14 +90,13 @@ function App() {
             mapRef.current = map;
         }
         if (!mapRef.current) {
-            localStorage.setItem("finalDeparture", "");
             initialization();
         }
         else if (option === 1) {
             mapRef.current.destroy();
             initialization();
         }
-    }, [displayValue, mapOptions, finalDeparture]);
+    }, [displayValue, mapOptions, finalDeparture, touchHome]);
 
     function resetMap() {
         setOption(1);
