@@ -6,7 +6,6 @@ import { useContext } from 'react';
 
 export var isFormOK = false;
 
-
 export function RegisterForm() {
     isFormOK = false;
     const [formData, setFormData] = useState(

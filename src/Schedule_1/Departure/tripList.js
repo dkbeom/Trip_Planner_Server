@@ -1,13 +1,13 @@
 import ListGroup from 'react-bootstrap/ListGroup';
-import React, { useState, useContext, useEffect } from 'react';
-import { MyContext } from './provider';
-import { Button, Col, Container, Form, Popover } from 'react-bootstrap';
+import React, { useContext } from 'react';
+import { MyContext } from '../provider';
+import { Button, Col, Container, Form } from 'react-bootstrap';
+import '../../mainpage/font.css'
 
 function TripList() {
-  const { tripList, deleteTripList } = useContext(MyContext);
   const { inputValue, setInputValue } = useContext(MyContext);
-  const { displayValue, setDisplayValue, departure } = useContext(MyContext);
-  const [radioButton, setRadioButton] = useState(0);
+  const { setDisplayValue, departure } = useContext(MyContext);
+  const { finalDeparture, setFinalDeparture } = useContext(MyContext);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -18,59 +18,51 @@ function TripList() {
     setDisplayValue(inputValue);
   };
 
-  useEffect(() => {
-    console.log(radioButton);
-  }, [radioButton]);
-
+  const handleButtonClick = (dpt) => {
+    setFinalDeparture(dpt);
+    localStorage.setItem("finalDeparture", dpt);
+  };
   return (
-    <Col style={{ marginLeft: '10vh', width: '30vh' }}>
+    <Col style={{ marginLeft: '40%', width: '30%' }}>
       <ListGroup style={{ width: '60vh', background: '#FFFFFF' }}>
-        <ListGroup.Item variant="primary" style={{ textAlign: 'center' }}>
-          출발지
+        <ListGroup.Item variant="secondary" style={{ textAlign: 'center' }}>
+          <div className='dd'>출발지 검색</div>
         </ListGroup.Item>
         <Form style={{ width: '50vh', marginLeft: '5vh', marginTop: '2vh' }} onSubmit={handleFormSubmit}>
           <Form.Group className="place" controlId="place">
-            <Form.Control
+            <Form.Control className='sd'
               type="place"
               placeholder="주소를 자유롭게 입력하세요."
               value={inputValue}
               onChange={handleInputChange}
             />
           </Form.Group>
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault1"
-              checked={radioButton === 0}
-              onChange={() => setRadioButton(0)}
-            />
-            <label className="form-check-label" htmlFor="flexRadioDefault1">
-              지번 주소로 찾기
-            </label>
-          </div>
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault2"
-              checked={radioButton === 1}
-              onChange={() => setRadioButton(1)}
-            />
-            <label className="form-check-label" htmlFor="flexRadioDefault2">
-              도로명 주소로 찾기
-            </label>
-          </div>
         </Form>
         <Container style={{ height: '3vh' }} />
+        <ListGroup.Item style={{ textAlign: 'center' }}/>
         <ListGroup.Item style={{ textAlign: 'center' }}>
-          {departure}
+          {departure.map((address, index) => (
+            <div key={index} className='sd'>
+              <Button variant="light" style={{ width: '50vh' }} onClick={() => handleButtonClick(departure[index])}>
+                {address}
+              </Button>
+            </div>
+          ))}          
+        <Container style={{ height: '2vh' }} />
         </ListGroup.Item>
-        <Container style={{ height: '3vh' }} />
+        </ListGroup>
+        <Container style={{height: '3vh'}}/>
+        <ListGroup style={{ width: '60vh', background: '#FFFFFF' }}>
+        <ListGroup.Item variant="primary" style={{ textAlign: 'center' }}>
+          <div className='dd'> 출발지</div>
+        </ListGroup.Item>
         <ListGroup.Item style={{ textAlign: 'center' }}>
-          {departure}
+          
+        {localStorage.getItem("finalDeparture") === "" ? (
+          <div className='sd'>{finalDeparture}</div>
+        ) : (
+          <div className='sd'>{localStorage.getItem("finalDeparture")}</div>
+        )}
         </ListGroup.Item>
       </ListGroup>
     </Col>

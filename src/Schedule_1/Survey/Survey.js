@@ -1,13 +1,24 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
-import Tmap from './Tmap';
-import TripList from './tripList';
 import { Row, Col } from 'react-bootstrap';
-import PlacementExample from './toast'
+import Forms from './Forms'
+import Report from './Report';
 import Nav from 'react-bootstrap/Nav';
 import NavBar from '../../mainpage/NavBar';
-import { MyContext } from '../provider';
+
+const MainWrapper = styled.div`
+margin-top: 1%;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+`;
+
+const MapWrapper = styled.div`
+  background-color: #DDFFFF77;
+  width: 100vh;
+  height: 70vh;
+`;
 
 
 const Background = styled.div`
@@ -18,41 +29,17 @@ const Background = styled.div`
   background-position: center center;
 `;
 
-const MainWrapper = styled.div`
-  margin-top: 1%;
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-`;
-
-const MapWrapper = styled.div`
-  background-color: #DDFFFF77;
-  width: 100vh;
-  height: 70vh;
-  margin-left: 30%;
-`;
-
-const ScheduleWrapper = styled.div`
-  width: 40vh;
-`;
-
-
 function Departure() {
-  const { finalDeparture, touchHome, touchProfile, setTouchHome, setTouchProfile } = useContext(MyContext);
 
   return (
     <Background>
-      <NavBar/>
-      <Nav fill variant="tabs" defaultActiveKey="/departure">
+      <NavBar />
+      <Nav fill variant="tabs" defaultActiveKey="link-1">
         <Nav.Item>
           <Nav.Link href="/departure">출발지 선택</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-        {finalDeparture === "" && localStorage.getItem("finalDeparture") == null ? (
-          <Nav.Link href="/pre-survey" eventKey="link-1" disabled>여행 사전 정보</Nav.Link>
-        ) : (
           <Nav.Link href="/pre-survey" eventKey="link-1">여행 사전 정보</Nav.Link>
-        )}
         </Nav.Item>
         <Nav.Item>
           <Nav.Link eventKey="link-2" disabled>여행지 선택</Nav.Link>
@@ -66,17 +53,14 @@ function Departure() {
       <MainWrapper>
         <Row>
           <Col xs={6}>
-            <ScheduleWrapper>
-              <TripList />
-            </ScheduleWrapper>
+            <Forms />
           </Col>
           <Col xs={6}>
             <MapWrapper>
-              <Tmap />
+              <Report />
             </MapWrapper>
           </Col>
         </Row>
-        <PlacementExample />
       </MainWrapper>
     </Background>
   );

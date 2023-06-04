@@ -1,17 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
 import NavBar from '../mainpage/NavBar';
-import MapAPI from './Tmap';
-import ScheduleTable from './ScheduleTable';
-import SmallExample from './Table';
-import TableComponent from './Table';
-import TripList from './tripList';
-import { Row, Col } from 'react-bootstrap';
-import { MyContextProvider } from './provider';
 import Departure from './Departure/Departure';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import Nav from 'react-bootstrap/Nav';
+import { MyContext, MyScheduleContextProvider } from './provider'
+import Survey from './Survey/Survey'
+import '../mainpage/font.css'
+import { Link } from 'react-router-dom';
 
 const Background = styled.div`
   background-image: url('/loginpage_background.png');
@@ -22,30 +20,78 @@ const Background = styled.div`
 `;
 
 function MainPage() {
+  const { finalDeparture, touchHome, touchProfile, setTouchHome, setTouchProfile } = useContext(MyContext);
+  const handleTabSelect = (selectedTab) => {
+    if (selectedTab === "home") {
+      console.log("Touched Home")
+      setTouchHome(touchHome + 1);
+    }
+    if (selectedTab === "profile") {
+      console.log("Touched Profile")
+      setTouchProfile(touchProfile + 1);
+    }
+  };
+
   return (
     <Background>
       <NavBar />
+    <Nav fill variant="tabs" defaultActiveKey="/departure">
+      <Nav.Item>
+        <Nav.Link href="/departure">출발지 선택</Nav.Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Nav.Link href="/survey" eventKey="link-1" disabled>여행 사전 정보</Nav.Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Nav.Link eventKey="link-2" disabled>여행지 선택</Nav.Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Nav.Link eventKey="disabled" disabled>
+          Disabled
+        </Nav.Link>
+      </Nav.Item>
+    </Nav>
       <Tabs
-        style={{background: "#FFFFFFAA"}}
+        style={{ background: "#FFFFFFAA" }}
         defaultActiveKey="home"
         id="fill-tab-example"
         className="mb-4"
         fill
+        onSelect={handleTabSelect}
       >
-        <Tab eventKey="home" title="출발지 고르기">
-          <Departure/>
+        <Tab eventKey="home" title="출발지 선택">
+            <Departure />
         </Tab>
-        <Tab eventKey="profile" title="여행지 고르기">
+        {finalDeparture === "" ? (
+          <Tab eventKey="profile" title="여행 사전 정보" disabled />
+        ) : (
+            <Tab eventKey="profile" title="여행 사전 정보" Link="/sample">
+                  <Survey />
+            </Tab>
+          )}
+        <Tab eventKey="longer-tab" title="여행지" disabled>
+          <Tab.Pane>
+            Tab content for Loooonger Tab
+          </Tab.Pane>
         </Tab>
-        <Tab eventKey="longer-tab" title="추가 입력 1">
-          Tab content for Loooonger Tab
-        </Tab>
-        <Tab eventKey="contact" title="추가 입력 2">
-          Tab content for Contact
+        <Tab eventKey="contact" title="추가 입력 2" disabled>
+          <Tab.Pane>
+            <div className="sd">
+              Tab content for Contact
+            </div>
+          </Tab.Pane>
         </Tab>
       </Tabs>
     </Background>
   );
 }
 
-export default MainPage;
+function MainPageWithContext() {
+  return (
+    <MyScheduleContextProvider>
+      <MainPage />
+    </MyScheduleContextProvider>
+  );
+}
+
+export default MainPageWithContext;

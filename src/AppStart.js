@@ -8,11 +8,15 @@ import MyProfile from './mainpage/MyProfile';
 import SamplePage from './Sample/SamplePage';
 import { MyContextProvider } from './provider';
 import SurveyPage from './Survey/SurveyPage';
+import Departure from './Schedule_1/Departure/Departure';
+import Survey from './Schedule_1/Survey/Survey';
+import { MyScheduleContextProvider } from './Schedule_1/provider';
 
 
 
 function AppStart() {
   return (
+    <MyScheduleContextProvider>
     <MyContextProvider>
       <BrowserRouter>
         <Routes>
@@ -22,9 +26,12 @@ function AppStart() {
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/myprofile" element={<MyProfile />} />
           <Route path="/survey" element={<SurveyPage />} />
+          <Route path="/departure" element={<Departure/>} />
+          <Route path="/pre-survey" element={<Survey/>}/>
         </Routes>
       </BrowserRouter>
     </MyContextProvider>
+    </MyScheduleContextProvider>
   );
 }
 
