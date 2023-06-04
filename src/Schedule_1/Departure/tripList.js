@@ -1,6 +1,6 @@
 import ListGroup from 'react-bootstrap/ListGroup';
 import React, { useState, useContext, useEffect } from 'react';
-import { MyContext } from './provider';
+import { MyContext } from '../provider';
 import { Button, Col, Container, Form, Popover } from 'react-bootstrap';
 
 function TripList() {
@@ -46,7 +46,8 @@ function TripList() {
                 {address}
               </Button>
             </div>
-          ))}
+          ))}          
+        <Container style={{ height: '2vh' }} />
         </ListGroup.Item>
         </ListGroup>
         <Container style={{height: '3vh'}}/>

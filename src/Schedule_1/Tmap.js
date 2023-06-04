@@ -78,7 +78,7 @@ function App() {
             initialization();
         }
         else if (option === 1) {
-            mapRef.current.destroy();
+            //mapRef.current.destroy();
             initialization();
         }
     }, [tripList, displayValue, departure, mapOptions]);

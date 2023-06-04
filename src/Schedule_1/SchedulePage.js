@@ -1,17 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
 import NavBar from '../mainpage/NavBar';
-import MapAPI from './Tmap';
-import ScheduleTable from './ScheduleTable';
-import SmallExample from './Table';
-import TableComponent from './Table';
-import TripList from './tripList';
-import { Row, Col } from 'react-bootstrap';
-import { MyContextProvider } from './provider';
 import Departure from './Departure/Departure';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import {MyContext, MyContextProvider} from './provider'
+import Survey from './Survey/Departure'
 
 const Background = styled.div`
   background-image: url('/loginpage_background.png');
@@ -22,25 +17,36 @@ const Background = styled.div`
 `;
 
 function MainPage() {
+  const handleTabSelect = (selectedTab) => {
+    console.log(selectedTab);
+  };
+  const { finalDeparture } = useContext(MyContext);
+
   return (
     <Background>
       <NavBar />
       <Tabs
-        style={{background: "#FFFFFFAA"}}
+        style={{ background: "#FFFFFFAA" }}
         defaultActiveKey="home"
         id="fill-tab-example"
         className="mb-4"
         fill
+        onSelect={handleTabSelect}
       >
-        <Tab eventKey="home" title="출발지 고르기">
-          <Departure/>
+        <Tab eventKey="home" title="출발지 선택">
+          <Departure />
         </Tab>
-        <Tab eventKey="profile" title="여행지 고르기">
-        </Tab>
-        <Tab eventKey="longer-tab" title="추가 입력 1">
+        {finalDeparture === "" ? (
+          <Tab eventKey="profile" title="여행 사전 정보" disabled/>
+        ) : (
+          <Tab eventKey="profile" title="여행 사전 정보">
+            <Survey/>
+          </Tab>
+        )}
+        <Tab eventKey="longer-tab" title="여행지" disabled>
           Tab content for Loooonger Tab
         </Tab>
-        <Tab eventKey="contact" title="추가 입력 2">
+        <Tab eventKey="contact" title="추가 입력 2" disabled>
           Tab content for Contact
         </Tab>
       </Tabs>
@@ -48,4 +54,12 @@ function MainPage() {
   );
 }
 
-export default MainPage;
+function MainPageWithContext() {
+  return (
+    <MyContextProvider>
+      <MainPage />
+    </MyContextProvider>
+  );
+}
+
+export default MainPageWithContext;
