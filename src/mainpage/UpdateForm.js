@@ -1,11 +1,13 @@
 import React, { useState, useContext } from 'react';
+import { Button, Modal } from 'react-bootstrap';
 import './font.css'
 import axios from 'axios';
 import { MyContext } from '../provider';
 
-export var isFormOK = false;
+export var isFormOKa = false;
 
  export function UpdateForm() {
+    isFormOKa = false;
   const [formData, setFormData] = useState({
     username: localStorage.getItem("name"),
     nickname: localStorage.getItem("nickname"),
@@ -14,34 +16,49 @@ export var isFormOK = false;
     confirmNewPassword: ''
   });
 
-  const [errorMessage, setErrorMessage] = useState('');
-  isFormOK = false;
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevData => ({
-      ...prevData,
+      ...formData,
       [name]: value
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-     const response = await axios.put('http://43.201.19.87:8080/member/modify', formData);
-      //const response = await axios.put('http://localhost:8080/member/modify', formData);
-      console.log(response.data); // 처리 결과 확인
-      // 여기서 필요한 처리를 수행할 수 있습니다.
-    } catch (error) {
-      console.error(error);
-      // 에러 처리
-    }
-  };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+          try {
+            const id = localStorage.getItem("ID");
+      const updatedFormData = {
+        id: id,
+        ...formData
+      };
+
+      //axios.post('http://43.201.19.87:8080/member/modify', formData) //-> EC2 Version
+        const response = await axios.put('http://localhost:8080/member/modify', updatedFormData, {
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+      
+            console.log(response.data); // 처리 결과 확인          
+            alert("수정되었습니다. 수정된 정보는 재로그인시 반영됩니다.");
+          } catch (error) {
+            console.log(error);
+            if (error.response && error.response.status === 400) {
+                isFormOKa=false;
+                alert(error.response.data); // 잘못된 요청에 대한 메시지를 팝업창으로 보여줍니다.
+              } else {
+                isFormOKa=false;
+                alert('요청을 처리하는 중에 오류가 발생했습니다. \n 에러코드 : ' +error.response.status); // 기타 오류에 대한 메시지를 팝업창으로 보여줍니다.
+              }
+          }
+          isFormOKa=true;
+      };
+      
 
   return (
     <div>
-      {/* 모달 형태로 폼을 표시할 수 있는 코드를 작성하세요 */}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className='updateform'>
         <label>
           이름 
           <input
@@ -92,6 +109,7 @@ export var isFormOK = false;
           />
         </label>
         <br />
+        <button type="submit" style={{ opacity: 0, pointerEvents: 'none', height: '0' }}></button>
       </form>
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import { UpdateForm, isFormOK } from "./UpdateForm.js"
+import { UpdateForm, isFormOKa } from "./UpdateForm.js"
 import './font.css'
 import { MyContext } from '../provider.js';
 import { useContext } from 'react';
@@ -13,10 +13,11 @@ function Update() {
     const handleShow = () => setShowModal(true);
     const { accountEmail } = useContext(MyContext);
     const handleSubmit = (formData) => {
-        if (!isFormOK)
-          return;
+        document.querySelector('.updateform button[type="submit"]').click();
+        if (!isFormOKa)
+            return;
         handleClose();
-      };
+    }; 
 
 
     useEffect(() => {
