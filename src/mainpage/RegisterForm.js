@@ -23,7 +23,6 @@ export function RegisterForm() {
     const { joinsuccess, setJoinsuccess } = useContext(MyContext);
     const handleSubmit = (e) => {
         e.preventDefault();
-        alert("서밋 눌럭대요~?");
         if (formData.nickname.length < 2) {
             setErrorMessage('닉네임은 최소 2글자 이상으로 설정해주세요!');
             return;
