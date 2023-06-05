@@ -1,0 +1,40 @@
+.sc_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 60vh;
+    overflow: auto;
+  }
+  
+  .sc_container thead {
+    position: sticky;
+    top: 0;
+    background-color: #eee;
+  }
+  
+  .sc_container th {
+    padding: 8px 16px;
+    text-align: center;
+  }
+  
+  .sc_container table {
+    border-collapse: collapse;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .sc_container td {
+    padding: 8px 16px;
+    text-align: center;
+  }
+  
+  .sc_container tr {
+    cursor: pointer;
+  }
+  
+  .sc_container tr:hover {
+    background-color: #eee;
+  }
+  

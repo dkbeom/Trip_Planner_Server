@@ -6,7 +6,7 @@ import Toast from 'react-bootstrap/Toast';
 import { ToastContainer } from 'react-bootstrap';
 
 function PlacementExample() {
-    const { finalDeparture } = useContext(MyContext);
+    const { finalDeparture, touchHome } = useContext(MyContext);
     const [show, setShow] = useState(true);
     const handleClose = () => {
         setShow(false);

@@ -64,7 +64,7 @@ function App() {
                 }
             });
         }
-        else if(localStorage.getItem("finalDeparture") !== ""){
+        else if(localStorage.getItem("finalDeparture") !== "" && localStorage.getItem("finalDeparture")){
             geocoder.addressSearch(localStorage.getItem("finalDeparture"), function (result, status) {
                 // 정상적으로 검색이 완료됐으면 
                 if (status === kakao.maps.services.Status.OK) {

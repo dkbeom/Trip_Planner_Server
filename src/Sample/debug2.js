@@ -1,35 +1,36 @@
-import React, { useEffect } from 'react';
-import ReactDOM from "react-dom";
+import React, { useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
 
-export default function App() {
+function MyComponent() {
+  const [value, setValue] = useState(localStorage.getItem('Bakil'));
 
   useEffect(() => {
-    const script = document.createElement("script");
-    script.innerHTML = `         
-        function initTmap() {
-            var map = new Tmapv3.Map("TMapApp", {
-                center: new Tmapv3.LatLng(37.566481622437934,126.98502302169841),
-                width: "100%",
-                height: "100%",
-                zoom:15
-            });
-        }
-        
-        initTmap();
-   `;
-    script.type = "text/javascript";
-    script.async = "async";
-    document.head.appendChild(script);
+    // 로컬 스토리지 업데이트 후에 실행되는 콜백 함수
+    const handleStorageUpdate = (event) => {
+      if (event.key === 'myKey') {
+        setValue(event.newValue);
+      }
+    };
+
+    // 로컬 스토리지 업데이트 이벤트에 대한 리스너 등록
+    window.addEventListener('storage', handleStorageUpdate);
+
+    // 컴포넌트 언마운트 시에 리스너 제거
+    return () => {
+      window.removeEventListener('storage', handleStorageUpdate);
+    };
   }, []);
 
+  // 값이 업데이트된 후에 연산 수행
+  const computedValue = value ? parseInt(value) + 1 : 0;
+
   return (
-    <div
-      id="TMapApp"
-      style={{
-        height: "100%",
-        width: "100%",
-        position: "fixed",
-      }}
-    />
+    <div>
+      <Button onClick={localStorage.setItem("hello", parseInt(value + 1))}> sdlk</Button>
+      <p>로컬 스토리지 값: {value}</p>
+      <p>연산 결과: {computedValue}</p>
+    </div>
   );
 }
+
+export default MyComponent;

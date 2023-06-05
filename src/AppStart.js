@@ -11,6 +11,7 @@ import SurveyPage from './Survey/SurveyPage';
 import Departure from './Schedule_1/Departure/Departure';
 import Survey from './Schedule_1/Survey/Survey';
 import { MyScheduleContextProvider } from './Schedule_1/provider';
+import Destination from './Schedule_1/Destination/Destination';
 
 
 
@@ -28,6 +29,7 @@ function AppStart() {
           <Route path="/survey" element={<SurveyPage />} />
           <Route path="/departure" element={<Departure/>} />
           <Route path="/pre-survey" element={<Survey/>}/>
+          <Route path="/destination" element={<Destination/>}/>
         </Routes>
       </BrowserRouter>
     </MyContextProvider>

@@ -10,7 +10,7 @@ import { useRef } from 'react';
 import ReportMap from './ReportMap'
 
 function Report() {
-    const { departureDate1, departureDate2, touchProfile, transport  } = useContext(MyContext);
+    const { departureDate1, departureDate2, touchProfile, transport, bakil, value1, value2  } = useContext(MyContext);
     const [mapOptions, setMapOptions] = useState({
         center: new window.Tmapv3.LatLng(35.8714, 128.75),
         width: "95vh",
@@ -47,9 +47,9 @@ function Report() {
                 }}>
                     <ReportMap />
                 </div>
-                <h4>{localStorage.getItem("finalDeparture")}에서 출발할 거야!</h4>
-                {transport && <h4>{transport} 타고 여행 갈래!</h4>}
-                {departureDate1 && departureDate2 && <h5>{departureDate1}부터 {departureDate2}까지!</h5>}
+                <h4 style={{marginTop:"3%"}}>{localStorage.getItem("finalDeparture")}에서 출발할 거야!</h4>
+                {localStorage.getItem("transport") && <h4>{localStorage.getItem("transport")} 타고 여행 갈래!</h4>}
+                {departureDate1 && departureDate2 && <h5>{departureDate1}부터 {departureDate2}까지!</h5>}       
             </Container>
         </div>
     );

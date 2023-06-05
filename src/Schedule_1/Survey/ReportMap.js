@@ -1,8 +1,6 @@
 /*global kakao*/
 import React, { useEffect, useRef, useState, useContext } from 'react';
 import { MyContext } from '../provider';
-import { Container } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
 
 function ReportMap() {
     const [mapOptions, setMapOptions] = useState({
