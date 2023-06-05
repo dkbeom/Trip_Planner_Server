@@ -5,10 +5,10 @@ import { Row, Col } from 'react-bootstrap';
 import Nav from 'react-bootstrap/Nav';
 import NavBar from '../../mainpage/NavBar';
 import TMap from './Map'
-import ScheduleTable from './ScheduleTable';
 import Table from './Table'
 import { MyContext, MyScheduleContextProvider } from '../provider';
 import { useContext } from 'react';
+import TripList from './TripList';
 
 const MainWrapper = styled.div`
   margin-top: 1%;
@@ -33,6 +33,13 @@ const Background = styled.div`
   background-position: center center;
 `;
 
+const TripListWrapper = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 20px;
+`;
+
 function Destination() {
   return (
     <Background>
@@ -53,7 +60,7 @@ function Destination() {
       </Nav>
       <MainWrapper>
         <Row>
-          <Col xs={6}>
+          <Col xs={6} style={{marginLeft: "3vh", width: "80vh"}}>
             <Table/>
           </Col>
           <Col xs={6}>
