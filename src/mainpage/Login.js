@@ -17,7 +17,7 @@ function Login() {
         if (!isFormOK)
             return;
         handleClose();
-    };  
+    }; 
 
 
     useEffect(() => {

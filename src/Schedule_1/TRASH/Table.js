@@ -1,7 +1,7 @@
 import ListGroup from 'react-bootstrap/ListGroup';
 import React, { useState, useContext } from 'react';
 import { Row, Col } from 'react-bootstrap';
-import { MyContext } from './provider';
+import { MyContext } from '../provider';
 
 function TableComponent() {
     const [activeItem1, setActiveItem1] = useState(''); // 초기값 0으로 설정

@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
-import NavBar from '../mainpage/NavBar';
-import Departure from './Departure/Departure';
+import NavBar from '../../mainpage/NavBar';
+import Departure from '../Departure/Departure';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Nav from 'react-bootstrap/Nav';
-import { MyContext, MyScheduleContextProvider } from './provider'
-import Survey from './Survey/Survey'
+import { MyContext, MyScheduleContextProvider } from '../provider'
+import Survey from '../Pre-Survey/Survey'
 import '../mainpage/font.css'
 import { Link } from 'react-router-dom';
 

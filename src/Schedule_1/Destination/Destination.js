@@ -41,6 +41,7 @@ const TripListWrapper = styled.div`
 `;
 
 function Destination() {
+  const {advancedTripList} = useContext(MyContext);
   return (
     <Background>
       <NavBar />
@@ -53,14 +54,16 @@ function Destination() {
         </Nav.Item>
           <Nav.Link href="/destination" eventKey="link-2">여행지 선택</Nav.Link>
         <Nav.Item>
-          <Nav.Link eventKey="disabled" disabled>
-            Disabled
-          </Nav.Link>
+        {advancedTripList.length === 0 ? (
+          <Nav.Link href="/post-survey" eventKey="link-3" disabled>여행 추가 정보</Nav.Link>
+        ) : (
+          <Nav.Link href="/post-survey" eventKey="link-3">여행 추가 정보</Nav.Link>
+        )}
         </Nav.Item>
       </Nav>
       <MainWrapper>
         <Row>
-          <Col xs={6} style={{marginLeft: "3vh", width: "80vh"}}>
+          <Col xs={6} style={{marginLeft: "10vh", width: "70vh"}}>
             <Table/>
           </Col>
           <Col xs={6}>

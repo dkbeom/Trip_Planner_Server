@@ -1,7 +1,7 @@
 import ListGroup from 'react-bootstrap/ListGroup';
 import TableComponent from './Table';
 import React, { useState, useContext } from 'react';
-import { MyContext } from './provider';
+import { MyContext } from '../provider';
 import { Button, Col, Container, Form } from 'react-bootstrap';
 
 function TripList() {

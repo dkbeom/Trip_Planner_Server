@@ -11,13 +11,14 @@ const initialSharedState = {
   transport: "",
   departureDate1: "",
   departureDate2: "",
-  touchHome: 0,
+  touchHome: 100,
   touchProfile: 0,
   mapRef: null,
   value1: "",
   value2: "",
   bakil: 0,
   allowButton: false,
+  advancedTripList: [],
   setTripList: () => {},
   deleteTripList: () => {},
   setInputValue: () => {},
@@ -35,6 +36,7 @@ const initialSharedState = {
   setValue2: () => {},
   setBakil: () => {},
   setAllowButton: () => {},
+  setAdvancedTripList: () => {},
 };
 
 export const MyContext = createContext(initialSharedState);
@@ -57,6 +59,7 @@ export const MyScheduleContextProvider = ({ children }) => {
   const [bakil, setBakil] = useState(initialSharedState.bakil);
   const mapRef = useRef(null); // useRef를 사용하여 mapRef 생성
   const [allowButton, setAllowButton] = useState(initialSharedState.allowButton);
+  const [advancedTripList, setAdvancedTripList] = useState(initialSharedState.advancedTripList);
 
   const deleteTripList = (index) => {
     // 해당 인덱스의 항목을 삭제하고 새로운 배열 생성
@@ -82,6 +85,7 @@ export const MyScheduleContextProvider = ({ children }) => {
     value2,
     bakil,
     allowButton,
+    advancedTripList,
     setTripList,
     deleteTripList,
     setInputValue,
@@ -99,6 +103,7 @@ export const MyScheduleContextProvider = ({ children }) => {
     setValue2,
     setBakil,
     setAllowButton,
+    setAdvancedTripList,
   };
   
   return (
