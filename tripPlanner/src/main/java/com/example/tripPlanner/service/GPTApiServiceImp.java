@@ -1,8 +1,9 @@
 package com.example.tripPlanner.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -45,16 +46,25 @@ public class GPTApiServiceImp implements GPTApiService{
 	}
 
 	
-	public GptResponse askQuestion(List<Place> places) {
+	public GptResponse askQuestion(List<Place> places){//,int date, String[] tend){
+		int placenum=places.size();
+		System.out.println("장소개수 : "+placenum);
 		String placestr=concatenateTitles(places);
-		int date=12;
+		int date=3;
+		String[] tend={"매운거","걷는거","단거","움직이는거"};
+		String 중복="중복은 안 되고 ";
 		String dates= date+"박"+(date+1)+"일";
-		String 성별; //남자끼리, 여자끼리 ,혼성으로  -갈것이고
-		String 성향; //매운것 선호 뭐 선호 뭐 선호
-		List<Message> messages = new ArrayList<>();
+//		if(date*5>placenum) { // 기간동안에 갈 만한 여행지의 수가 부족할때!
+//			 중복="";
+//		}
+		String 성별="남자 셋"; //남자끼리, 여자끼리 ,혼성으로  -갈것이고
+		String 성향=tend[0]+"랑"+tend[1]+"을 좋아하고"+tend[2]+"랑"+tend[3]+"을 싫어해";
+		
+		List<Message> messages = new ArrayList<>(); 
 	    Message msg=new Message();
 	    msg.setRole("user");
-	    msg.setContent("나는 "+dates+" 여행을 갈것이고, 남자 셋, 자연관광을 좋아하고, 매운것을 잘먹어, 내가 아래에 보내주는 장소들중에서 날짜별로 내 성향에 맞게 여행지를 추천해줘 ! ("+placestr+")날짜별로 정리해서 추출해줘 하루에 3~4곳, 중복은 안 되고 장소이름만 적어 표로정리해줘 "); // 전달할 content 값을 설정합니다.
+	    msg.setContent("나는 "+dates+" 여행을 갈것이고,"+성별+","+성향+" 내가 아래에 보내주는 장소들중에서 날짜별로 내 성향에 맞게 여행지를 랜덤으로 골라줘 !"
+	    		+ " ("+placestr+")날짜별로 정리해서 추출해줘 하루에 3~5곳, "+중복+" 장소이름만 적어 표로정리해줘 "); // 전달할 content 값을 설정합니다.
 	    System.out.println(msg.getContent());
 	    messages.add(msg);
 	    System.out.println(++cnt+"번째 시도");
@@ -96,29 +106,7 @@ public String[][] sendQuestion(List<Place> places) {
             travelSchedule[i - 2][j] = place[j].trim();
         }
     }
-//	String[] lines = out.split("\n");
-//    List<String[]> outputList = new ArrayList<>();
-//
-//    int idx=0;
-//    int index = 0;
-//    for (String line : lines) {
-//        if (line.endsWith(":")) {
-//            ++index;
-//            idx=0;
-//            outputList.add(new String[10]);
-//        } else if (line.startsWith("- ")) {
-//            line = line.substring(2);
-//            if (outputList.size() <= index) {
-//                outputList.add(new String[10]);
-//            }
-//            if (outputList.get(index)[idx] == null) {
-//                outputList.get(index)[idx++] = line;
-//            }
-//        }
-//    }
-//
-//    String[][] outputArray = outputList.toArray(new String[outputList.size()][]);
-    
+
     System.out.println("저기\n");
     for (int i = 0; i < numDays; i++) {
         for (int j = 0; j < travelSchedule[i].length; j++) {
@@ -130,4 +118,5 @@ public String[][] sendQuestion(List<Place> places) {
  
     return  travelSchedule;
 	}
+
 }

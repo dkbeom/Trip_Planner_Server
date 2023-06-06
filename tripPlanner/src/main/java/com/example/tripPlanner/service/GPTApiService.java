@@ -1,8 +1,10 @@
 package com.example.tripPlanner.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpEntity;
+
 import com.example.tripPlanner.dto.GptRequest;
 import com.example.tripPlanner.dto.GptResponse;
 import com.example.tripPlanner.entity.Place;
