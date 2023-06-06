@@ -29,7 +29,11 @@ function NextPageButton() {
         const token = localStorage.getItem('transport');
         const val1 = localStorage.getItem('value1');
         const val2 = localStorage.getItem('value2');
-        if (token && val2 - val1 >= 0) {
+        if(val1 == null || val2 == null){
+            setAllowButton(false);
+            setShowModal2(true);
+        }
+        else if (token && val2 - val1 >= 0) {
             setAllowButton(true);
             setShowModal(true);
         }

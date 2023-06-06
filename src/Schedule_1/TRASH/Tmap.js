@@ -1,6 +1,6 @@
 /*global kakao*/
 import React, { useEffect, useRef, useState, useContext } from 'react';
-import { MyContext } from './provider';
+import { MyContext } from '../provider';
 
 var coords = [0, 0];
 

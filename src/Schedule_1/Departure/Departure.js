@@ -58,8 +58,8 @@ function Departure() {
           <Nav.Link eventKey="link-2" disabled>여행지 선택</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="disabled" disabled>
-            Disabled
+          <Nav.Link eventKey="link-3" disabled>
+            여행 추가 정보
           </Nav.Link>
         </Nav.Item>
       </Nav>

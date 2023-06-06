@@ -34,19 +34,22 @@ export function LoginForm() {
             .then(response => {
                 console.log(response);
                 if(response.data.token==null){
+                    setErrorMessage('해당하는 회원 정보가 없습니다!'); // Set loginError to true if login fails
                     setaccountEmail("");
+                    isFormOK = false;
+                    return;
                 }
                 else{
                     setaccountEmail(formData.id);
                     localStorage.clear();
                     localStorage.setItem("ID", formData.id);
                     localStorage.setItem("token", response.data.token);
+                    isFormOK = true;
                 }
             })
             .catch(error => {
                 console.log(error);
             });
-        isFormOK = true;
         // 폼 데이터를 JSON으로 변환합니다.
         const jsonFormData = JSON.stringify(formData);
         // Blob 객체를 생성합니다.

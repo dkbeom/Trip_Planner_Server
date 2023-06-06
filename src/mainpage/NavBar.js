@@ -10,7 +10,7 @@ import axios from 'axios';
 function Greeting() {
     const handleLogout = () => {
         localStorage.clear();
-        window.location.href = "http://localhost:3000/";
+        window.location.href = "/";
     }
     const [nickname, setNickname] = useState(null);
     const [showModal, setShowModal] = useState(false);

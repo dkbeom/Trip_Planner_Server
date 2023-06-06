@@ -1,6 +1,6 @@
 /*global kakao*/
 import React, { useState, useEffect, useContext } from 'react'
-import { MyContext } from './provider';
+import { MyContext } from '../provider';
 import TMAP from './Tmap';
 import { Container } from 'react-bootstrap';
 
