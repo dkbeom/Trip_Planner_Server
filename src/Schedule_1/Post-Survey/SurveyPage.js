@@ -6,6 +6,9 @@ import { Link } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
 import SurveyPaper from './SurveyPaper';
 import Nav from 'react-bootstrap/Nav';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import '../../mainpage/font.css'
 
 
 const Background = styled.div`
@@ -26,6 +29,17 @@ const MainWrapper = styled.div`
 `;
 
 const MyPage = () => {
+  
+  const [showButton, setShowButton] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+        setShowButton(true);
+    }, 123);
+
+    return () => clearTimeout(timer);
+}, []);
+
   return (
     <Background>
       <NavBar />
@@ -50,6 +64,24 @@ const MyPage = () => {
           <SurveyPaper />
         </Row>
       </MainWrapper>
+      
+      <div className={`item ${showButton ? 'show' : ''}`}>
+                    <Link to="/sample">
+                        <button
+                            type="button"
+                            className="btn btn-secondary btn-lg"
+                            style={{
+                                backgroundColor: '#F0CC90',
+                                color: '#121212',
+                                boxShadow: '0px 0px 10px 1px rgba(0,0,0,0.2)',
+                            }}
+                        >
+                            <div className="fd" style={{ fontSize: '30px' }}>
+                                스케줄 만들기
+                            </div>
+                        </button>
+                    </Link>
+                </div>
     </Background>
   );
 };

@@ -1,36 +1,46 @@
-import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Button } from 'react-bootstrap';
 
-function MyComponent() {
-  const [value, setValue] = useState(localStorage.getItem('Bakil'));
-
-  useEffect(() => {
-    // 로컬 스토리지 업데이트 후에 실행되는 콜백 함수
-    const handleStorageUpdate = (event) => {
-      if (event.key === 'myKey') {
-        setValue(event.newValue);
-      }
+function file2(){
+  const sendPredictionRequest = async () => {
+    const url = 'https://apis.openapi.sk.com/tmap/routes/prediction?version=1';
+    const appKey = 'iMIjpehulFaBDBzBhOiqY10fiMy5JbbN8UlEySE5'; // Replace with your actual app key
+  
+    const requestData = {
+      routesInfo: {
+        departure: {
+          name: 'test1',
+          lon: '126.8463399',
+          lat: '35.2142065',
+        },
+        destination: {
+          name: 'test2',
+          lon: '126.844188',
+          lat: '35.221412',
+        },
+        predictionType: 'arrival',
+        predictionTime: '2023-06-07T09:00:22+0900',
+      },
     };
+  
+    try {
+      const response = await axios.post(url, requestData, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          appKey: appKey,
+        },
+      });
+  
+      console.log(response.data); // Handle the response data as needed
+    } catch (error) {
+      console.log(error); // Handle any errors
+    }
+  };
+return(
 
-    // 로컬 스토리지 업데이트 이벤트에 대한 리스너 등록
-    window.addEventListener('storage', handleStorageUpdate);
-
-    // 컴포넌트 언마운트 시에 리스너 제거
-    return () => {
-      window.removeEventListener('storage', handleStorageUpdate);
-    };
-  }, []);
-
-  // 값이 업데이트된 후에 연산 수행
-  const computedValue = value ? parseInt(value) + 1 : 0;
-
-  return (
-    <div>
-      <Button onClick={localStorage.setItem("hello", parseInt(value + 1))}> sdlk</Button>
-      <p>로컬 스토리지 값: {value}</p>
-      <p>연산 결과: {computedValue}</p>
-    </div>
-  );
+  <Button onClick={sendPredictionRequest}>으아</Button>
+)
 }
 
-export default MyComponent;
+export default file2;
