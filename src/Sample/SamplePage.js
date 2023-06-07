@@ -7,7 +7,6 @@ function SamplePage() {
         <MyContextProvider>
                 {/* 자식 컴포넌트들 */}
                 <File1 />
-                <File2 />
         </MyContextProvider>
     );
 }

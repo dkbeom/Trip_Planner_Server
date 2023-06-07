@@ -48,7 +48,7 @@ function NextPageButton() {
     }
 
     return (
-        <Container style={{ paddingTop: '30px', textAlign: 'center' }}>
+        <Container style={{ paddingTop: '30px', textAlign: 'center', display: "flex", flexDirection: "column", alignItems: "center" }}>
             <div className={`item ${showButton ? 'show' : ''}`}>
                 <button
                     type="button"

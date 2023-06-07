@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
 import NavBar from '../../mainpage/NavBar';
 import { Link } from 'react-router-dom';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Container } from 'react-bootstrap';
 import SurveyPaper from './SurveyPaper';
 import Nav from 'react-bootstrap/Nav';
 import { useState } from 'react';
@@ -29,16 +29,16 @@ const MainWrapper = styled.div`
 `;
 
 const MyPage = () => {
-  
+
   const [showButton, setShowButton] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-        setShowButton(true);
+      setShowButton(true);
     }, 123);
 
     return () => clearTimeout(timer);
-}, []);
+  }, []);
 
   return (
     <Background>
@@ -64,24 +64,25 @@ const MyPage = () => {
           <SurveyPaper />
         </Row>
       </MainWrapper>
-      
-      <div className={`item ${showButton ? 'show' : ''}`}>
-                    <Link to="/sample">
-                        <button
-                            type="button"
-                            className="btn btn-secondary btn-lg"
-                            style={{
-                                backgroundColor: '#F0CC90',
-                                color: '#121212',
-                                boxShadow: '0px 0px 10px 1px rgba(0,0,0,0.2)',
-                            }}
-                        >
-                            <div className="fd" style={{ fontSize: '30px' }}>
-                                스케줄 만들기
-                            </div>
-                        </button>
-                    </Link>
-                </div>
+      <Container style={{ paddingTop: '50px', textAlign: 'center', display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div className={`item ${showButton ? 'show' : ''}`}>
+          <Link to="/sample">
+            <button
+              type="button"
+              className="btn btn-secondary btn-lg"
+              style={{
+                backgroundColor: '#F0CC90',
+                color: '#121212',
+                boxShadow: '0px 0px 10px 1px rgba(0,0,0,0.2)',
+              }}
+            >
+              <div className="fd" style={{ fontSize: '30px' }}>
+                스케줄 만들기
+              </div>
+            </button>
+          </Link>
+        </div>
+      </Container>
     </Background>
   );
 };
