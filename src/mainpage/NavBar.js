@@ -44,10 +44,10 @@ function Greeting() {
 
     if (localStorage.getItem("token")) {
         return (
-            <Container>
+            <Container style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <Col>
                     <div className='dd' style={{ fontSize: "20px", marginRight: "200px" }}>
-                    <Link to="/mypage"><button type="button" className="btn btn-outline-success" style={{ marginRight: "10px" }}>My Page</button></Link>
+                        <Link to="/mypage"><button type="button" className="btn btn-outline-success" style={{ marginRight: "10px" }}>My Page</button></Link>
                         <button type="button" className="btn btn-outline-danger" onClick={handleLogout}>Logout</button>
                     </div>
                 </Col>
@@ -61,7 +61,7 @@ function Greeting() {
     }
     else {
         return (
-            <Container>
+            <Container style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <Col style={{ paddingTop: "20px" }}>
                     <div className='dd' style={{ fontSize: "20px", marginRight: "200px" }}>
                         <Login show={showModal} handleClose={handleModalClose} />
@@ -89,7 +89,7 @@ function NavBar() {
             style={{ backgroundColor: "rgba(255, 255, 255, 0.5)", height: "180px" }}
         >
             <div>
-                <Container>
+                <Container style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                     <Col>
                         <Navbar.Brand href="/">
                             <Title>
@@ -107,6 +107,7 @@ function NavBar() {
                         </div>
                     </Col>
                 </Container>
+
             </div>
             <div>
                 <Greeting />

@@ -19,7 +19,7 @@ function MainPage() {
     return (
             <Background>
                 <NavBar />
-                <Container style={{ paddingTop: "30px" }}>
+                <Container style={{ paddingTop: "30px", display: "flex", flexDirection: "column", alignItems: "center" }}>
                     <div>
 
                     </div>

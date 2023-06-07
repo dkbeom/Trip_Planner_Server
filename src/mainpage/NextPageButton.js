@@ -29,7 +29,7 @@ function NextPageButton() {
     };
 
     return (
-        <Container style={{ paddingTop: '50px', textAlign: 'center' }}>
+        <Container style={{ paddingTop: '50px', textAlign: 'center', display: "flex", flexDirection: "column", alignItems: "center" }}>
             {isLoggedIn ? (
                 <div className={`item ${showButton ? 'show' : ''}`}>
                     <Link to="/departure">

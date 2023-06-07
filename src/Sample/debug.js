@@ -6,6 +6,7 @@ import { Row, Col } from 'react-bootstrap';
 import NavBar from '../mainpage/NavBar';
 import { MyContext } from '../provider';
 import Alert from 'react-bootstrap/Alert'
+import Image from 'react-bootstrap/Image';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
@@ -91,11 +92,6 @@ function Departure() {
       });
   }, []);
 
-  useEffect(()=>{
-    if(res){
-      console.log(res.data);
-    }
-  }, [res])
 
   return (
     <Background>
@@ -105,7 +101,29 @@ function Departure() {
       {hello}</Alert.Heading>
     </Alert>
       <div>
-        {JSON.stringify(sample)}
+        {JSON.stringify(sample.data[0][0].title)}
+      </div>
+      <div>
+        {JSON.stringify(sample.data[0][0].addr)}
+      </div>
+      <Image src={sample.data[0][0].image} style={{width:"40vh"}} rounded />
+      <div>
+      {JSON.stringify(sample.data[0][0].nearByRestaurants[0].title)}
+      </div>
+      <div>
+        {JSON.stringify(sample.data[0][0].nearByRestaurants[0].addr)}
+      </div>
+      <div>
+        {JSON.stringify(sample.data[0][0].nearByRestaurants[1].title)}
+      </div>
+      <div>
+        {JSON.stringify(sample.data[0][0].nearByRestaurants[1].addr)}
+      </div>
+      <div>
+        {JSON.stringify(sample.data[0][0].nearByRestaurants[2].title)}
+      </div>
+      <div>
+        {JSON.stringify(sample.data[0][0].nearByRestaurants[2].addr)}
       </div>
       <MainWrapper>
         <Row>
