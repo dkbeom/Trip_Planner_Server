@@ -361,10 +361,20 @@ public class TourApiServiceImp implements TourApiService {
 							
 							boolean isMatch = false;
 							
-							for(String category : categories) {
-								if(category.equals((String)eachItem.get("cat1"))) {
-									isMatch = true;
-									break;
+							// categories가 비어있을 경우
+							if(categories.length <= 0) {
+								System.out.println("categories 배열이 비어있음");
+								isMatch = true;
+							}
+							// categories가 비어있지 않은 경우
+							else {
+								System.out.println("categories 배열이 비어있지 않음");
+								// 해당 여행지가 categories에 포함되는지 확인
+								for(String category : categories) {
+									if(category.equals((String)eachItem.get("cat1"))) {
+										isMatch = true;
+										break;
+									}
 								}
 							}
 							

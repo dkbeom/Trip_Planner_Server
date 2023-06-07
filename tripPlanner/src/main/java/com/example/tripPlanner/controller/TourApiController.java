@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpServerErrorException;
 
 import com.example.tripPlanner.entity.Place;
 import com.example.tripPlanner.entity.Restaurant;
 import com.example.tripPlanner.entity.TourApiParam;
+import com.example.tripPlanner.service.GPTApiService;
 import com.example.tripPlanner.service.MemberService;
 import com.example.tripPlanner.service.PlaceService;
 import com.example.tripPlanner.service.RestaurantService;
@@ -42,6 +44,9 @@ public class TourApiController {
 	
 	@Autowired
     private MemberService memberService;
+	
+	@Autowired
+	private GPTApiService gptApiService;
 	
 
 	// 키워드에 맞는 여행지 리스트 조회
@@ -141,7 +146,7 @@ public class TourApiController {
 	// 특정 지역에 있는 여행지 리스트 조회
 	@PostMapping("/areaBased")
 	public ArrayList<ArrayList<Place>> getAreaBasedPlaceList(@RequestBody TourApiParam param/*, @RequestHeader(value = "Authorization") String token*/) {
-		// 파라미터: currentX, currentY, areas, categories, foodPreferences, tag
+		// 파라미터: currentX, currentY, areas, categories, foodPreferences, travelDuration
 		
 		// 개인정보 확인
 		//Member member = memberService.getMemberById(securityService.getSubject(token).get("id"));
@@ -151,17 +156,59 @@ public class TourApiController {
 		List<Place> placeList = tourApiService.getAreaBasedPlaceList(param.getAreas(), param.getCategories());
 		long end1 = System.currentTimeMillis();
 		
-		// TEST
-		int a = 4;
-		int b = 6;
-		String[][] testArray = new String[a][b];
-		for(int i = 0; i < a; i++) {
-			for(int j = 0; j < b; j++) {
-				testArray[i][j] = placeList.get((b+3)*i+j).getTitle();
+		
+		System.out.println("placeList의 개수 => "+placeList.size());
+		
+//		// TEST
+//		int a = 4;
+//		int b = 6;
+//		String[][] testArray = new String[a][b];
+//		for(int i = 0; i < a; i++) {
+//			for(int j = 0; j < b; j++) {
+//				testArray[i][j] = placeList.get((b+3)*i+j).getTitle();
+//			}
+//		}
+		
+		long start2 = System.currentTimeMillis();
+		// -------------------------------------- GPT 시작 --------------------------------------
+		String[][] testArray = null;
+		if(placeList.size() >= param.getTravelDuration() * 5) {
+			System.out.println();
+			System.out.println("gpt 들어가기전 여행지 이름 목록");
+			for(Place p1 : placeList) {
+				System.out.println("여행지 이름 => "+p1.getTitle());
+			}
+			System.out.println();
+
+			try {
+			    testArray = gptApiService.sendQuestion(placeList, param.getTravelDuration());
+			    // 예외가 발생하지 않은 경우에 대한 처리
+			    // testArray를 사용하는 나머지 로직을 작성합니다.
+			} catch (HttpServerErrorException e) {
+			    // 500 Internal Server Error가 발생한 경우에 대한 처리
+			    // 예외 처리 로직을 작성합니다.
+			    // 예를 들어, 오류 메시지를 출력하거나 로그에 기록할 수 있습니다.
+			    System.out.println("서버에서 오류가 발생했습니다: " + e.getMessage());
+			    e.printStackTrace();
+			    // 필요한 경우 예외를 다시 던져서 상위 호출자에게 전파할 수도 있습니다.
+			    throw e;
+			}
+			
+			System.out.println();
+			System.out.println("gpt 들어갔다 나온 후 여행지 이름 목록");
+			int n = 1;
+			for(String[] oneday : testArray) {
+				System.out.println("day"+(n++));
+				for(String onePlace : oneday) {
+					System.out.println("여행지 이름 => "+onePlace);
+				}
 			}
 		}
+		
+		// -------------------------------------- GPT 끝 --------------------------------------
+		long end2 = System.currentTimeMillis();
 
-		long start2 = System.currentTimeMillis();
+		long start3 = System.currentTimeMillis();
 		// ChatGPT에서 추천 여행지로 받은 2차원 배열 다시 PlaceList로 매핑 (recommendationsAllDates -> recommendedPlaceListAllDates)
 		String[][] recommendationsAllDates = testArray; // ChatGPT에서 배열을 받음
 		ArrayList<ArrayList<Place>> recommendedPlaceListAllDates = new ArrayList<>();
@@ -179,9 +226,9 @@ public class TourApiController {
 			}
 			recommendedPlaceListAllDates.add(recommendedPlaceListByDate);
 		}
-		long end2 = System.currentTimeMillis();
+		long end3 = System.currentTimeMillis();
 		
-		long start3 = System.currentTimeMillis();
+		long start4 = System.currentTimeMillis();
 		// TSP 알고리즘(Greedy) (recommendedPlaceListAllDates -> orderedPlaceListAllDates)
 		ArrayList<ArrayList<Place>> orderedPlaceListAllDates = new ArrayList<>();
 		ArrayList<Place> orderedPlaceListByDate;
@@ -190,9 +237,9 @@ public class TourApiController {
 			orderedPlaceListByDate = tsp.getTspOrderedPlaceList(param.getCurrentX(), param.getCurrentY());
 			orderedPlaceListAllDates.add(new ArrayList<Place>(orderedPlaceListByDate));
 		}
-		long end3 = System.currentTimeMillis();
+		long end4 = System.currentTimeMillis();
 		
-		long start4 = System.currentTimeMillis();
+		long start5 = System.currentTimeMillis();
 		// 각 여행지마다 근처 식당 목록 삽입 (orderedPlaceListAllDates -> orderedPlaceListAllDates)
 		ExcelReader excelReader = new ExcelReader(param.getFoodPreferences());
 		List<Restaurant> restaurantList;
@@ -202,9 +249,9 @@ public class TourApiController {
 				p.setNearByRestaurants(new ArrayList<Restaurant>(restaurantList));
 			}
 		}
-		long end4 = System.currentTimeMillis();
+		long end5 = System.currentTimeMillis();
 		
-		long start5 = System.currentTimeMillis();
+		long start6 = System.currentTimeMillis();
 		// 여행지 DB 조회 및 삽입 (orderedPlaceListAllDates -> orderedPlaceListAllDates)
 		for(ArrayList<Place> orderedPlaceList : orderedPlaceListAllDates) {
 			for (Place p : orderedPlaceList) {
@@ -235,15 +282,16 @@ public class TourApiController {
 				}
 			}
 		}
-		long end5 = System.currentTimeMillis();
+		long end6 = System.currentTimeMillis();
 		
 		System.out.println();
 		System.out.println();
 		System.out.println("TourAPI 에서 키워드에 맞는 여행지 리스트 조회 경과 시간: " + (end1 - start1) + "ms");
-		System.out.println("ChatGPT에서 추천 여행지로 받은 2차원 배열 다시 PlaceList로 매핑 경과 시간: " + (end2 - start2) + "ms");
-		System.out.println("TSP 알고리즘 경과 시간: " + (end3 - start3) + "ms");
-		System.out.println("근처 식당 목록 삽입 경과 시간: " + (end4 - start4) + "ms");
-		System.out.println("여행지 DB 조회 및 삽입 경과 시간: " + (end5 - start5) + "ms");
+		System.out.println("ChatGPT에서 2차원 배열로 추천 여행지를 받는 시간: " + (end2 - start2) + "ms");
+		System.out.println("ChatGPT에서 추천 여행지로 받은 2차원 배열 다시 PlaceList로 매핑 경과 시간: " + (end3 - start3) + "ms");
+		System.out.println("TSP 알고리즘 경과 시간: " + (end4 - start4) + "ms");
+		System.out.println("근처 식당 목록 삽입 경과 시간: " + (end5 - start5) + "ms");
+		System.out.println("여행지 DB 조회 및 삽입 경과 시간: " + (end6 - start6) + "ms");
 		System.out.println();
 
 		return orderedPlaceListAllDates;

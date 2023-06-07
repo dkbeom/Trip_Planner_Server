@@ -17,4 +17,5 @@ public class TourApiParam {
 	private String contentTypeId;     // 관광타입 ID
 	private String[] categories;      // 대분류들
 	private String[] foodPreferences; // 음식 취향
+	private Integer travelDuration;   // 여행 기간 일수
 }

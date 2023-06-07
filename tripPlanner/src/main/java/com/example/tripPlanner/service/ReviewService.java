@@ -12,5 +12,5 @@ public interface ReviewService {
 	
 	boolean insertReview(Review review);
 	
-	boolean deleteReview(Integer reviewId);
+	boolean deleteReview(Integer reviewId, String memberId);
 }
