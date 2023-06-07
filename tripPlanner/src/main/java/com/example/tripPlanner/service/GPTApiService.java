@@ -13,6 +13,6 @@ public interface GPTApiService {
 
 	HttpEntity<GptRequest> buildHttpEntity(GptRequest gptRequest);
 	GptResponse getResponse(HttpEntity<GptRequest> requestHttpEntity);
-	GptResponse askQuestion(List<Place> places);
+	GptResponse askQuestion(List<Place> places,int numDays);
 	String[][] sendQuestion(List<Place> places);
 	}
