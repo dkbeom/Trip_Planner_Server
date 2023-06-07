@@ -1,0 +1,98 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.left-box {
+  width: 20%;
+  padding: 10px;
+  background-color: #ffffff;
+}
+
+.right-box {
+  width: 65%;
+  padding: 10px;
+  background-color: #ffffff;
+}
+
+.review {
+  margin-bottom: 10px;
+}
+
+.review-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.nickname {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.timestamp {
+  color: #888888;
+}
+
+.rating {
+  margin-bottom: 5px;
+}
+
+.star {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url(star.png); /* Replace with your star image */
+  background-size: cover;
+}
+
+.star.filled {
+  background-image: url(star-filled.png); /* Replace with your filled star image */
+}
+
+.content {
+  margin-bottom: 5px;
+}
+
+.report-button {
+  background-color: #f44336;
+  color: #ffffff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  float: right;
+}
+
+.review-item {
+    margin-bottom: 1rem; /* 조정 가능한 간격 */
+  }
+  
+  @media screen and (min-width: 768px) {
+    /* 화면 너비가 768px 이상인 경우 */
+    .review-item {
+      margin-bottom: 1.5rem; /* 조정 가능한 간격 */
+    }
+  }
+  
+  @media screen and (min-width: 1024px) {
+    /* 화면 너비가 1024px 이상인 경우 */
+    .review-item {
+      margin-bottom: 2rem; /* 조정 가능한 간격 */
+    }
+  }
+  
+  .place-item {
+    /* Regular style for place items */
+    cursor: pointer;
+  }
+  .place-item:hover {
+    background-color: lightgray;
+  }
+  
+  .place-item.active {
+    font-weight: bold;
+    background-color: #d4852a;
+    /* Add any other styles you want to apply to the active place item */
+  }
+  
