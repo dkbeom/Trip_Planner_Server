@@ -63,8 +63,8 @@ public class GPTApiServiceImp implements GPTApiService{
 		List<Message> messages = new ArrayList<>(); 
 	    Message msg=new Message();
 	    msg.setRole("user");
-	    msg.setContent("나는 "+dates+" 여행을 갈것이고,"+성향+" 내가 아래에 보내주는 장소들중에서 날짜별로 사람들이 많이가는 곳 위주로 추천해줘 도서관같은 여행에 어긋나는 장소는 빼고 각 첫글자 초성이 골고루 나오도록 해줘 !"
-	    		+ " ("+placestr+")날짜별로 정리해서 추출해줘 하루에 3~5곳, "+중복+" 장소이름만 적어 표로정리해줘 "); // 전달할 content 값을 설정합니다.
+	    msg.setContent("나는 "+dates+" 여행을 갈것이고,"+성향+" 내가 아래에 보내주는 장소들중에서 날짜별로 사람들이 많이가는 곳 위주로 추천해줘 도서관같은 여행에 어긋나는 장소는 빼고 각 첫글자 초성이 골고루 나오도록 해줘 그리고"+dates+
+	    		" 번째 날에는 2곳만 추천해줘 ("+placestr+")날짜별로 정리해서 추출해줘 하루에 3~4곳, "+중복+" 장소이름만 적어 표로정리해줘 "); // 전달할 content 값을 설정합니다.
 	    System.out.println(msg.getContent());
 	    messages.add(msg);
 	    System.out.println(++cnt+"번째 시도");
@@ -87,7 +87,7 @@ public class GPTApiServiceImp implements GPTApiService{
 	}
 
 public String[][] sendQuestion(List<Place> places) {
-	int numDays=3;
+	int numDays=2;
 	String out=askQuestion(places,numDays).getChoices().get(0).getMessage().getContent();
 	System.out.println(out);
     String[] lines = out.split("\n");
