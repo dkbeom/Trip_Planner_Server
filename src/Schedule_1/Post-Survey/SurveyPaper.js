@@ -4,7 +4,10 @@ import { redirect } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import '../../mainpage/font.css'
+import { useEffect } from 'react';
 
+
+var categories = ["A01", "A02", "A03", "C01"];
 function SurveyPage() {
   const questions = [
     { id: 'question1', text: '1. 첫날 여행 출발을 일찍 하려고 하시나요?' },
@@ -16,11 +19,11 @@ function SurveyPage() {
     { id: 'question7', text: '7. 문화유적지나 역사적인 장소에 관심이 많나요?' },
     { id: 'question8', text: '8. 다양한 액티비티와 스포츠를 여행에 포함시키는 것을 좋아하나요?' },
     { id: 'question9', text: '9. 지역 주민과 교류하며 현지 문화를 체험하는 것을 좋아하시나요?' },
-    { id: 'question10', text: '10. 여행 도중에도 계획을 변경하거나 새로운 경로를 탐험하는 것을 좋아하나요?' },
+    { id: 'question10', text: '10. 해산물을 좋아하시나요?' },
     { id: 'question11', text: '11. 이색적인 장소나 특이한 경험을 찾아다니는 것을 좋아하나요?' },
     { id: 'question12', text: '12. 음식, 음료, 현지 문화와 관련된 투어를 선호하나요?' },
     { id: 'question13', text: '13. 호텔이나 숙박시설의 퀄리티보다는 가격과 위치가 더 중요할까요?' },
-    { id: 'question14', text: '14. 여행을 할 때 일정에 여유를 두는 것을 선호하나요?' },
+    { id: 'question14', text: '14. 카페도 좋아하시나요?' },
     { id: 'question15', text: '15. 새로운 음식을 맛보기 위해 여행지에서 유명한 레스토랑을 찾는 편인가요?' }
   ];
 
@@ -31,7 +34,6 @@ function SurveyPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [unansweredQuestions, setUnansweredQuestions] = useState([]);
   const scrollRef = React.createRef();
-
   const handleChange = (question, value) => {
     setFormData(prevData => ({
       ...prevData,
@@ -51,6 +53,50 @@ function SurveyPage() {
     setFormData(defaultFormData);
   }, []);
 
+  useEffect(()=>{
+    if(formData.question1 === '네!'){
+      localStorage.setItem("startTime1", '8');
+    }
+    if(formData.question1 === '잘 모르겠어요.'){
+      localStorage.setItem("startTime1", '9');
+    }
+    if(formData.question1 === '아니오!'){
+      localStorage.setItem("startTime1", '10');
+    }
+    if(formData.question2 === '네!'){
+      localStorage.setItem("startTime2", '8');
+    }
+    if(formData.question2 === '잘 모르겠어요.'){
+      localStorage.setItem("startTime2", '9');
+    }
+    if(formData.question2 === '아니오!'){
+      localStorage.setItem("startTime2", '10');
+    }
+    if(formData.question3 === '아니오!'){
+      categories = categories.filter(item => item !== "A02");
+      var a = categories.length;
+      if(a==2){
+        a = 0;
+      }
+      if(a==3){
+        a = 1;
+      }
+      localStorage.setItem("categories", a);
+    }
+    if(formData.question4 === '아니오!'){
+      categories = categories.filter(item => item !== "A01");
+      var a = categories.length;
+      if(a==2){
+        a = 0;
+      }
+      if(a==3){
+        a = 2;
+      }
+      console.log(categories);
+      localStorage.setItem("categories", a);
+    }
+    
+  }, [formData])
   const handleNextPage = () => {
     setCurrentPage(prevPage => prevPage + 1);
     scrollRef.current.scrollTop = 0;

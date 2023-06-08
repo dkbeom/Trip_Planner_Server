@@ -111,6 +111,15 @@ function Departure() {
     };
   });
   var travelDuration = parseInt(localStorage.getItem("Bakil")) + 1;
+  var a = ["A01", "A02", "A03"];
+  if(localStorage.getItem("categories")){
+    if(localStorage.getItem("categories") == '1'){
+      a = ["A01", "A03"];
+    }
+    if(localStorage.getItem("categories") == '2'){
+      a = ["A02", "A03"];
+    }
+  }
   const [formData, setFormData] = useState({
     "currentX": localStorage.getItem("x"),
 
@@ -118,9 +127,9 @@ function Departure() {
 
     "areas": area,
 
-    "categories": ["A01", "A02", "A03", "C01"],
+    "categories": a,
 
-    "foodPreferences": ["국물요리", "고기", "면/분식"],
+    "foodPreferences": ["국물요리", "고기", "면/분식", "한식/뷔페", "일식", "이탈리안음식", "제과/베이커리/떡", "카페/찻집"],
 
     "travelDuration": travelDuration
   });

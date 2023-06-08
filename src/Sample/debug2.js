@@ -5,23 +5,23 @@ function file2(a, b, c, d){
   let result;
   const sendPredictionRequest = async () => {
     const url = 'https://apis.openapi.sk.com/tmap/routes/prediction?version=1';
-    const appKey = 'iMIjpehulFaBDBzBhOiqY10fiMy5JbbN8UlEySE5'; // Replace with your actual app key
+    const appKey = '52DEnq0WzjAg8MuIB9OU8RLLXT5MsW82ZtTl3WUh'; // Replace with your actual app key
   
     const requestData = {
-      routesInfo: {
-        departure: {
-          name: 'test1',
-          lon: a,
-          lat: b,
-        },
-        destination: {
-          name: 'test2',
-          lon: c,
-          lat: d,
-        },
-        predictionType: 'arrival',
-        predictionTime: '2023-06-07T09:00:22+0900',
-      },
+      "routesInfo" : {
+        "departure" : {
+            "name" : "test1",
+            "lon" : "127.10323758",
+            "lat" : "37.36520202"
+            },
+        "destination" : {
+            "name" : "test2",
+            "lon" : "128.87264091",
+            "lat" : "35.17240084"
+            },
+        "predictionType" : "arrival",
+        "predictionTime" : "2022-09-10T09:00:22+0900"
+            }
     };
   
     try {
@@ -35,9 +35,6 @@ function file2(a, b, c, d){
       result = response.data;
       console.log(response.data); // Handle the response data as needed
       
-return(
-  JSON.stringify(result)
-);
     } catch (error) {
       console.log(error); // Handle any errors
     }
