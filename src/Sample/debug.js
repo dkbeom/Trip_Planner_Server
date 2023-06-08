@@ -48,6 +48,7 @@ const ScheduleWrapper = styled.div`
 
 let sample;
 //sample = sample1; //디버깅할 때 아니면 꺼두자
+//localStorage.setItem("response", JSON.stringify(sample)); //이것두
 
 const handleClick = () => {
 

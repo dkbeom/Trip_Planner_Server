@@ -9,6 +9,16 @@ var x = 0.0;
 var y = 0.0;
 
 function App() {
+    var coords = [0, 0];
+    var x = localStorage.getItem('x'); // 출발지가 집일 때 설정
+    var y = localStorage.getItem('y');
+    var data = JSON.parse(localStorage.getItem("response"));
+    var day = parseInt(localStorage.getItem("pageNum")) - 1;
+    var places = JSON.parse(localStorage.getItem("response")).data[parseInt(localStorage.getItem("pageNum")) - 1].length;
+    if (places > 4) {
+      places = 4;
+    }
+    var sample = JSON.stringify(data.data[day][0]);
     const [mapOptions, setMapOptions] = useState({
         center: new window.Tmapv3.LatLng(35.8714, 128.75),
         width: "95vh",
