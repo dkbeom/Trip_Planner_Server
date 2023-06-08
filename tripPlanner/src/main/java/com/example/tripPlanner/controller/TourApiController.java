@@ -154,6 +154,8 @@ public class TourApiController {
 	public ArrayList<ArrayList<Place>> getAreaBasedPlaceList(@RequestBody TourApiParam param) {
 		// 파라미터: currentX, currentY, areas, categories, foodPreferences, travelDuration
 		
+		System.out.println("시작");
+		
 		long start1 = System.currentTimeMillis();
 		// TourAPI 에서 키워드에 맞는 여행지 리스트 조회
 		List<Place> placeList = tourApiService.getAreaBasedPlaceList(param.getAreas(), param.getCategories(), param.getTravelDuration());
@@ -163,6 +165,7 @@ public class TourApiController {
 		for(Place place : placeList) {
 			System.out.println("여행지 이름 => "+place.getTitle());
 		}
+		System.out.println("\nTourAPI 여행지 리스트 조회 끝\n");
 		
 		
 		long start2 = System.currentTimeMillis();
@@ -217,6 +220,7 @@ public class TourApiController {
 		}		
 		// -------------------------------------- GPT 끝 --------------------------------------
 		long end2 = System.currentTimeMillis();
+		System.out.println("\nGPT 끝\n");
 
 		
 		long start3 = System.currentTimeMillis();
@@ -238,6 +242,7 @@ public class TourApiController {
 			recommendedPlaceListAllDates.add(recommendedPlaceListByDate);
 		}
 		long end3 = System.currentTimeMillis();
+		System.out.println("\nGPT에서 나온 2차원 배열 다시 PlaceList로 매핑 끝\n");
 		
 		
 		long start4 = System.currentTimeMillis();
@@ -250,6 +255,7 @@ public class TourApiController {
 			orderedPlaceListAllDates.add(new ArrayList<Place>(orderedPlaceListByDate));
 		}
 		long end4 = System.currentTimeMillis();
+		System.out.println("\nTSP 알고리즘 끝\n");
 		
 		
 		long start5 = System.currentTimeMillis();
@@ -263,6 +269,7 @@ public class TourApiController {
 			}
 		}
 		long end5 = System.currentTimeMillis();
+		System.out.println("\n근처 식당 목록 삽입 끝\n");
 		
 		
 		long start6 = System.currentTimeMillis();
@@ -299,6 +306,7 @@ public class TourApiController {
 			}
 		}
 		long end6 = System.currentTimeMillis();
+		System.out.println("\n여행지 DB 조회 및 삽입 끝\n");
 		
 		System.out.println("\n");
 		System.out.println("TourAPI 에서 키워드에 맞는 여행지 리스트 조회 경과 시간: " + (end1 - start1) + "ms");
