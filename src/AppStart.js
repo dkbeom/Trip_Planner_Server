@@ -13,6 +13,7 @@ import { MyScheduleContextProvider } from './Schedule_1/provider';
 import Destination from './Schedule_1/Destination/Destination';
 import PostSurvey from './Schedule_1/Post-Survey/SurveyPage'
 import Review from './Review/Review';
+import ResultPage from './Result/ResultPage'
 
 
 
@@ -31,6 +32,7 @@ function AppStart() {
           <Route path="/destination" element={<Destination/>}/>
           <Route path="/post-survey" element={<PostSurvey/>}/>
           <Route path="/review" element={<Review/>}/>
+          <Route path="/result" element={<ResultPage/>}/>
         </Routes>
     </MyContextProvider>
     </MyScheduleContextProvider>

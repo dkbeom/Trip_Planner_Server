@@ -82,6 +82,10 @@ function Greeting() {
 }
 
 function NavBar() {
+    const handleLogoClick = () => {
+        // 특정 아이템을 localStorage에서 삭제하는 코드
+        localStorage.removeItem("response");
+      };
     return (
         <Navbar
             expand="lg"
@@ -91,7 +95,7 @@ function NavBar() {
             <div>
                 <Container style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                     <Col>
-                        <Navbar.Brand href="/">
+                        <Navbar.Brand href="/" onClick={handleLogoClick}>
                             <Title>
                                 <img src="icon_STP.png" alt="Main_Logo" width="120" height="60" />
                                 <span className="highlight">

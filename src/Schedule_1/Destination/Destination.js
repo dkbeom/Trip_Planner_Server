@@ -45,21 +45,15 @@ function Destination() {
   return (
     <Background>
       <NavBar />
-      <Nav fill variant="tabs" defaultActiveKey="link-2">
-        <Nav.Item>
-          <Nav.Link href="/departure">출발지 선택</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/pre-survey" eventKey="link-1">여행 사전 정보</Nav.Link>
-        </Nav.Item>
-          <Nav.Link href="/destination" eventKey="link-2">여행지 선택</Nav.Link>
-        <Nav.Item>
+      <Nav fill variant="tabs" defaultActiveKey="link-2" >
+          <Nav.Link href="/departure" style={{ backgroundColor: 'white', border: '1px solid black'}}>출발지 선택</Nav.Link>
+          <Nav.Link href="/pre-survey" eventKey="link-1" style={{ backgroundColor: 'white', border: '1px solid black' }}>여행 사전 정보</Nav.Link>
+          <Nav.Link href="/destination" eventKey="link-2" style={{ backgroundColor: '#BBBBBB', border: '1px solid black', fontWeight: 'bold' }}>여행지 선택</Nav.Link>
         {advancedTripList.length === 0 ? (
-          <Nav.Link href="/post-survey" eventKey="link-3" disabled>여행 추가 정보</Nav.Link>
+          <Nav.Link href="/post-survey" eventKey="link-3" disabled style={{border: '1px solid black'}}>여행 추가 정보</Nav.Link>
         ) : (
-          <Nav.Link href="/post-survey" eventKey="link-3">여행 추가 정보</Nav.Link>
+          <Nav.Link href="/post-survey" eventKey="link-3" style={{ backgroundColor: 'white', border: '1px solid black' }}>여행 추가 정보</Nav.Link>
         )}
-        </Nav.Item>
       </Nav>
       <MainWrapper>
         <Row>

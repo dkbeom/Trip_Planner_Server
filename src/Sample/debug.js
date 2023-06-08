@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
 import { Row, Col } from 'react-bootstrap';
 import NavBar from '../mainpage/NavBar';
-import { MyContext } from '../provider';
+import { MyContext, MyContextProvider } from './provider';
 import Alert from 'react-bootstrap/Alert'
 import Image from 'react-bootstrap/Image';
 import Pagination from 'react-bootstrap/Pagination';
@@ -14,6 +14,8 @@ import Card from 'react-bootstrap/Card';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Spinner from 'react-bootstrap/Spinner';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import Modal from './debug3';
+import { useContext } from 'react';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
@@ -89,7 +91,8 @@ function Departure() {
   const [hello, setHello] = useState('현재 상황: 스케줄을 만들고 있습니다. 기다려주세요!');
   const tripListString = localStorage.getItem("advancedTripList");
   const tripList = JSON.parse(tripListString);
-
+  const { showmap, setShowMap } = useContext(MyContext);
+  const [active, setActive] = useState(1);
   const area = tripList.map((item) => {
     const { address, lat, lng } = item;
     const addressParts = address.split(" ");
@@ -125,22 +128,32 @@ function Departure() {
       timeout: 600000, // 10 minutes timeout
     });
     console.log(formData);
-    apiRequest
-      .post('http://43.201.19.87:8080/tourApi/areaBased', formData)
-      .then((response) => {
-        const responseDataString = JSON.stringify(response.data[0][0]);
-        setHello("현재 상황: 추천 장소를 받아왔습니다!");
-        console.log(response);
-        sample = response;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (!localStorage.getItem("response")) {
+      apiRequest
+        .post('http://43.201.19.87:8080/tourApi/areaBased', formData)
+        .then((response) => {
+          localStorage.setItem("response", JSON.stringify(response));
+          setHello("현재 상황: 추천 장소를 받아왔습니다!");
+          console.log(response);
+          sample = response;
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    else {
+      setHello("현재 상황: 추천 장소를 받아왔습니다!");
+      sample = JSON.parse(localStorage.getItem("response"));
+    }
+    if(localStorage.getItem("pageNum")){
+      setActive(parseInt(localStorage.getItem("pageNum")));
+    }
   }, []);
-  const [active, setActive] = useState(1);
   let items = [];
   const handlePageChange = (pageNumber) => {
     setActive(pageNumber);
+    localStorage.setItem("pageNum", pageNumber);
     // 페이지 변경에 따른 추가 동작 수행
     // 예: 해당 페이지 데이터를 가져오기
   };
@@ -152,28 +165,36 @@ function Departure() {
     );
   }
 
+  const handleMapReading = () => {
+    setShowMap(true);
+  }
   return (
     <Background>
       <NavBar />
       <Alert variant="primary">
-        <Alert.Heading>
+        <Alert.Heading className='dd' style={{ textAlign: "center" }}>
           {hello}
         </Alert.Heading>
       </Alert>
       <div style={{ display: "flex", justifyContent: "center", gap: "10vh", margin: "0 auto" }}>
         {sample &&
           sample.data[active - 1].map((data, index) => (
-            <div key={index}>
-              {result(active - 1, index)}
-            </div>
+            index <= 3 && (
+              <div key={index}>
+                {result(active - 1, index)}
+              </div>
+            )
           ))}
       </div>
       {!sample &&
-      <div style={{ display: "flex", justifyContent: "center", marginTop: "27.2vh", height: "27.2vh"}}>
-      <Spinner animation="border" variant="primary" style={{width:"100px", height: "100px"}}/>
-      </div>}
-      
-      <Pagination size="lg" style={{ display: "flex", justifyContent: "center", margin: "0 auto", marginTop: "5vh" }}>{items}</Pagination>
+        <div style={{ display: "flex", justifyContent: "center", marginTop: "27.2vh", height: "27.2vh" }}>
+          <Spinner animation="border" variant="primary" style={{ width: "100px", height: "100px" }} />
+        </div>}
+
+      <div style={{ display: "flex", justifyContent: "center", }}>
+        <Pagination size="lg" style={{ display: "flex", justifyContent: "center", marginTop: "5vh", marginRight: "5vh" }}>{items}</Pagination>
+        <Button variant='success' style={{ width: "12vh", height: "5vh", marginTop: "5vh" }}  href='/result'>스케줄 보기</Button>
+      </div>
     </Background>
   );
 }

@@ -43,21 +43,21 @@ function Departure() {
   return (
     <Background>
       <NavBar/>
-      <Nav fill variant="tabs" defaultActiveKey="/departure">
-        <Nav.Item>
-          <Nav.Link href="/departure">출발지 선택</Nav.Link>
+      <Nav fill variant="tabs" defaultActiveKey="link-0">
+        <Nav.Item style={{ backgroundColor: '#BBBBBB', border: '1px solid black', fontWeight: 'bold' }}>
+          <Nav.Link href="/departure" eventKey="link-0" style={{backgroundColor: '#BBBBBB',}}>출발지 선택</Nav.Link>
         </Nav.Item>
         <Nav.Item>
         {finalDeparture === "" && localStorage.getItem("finalDeparture") == null ? (
-          <Nav.Link href="/pre-survey" eventKey="link-1" disabled>여행 사전 정보</Nav.Link>
+          <Nav.Link href="/pre-survey" eventKey="link-1" disabled style={{border: '1px solid black' }}>여행 사전 정보</Nav.Link>
         ) : (
-          <Nav.Link href="/pre-survey" eventKey="link-1">여행 사전 정보</Nav.Link>
+          <Nav.Link href="/pre-survey" eventKey="link-1" style={{ backgroundColor: 'white', border: '1px solid black' }}>여행 사전 정보</Nav.Link>
         )}
         </Nav.Item>
-        <Nav.Item>
+        <Nav.Item style={{border: '1px solid black' }}>
           <Nav.Link eventKey="link-2" disabled>여행지 선택</Nav.Link>
         </Nav.Item>
-        <Nav.Item>
+        <Nav.Item style={{border: '1px solid black' }}>
           <Nav.Link eventKey="link-3" disabled>
             여행 추가 정보
           </Nav.Link>

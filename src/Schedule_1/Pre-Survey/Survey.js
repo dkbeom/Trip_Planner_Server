@@ -40,18 +40,18 @@ function Departure() {
       <NavBar />
       <Nav fill variant="tabs" defaultActiveKey="link-1">
         <Nav.Item>
-          <Nav.Link href="/departure">출발지 선택</Nav.Link>
+          <Nav.Link href="/departure" style={{ backgroundColor: 'white', border: '1px solid black' }}>출발지 선택</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link href="/pre-survey" eventKey="link-1">여행 사전 정보</Nav.Link>
+          <Nav.Link href="/pre-survey" eventKey="link-1" style={{ backgroundColor: '#BBBBBB', border: '1px solid black', fontWeight: 'bold'}}>여행 사전 정보</Nav.Link>
         </Nav.Item>
         {(!allowButton) ? (
-          <Nav.Link href="/destination" eventKey="link-2" disabled>여행지 선택</Nav.Link>
+          <Nav.Link href="/destination" eventKey="link-2" disabled style={{ border: '1px solid black' }}>여행지 선택</Nav.Link>
         ) : (
-          <Nav.Link href="/destination" eventKey="link-2">여행지 선택</Nav.Link>
+          <Nav.Link href="/destination" eventKey="link-2" style={{ backgroundColor: 'white', border: '1px solid black' }}>여행지 선택</Nav.Link>
         )}
         <Nav.Item>
-          <Nav.Link eventKey="link-3" disabled>
+          <Nav.Link eventKey="link-3" disabled style={{border: '1px solid black' }}>
             여행 추가 정보
           </Nav.Link>
         </Nav.Item>

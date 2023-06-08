@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 
-function file2(){
+function file2(a, b, c, d){
+  let result;
   const sendPredictionRequest = async () => {
     const url = 'https://apis.openapi.sk.com/tmap/routes/prediction?version=1';
     const appKey = 'iMIjpehulFaBDBzBhOiqY10fiMy5JbbN8UlEySE5'; // Replace with your actual app key
@@ -10,13 +11,13 @@ function file2(){
       routesInfo: {
         departure: {
           name: 'test1',
-          lon: '126.8463399',
-          lat: '35.2142065',
+          lon: a,
+          lat: b,
         },
         destination: {
           name: 'test2',
-          lon: '126.844188',
-          lat: '35.221412',
+          lon: c,
+          lat: d,
         },
         predictionType: 'arrival',
         predictionTime: '2023-06-07T09:00:22+0900',
@@ -31,16 +32,17 @@ function file2(){
           appKey: appKey,
         },
       });
-  
+      result = response.data;
       console.log(response.data); // Handle the response data as needed
+      
+return(
+  JSON.stringify(result)
+);
     } catch (error) {
       console.log(error); // Handle any errors
     }
   };
-return(
-
-  <Button onClick={sendPredictionRequest}>으아</Button>
-)
+  sendPredictionRequest();
 }
 
 export default file2;

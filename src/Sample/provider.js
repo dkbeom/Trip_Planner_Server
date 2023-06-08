@@ -5,6 +5,8 @@ const initialSharedState = {
   setSharedVariable: () => {},
   itemList: [],
   setItemList: () => {},
+  showmap: false,
+  setShowMap: () => {},
 };
 
 export const MyContext = createContext(initialSharedState);
@@ -12,6 +14,7 @@ export const MyContext = createContext(initialSharedState);
 export const MyContextProvider = ({ children }) => {
   const [sharedVariable, setSharedVariable] = useState(initialSharedState.sharedVariable);
   const [itemList, setItemList] = useState(initialSharedState.itemList);
+  const [showmap, setShowMap] = useState(initialSharedState.showmap);
 
   const updateSharedVariable = (value) => {
     setSharedVariable(value);
@@ -22,6 +25,8 @@ export const MyContextProvider = ({ children }) => {
     setSharedVariable: updateSharedVariable,
     itemList,
     setItemList,
+    showmap,
+    setShowMap,
   };
 
   return (
