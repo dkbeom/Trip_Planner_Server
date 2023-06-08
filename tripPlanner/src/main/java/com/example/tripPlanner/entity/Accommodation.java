@@ -1,11 +1,9 @@
 package com.example.tripPlanner.entity;
 
-import java.util.List;
-
 import lombok.Data;
 
 @Data
-public class Place {
+public class Accommodation {
 	private String id;            // 콘텐츠ID
 	private String title;         // 제목
 	private String addr;          // 주소
@@ -21,8 +19,5 @@ public class Place {
 	private String tel;           // 전화번호
 	private Double sumScore;      // 평점 총점
 	private Integer numScore;     // 평점 갯수
-	private String tag;           // 태그
-	
-	private List<Restaurant> nearByRestaurants;       // 근처 식당 목록
-	private List<Accommodation> nearByAccommodations; // 근처 숙박시설 목록
+	private Double distance;      // 떨어진 거리(km)
 }

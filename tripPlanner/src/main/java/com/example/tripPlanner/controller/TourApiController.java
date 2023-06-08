@@ -151,16 +151,18 @@ public class TourApiController {
 	
 	// 특정 지역에 있는 여행지 리스트 조회
 	@PostMapping("/areaBased")
-	public ArrayList<ArrayList<Place>> getAreaBasedPlaceList(@RequestBody TourApiParam param, @RequestHeader(value = "Authorization") String token) {
+	public ArrayList<ArrayList<Place>> getAreaBasedPlaceList(@RequestBody TourApiParam param) {
 		// 파라미터: currentX, currentY, areas, categories, foodPreferences, travelDuration
-		
-		// 개인정보 확인
-		Member member = memberService.getMemberById(securityService.getSubject(token).get("id"));
 		
 		long start1 = System.currentTimeMillis();
 		// TourAPI 에서 키워드에 맞는 여행지 리스트 조회
-		List<Place> placeList = tourApiService.getAreaBasedPlaceList(param.getAreas(), param.getCategories());
+		List<Place> placeList = tourApiService.getAreaBasedPlaceList(param.getAreas(), param.getCategories(), param.getTravelDuration());
 		long end1 = System.currentTimeMillis();
+		
+		System.out.println("ChatGPT 들어가기 전 여행지 리스트");
+		for(Place place : placeList) {
+			System.out.println("여행지 이름 => "+place.getTitle());
+		}
 		
 		
 		long start2 = System.currentTimeMillis();
@@ -280,10 +282,6 @@ public class TourApiController {
 					placeService.insertPlace(p);
 				}
 				
-				// 히스토리 DB에 여행지 정보 저장
-				historyService.insert(p.getId(), p.getTitle(), member.getId(), member.getNickname());
-				
-				
 				// 해당 여행지의 근처 음식점 DB 조회 및 삽입
 				for(Restaurant r : p.getNearByRestaurants()) {
 					// 근처 음식점들이 음식점 DB에 존재하는 경우
@@ -297,9 +295,6 @@ public class TourApiController {
 						// 음식점 DB에 해당 음식점 삽입
 						restaurantService.insertRestaurant(r);
 					}
-					
-					// 히스토리 DB에 음식점 정보 저장
-					historyService.insert(r.getId(), r.getTitle(), member.getId(), member.getNickname());
 				}
 			}
 		}
@@ -308,7 +303,7 @@ public class TourApiController {
 		System.out.println("\n");
 		System.out.println("TourAPI 에서 키워드에 맞는 여행지 리스트 조회 경과 시간: " + (end1 - start1) + "ms");
 		System.out.println("ChatGPT에서 2차원 배열로 추천 여행지를 받는 시간: " + (end2 - start2) + "ms");
-		System.out.println("ChatGPT에서 추천 여행지로 받은 2차원 배열 다시 PlaceList로 매핑 경과 시간: " + (end3 - start3) + "ms");
+		System.out.println("ChatGPT에서 추천 여행지로 받은 2차원 배열을 다시 PlaceList로 매핑 경과 시간: " + (end3 - start3) + "ms");
 		System.out.println("TSP 알고리즘 경과 시간: " + (end4 - start4) + "ms");
 		System.out.println("근처 식당 목록 삽입 경과 시간: " + (end5 - start5) + "ms");
 		System.out.println("여행지 DB 조회 및 삽입 경과 시간: " + (end6 - start6) + "ms");

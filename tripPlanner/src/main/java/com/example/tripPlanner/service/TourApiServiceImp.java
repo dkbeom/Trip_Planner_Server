@@ -1,6 +1,9 @@
 package com.example.tripPlanner.service;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
@@ -17,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.tripPlanner.entity.Accommodation;
 import com.example.tripPlanner.entity.Area;
 import com.example.tripPlanner.entity.Category;
 import com.example.tripPlanner.entity.Place;
@@ -327,12 +331,12 @@ public class TourApiServiceImp implements TourApiService {
 	/////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public List<Place> getAreaBasedPlaceList(Area[] areas) {
-		return getAreaBasedPlaceList(areas, new String[]{"A01", "A02", "A03", "C01"});
+	public List<Place> getAreaBasedPlaceList(Area[] areas, Integer travelDuration) {
+		return getAreaBasedPlaceList(areas, new String[]{"A01", "A02", "A03", "C01"}, travelDuration);
 	}
 
 	@Override
-	public List<Place> getAreaBasedPlaceList(Area[] areas, String[] categories) {
+	public List<Place> getAreaBasedPlaceList(Area[] areas, String[] categories, Integer travelDuration) {
 		
 		String uriString = "";
 		
@@ -341,6 +345,9 @@ public class TourApiServiceImp implements TourApiService {
 		
 		// List<Place> 생성
 		List<Place> placeList = new ArrayList<>();
+		
+		// 숙소 리스트
+		List<Accommodation> accommodationList = new ArrayList<>();
 		
 		for(Area area : areas) {
 			areaCodeMap = getAreaCode(area.getAreaName() , area.getSigunguName());
@@ -356,48 +363,106 @@ public class TourApiServiceImp implements TourApiService {
 				if(itemsAndNumOfRows != null) {
 					for (int i = 0; i < (Integer)itemsAndNumOfRows.get("numOfRows"); i++) {
 						JSONObject eachItem = (JSONObject) ((JSONArray)itemsAndNumOfRows.get("item")).get(i);
-						// 쇼핑, 음식, 숙박, 추천코스 제외
-						if(!((String)eachItem.get("cat1")).equals("A04") && !((String)eachItem.get("cat1")).equals("A05") && !((String)eachItem.get("cat1")).equals("B02") && !((String)eachItem.get("cat1")).equals("C01")) {
+						// 쇼핑, 음식, 추천코스 제외
+						if(!((String)eachItem.get("cat1")).equals("A04") && !((String)eachItem.get("cat1")).equals("A05") && !((String)eachItem.get("cat1")).equals("C01")) {
 							
-							boolean isMatch = false;
-							
-							// categories가 비어있을 경우
-							if(categories.length <= 0) {
-								isMatch = true;
+							// 해당 여행지가 숙박(B02)인 경우
+							if(((String)eachItem.get("cat1")).equals("B02")) {
+								Accommodation accommodation = new Accommodation();
+								accommodation.setId((String) eachItem.get("contentid"));
+								accommodation.setTitle((String) eachItem.get("title"));
+								accommodation.setAddr((String) eachItem.get("addr1"));
+								accommodation.setMapX((String) eachItem.get("mapx"));
+								accommodation.setMapY((String) eachItem.get("mapy"));
+								accommodation.setImage((String) eachItem.get("firstimage"));
+								accommodation.setContentTypeId((String) eachItem.get("contenttypeid"));
+								accommodation.setCat1((String) eachItem.get("cat1"));
+								accommodation.setCat2((String) eachItem.get("cat2"));
+								accommodation.setCat3((String) eachItem.get("cat3"));
+								accommodation.setAreaCode((String) eachItem.get("areacode"));
+								accommodation.setSigunguCode((String) eachItem.get("sigungucode"));
+								accommodation.setTel((String) eachItem.get("tel"));
+								accommodationList.add(accommodation);
 							}
-							// categories가 비어있지 않은 경우
+							// 해당 여행지가 자연(A01), 인문(A02), 레포츠(A03) 중 하나일 경우
 							else {
-								// 해당 여행지가 categories에 포함되는지 확인
-								for(String category : categories) {
-									if(category.equals((String)eachItem.get("cat1"))) {
-										isMatch = true;
-										break;
+								boolean isMatch = false;
+								
+								// categories가 비어있을 경우
+								if(categories.length <= 0) {
+									isMatch = true;
+								}
+								// categories가 비어있지 않은 경우
+								else {
+									// 해당 여행지가 categories에 포함되는지 확인
+									for(String category : categories) {
+										if(category.equals((String)eachItem.get("cat1"))) {
+											isMatch = true;
+											break;
+										}
 									}
 								}
-							}
-							
-							if(isMatch) {
-								Place place = new Place();
-								place.setId((String) eachItem.get("contentid"));
-								place.setTitle((String) eachItem.get("title"));
-								place.setAddr((String) eachItem.get("addr1"));
-								place.setMapX((String) eachItem.get("mapx"));
-								place.setMapY((String) eachItem.get("mapy"));
-								place.setImage((String) eachItem.get("firstimage"));
-								place.setContentTypeId((String) eachItem.get("contenttypeid"));
-								place.setCat1((String) eachItem.get("cat1"));
-								place.setCat2((String) eachItem.get("cat2"));
-								place.setCat3((String) eachItem.get("cat3"));
-								place.setAreaCode((String) eachItem.get("areacode"));
-								place.setSigunguCode((String) eachItem.get("sigungucode"));
-								place.setTel((String) eachItem.get("tel"));
-								placeList.add(place);
+								
+								if(isMatch) {
+									Place place = new Place();
+									place.setId((String) eachItem.get("contentid"));
+									place.setTitle((String) eachItem.get("title"));
+									place.setAddr((String) eachItem.get("addr1"));
+									place.setMapX((String) eachItem.get("mapx"));
+									place.setMapY((String) eachItem.get("mapy"));
+									place.setImage((String) eachItem.get("firstimage"));
+									place.setContentTypeId((String) eachItem.get("contenttypeid"));
+									place.setCat1((String) eachItem.get("cat1"));
+									place.setCat2((String) eachItem.get("cat2"));
+									place.setCat3((String) eachItem.get("cat3"));
+									place.setAreaCode((String) eachItem.get("areacode"));
+									place.setSigunguCode((String) eachItem.get("sigungucode"));
+									place.setTel((String) eachItem.get("tel"));
+									placeList.add(place);
+								}
 							}
 						}
 					}
 				}
 			}
 		}
+		// 검색되는 여행지 수가 특정 수치 이상 넘어가면 자르기
+		if (placeList.size() > travelDuration * 7) {
+		    placeList.subList(travelDuration * 7, placeList.size()).clear();
+		}
+		
+		// 여행지 각각에 근처 숙박시설 정보 삽입
+		for(Place place : placeList) {
+			
+			List<Accommodation> nearByAccommodationsList = new ArrayList<>();
+			
+			for(Accommodation accommodation : accommodationList) {
+				
+		        BigDecimal placeMapXDecimal = new BigDecimal(place.getMapX());
+		        BigDecimal placeMapYDecimal = new BigDecimal(place.getMapY());
+		        
+		        BigDecimal accommodationMapXDecimal = new BigDecimal(accommodation.getMapX());
+		        BigDecimal accommodationMapYDecimal = new BigDecimal(accommodation.getMapY());
+				
+		    	// 현재 위치와 해당 음식점의 위도, 경도 차이에 따른 거리 계산
+		    	BigDecimal x = placeMapXDecimal.subtract(accommodationMapXDecimal).multiply(new BigDecimal(88));
+		    	BigDecimal y = placeMapYDecimal.subtract(accommodationMapYDecimal).multiply(new BigDecimal(111));
+		    	BigDecimal x2 = x.pow(2);
+		    	BigDecimal y2 = y.pow(2);
+		    	MathContext mc = new MathContext(10, RoundingMode.HALF_UP);
+		    	BigDecimal distance = x2.add(y2).sqrt(mc);
+		    	
+		    	if(distance.doubleValue() <= 5.0) {
+		    		accommodation.setDistance(distance.doubleValue());
+		    		nearByAccommodationsList.add(accommodation);
+		    		if(nearByAccommodationsList.size() >= 3) {
+		    			break;
+		    		}
+		    	}
+			}
+			place.setNearByAccommodations(nearByAccommodationsList);
+		}
+		
 		return placeList;
 	}
 }

@@ -38,6 +38,6 @@ public interface TourApiService {
 	List<Category> getCategoryList(String cat1, String cat2, String cat3);
 	
 	// Tour API 지역기반 관광정보 조회
-	List<Place> getAreaBasedPlaceList(Area[] areas);
-	List<Place> getAreaBasedPlaceList(Area[] areas, String[] categories);
+	List<Place> getAreaBasedPlaceList(Area[] areas, Integer travelDuration);
+	List<Place> getAreaBasedPlaceList(Area[] areas, String[] categories, Integer travelDuration);
 }
