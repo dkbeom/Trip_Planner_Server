@@ -452,7 +452,8 @@ public class TourApiServiceImp implements TourApiService {
 		    	MathContext mc = new MathContext(10, RoundingMode.HALF_UP);
 		    	BigDecimal distance = x2.add(y2).sqrt(mc);
 		    	
-		    	if(distance.doubleValue() <= 5.0) {
+		    	// 여행지 근처 10km 내의 숙소 정보 추가
+		    	if(distance.doubleValue() <= 10.0) {
 		    		accommodation.setDistance(distance.doubleValue());
 		    		nearByAccommodationsList.add(accommodation);
 		    		if(nearByAccommodationsList.size() >= 3) {
