@@ -6,15 +6,12 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpServerErrorException;
 
-import com.example.tripPlanner.entity.Member;
 import com.example.tripPlanner.entity.Place;
 import com.example.tripPlanner.entity.Restaurant;
 import com.example.tripPlanner.entity.TourApiParam;
@@ -154,18 +151,10 @@ public class TourApiController {
 	public ArrayList<ArrayList<Place>> getAreaBasedPlaceList(@RequestBody TourApiParam param) {
 		// 파라미터: currentX, currentY, areas, categories, foodPreferences, travelDuration
 		
-		System.out.println("시작");
-		
 		long start1 = System.currentTimeMillis();
 		// TourAPI 에서 키워드에 맞는 여행지 리스트 조회
 		List<Place> placeList = tourApiService.getAreaBasedPlaceList(param.getAreas(), param.getCategories(), param.getTravelDuration());
 		long end1 = System.currentTimeMillis();
-		
-		System.out.println("ChatGPT 들어가기 전 여행지 리스트");
-		for(Place place : placeList) {
-			System.out.println("여행지 이름 => "+place.getTitle());
-		}
-		System.out.println("\nTourAPI 여행지 리스트 조회 끝\n");
 		
 		
 		long start2 = System.currentTimeMillis();
@@ -318,11 +307,5 @@ public class TourApiController {
 		System.out.println("\n");
 
 		return orderedPlaceListAllDates;
-	}
-	
-	@GetMapping("/hi")
-	public String hi() {
-		
-		return "hello everyone~";
 	}
 }

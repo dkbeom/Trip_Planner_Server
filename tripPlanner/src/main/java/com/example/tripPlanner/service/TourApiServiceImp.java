@@ -43,22 +43,17 @@ public class TourApiServiceImp implements TourApiService {
 			
 			// RestTemplate 생성
 			RestTemplate restTemplate = new RestTemplate();
-
 			// api 호출
 			ResponseEntity<String> responseEntity = restTemplate.getForEntity(uri, String.class);
-
 			// response body
 			JSONObject body = new JSONObject(responseEntity.getBody()).getJSONObject("response").getJSONObject("body");
-
 			// item 갯수
 			Integer numOfRows = (Integer) body.get("numOfRows");
-
 			// item 배열
 			JSONArray item = null;
 			if (numOfRows > 0) {
 				item = body.getJSONObject("items").getJSONArray("item");
 			}
-			
 			Map<String,Object> itemsAndNumOfRows = new HashMap<>();
 			itemsAndNumOfRows.put("numOfRows", numOfRows);
 			itemsAndNumOfRows.put("item", item);
