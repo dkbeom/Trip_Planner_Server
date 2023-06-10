@@ -58,9 +58,6 @@ function Forms() {
         if(transportValue==="자동차"){
             setSelectedValue("2");
         }
-        if(transportValue==="렌트카"){
-            setSelectedValue("3");
-        }
         }
         if(value1 && value2){
             localStorage.setItem("Bakil", (value2.valueOf()-value1.valueOf())/86400000);
@@ -89,11 +86,6 @@ function Forms() {
             setTransport("자동차");
             localStorage.setItem("transport", "자동차");
             setComment1("자동차: 여행의 시작부터 끝까지 모두 자차를 이용하여 여행합니다.");
-        }
-        if (value === "3") {
-            setTransport("렌트카");
-            localStorage.setItem("transport", "렌트카");
-            setComment1("렌트카: 여행지까지는 대중교통을 이용하며, 여행지 내에서는 렌트카를 이용하여 여행합니다.");
         }
     };
 
@@ -198,7 +190,6 @@ function Forms() {
                     <option value="0">(선택)</option>
                     <option value="1">대중교통</option>
                     <option value="2">자동차</option>
-                    <option value="3">렌트카</option>
                 </select>
                 <div className='sd' style={{ fontSize: "15px" }}>
                     {comment1}

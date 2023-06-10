@@ -150,7 +150,7 @@ function App() {
       polyline.setMap(mapRef.current);
     }
   }
-  useEffect(() => {
+  function AddMarker() {
     var marker = new window.Tmapv3.Marker({
       position: new window.Tmapv3.LatLng(coords[1], coords[0]),
       icon: imageSrc[0],
@@ -165,6 +165,9 @@ function App() {
       })
       marker1.setMap(mapRef.current);
     }
+  }
+  useEffect(() => {
+    
     //Tmap의 마운트 오류는 이렇게 잡으면 된다.
     function initialization() {
       const container = document.getElementById('map');
@@ -172,6 +175,7 @@ function App() {
       mapRef.current = map;
       map.on("ConfigLoad", function () {
         AddLine()
+        AddMarker()
       })
     }
     if (!mapRef.current) {
