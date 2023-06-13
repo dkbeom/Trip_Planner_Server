@@ -113,7 +113,7 @@ function App() {
 
     useEffect(() => {
         c++;
-        if (c > 2) {
+        if (c > 1) {
             localStorage.setItem('advancedTripList', JSON.stringify(advancedTripList));
         }
     }, [advancedTripList])

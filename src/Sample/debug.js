@@ -146,6 +146,7 @@ function Departure() {
           setHello("현재 상황: 추천 장소를 받아왔습니다!");
           console.log(response);
           sample = response;
+          localStorage.setItem("pageNum", 1);
           window.location.reload();
         })
         .catch((error) => {
