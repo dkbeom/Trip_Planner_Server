@@ -151,7 +151,7 @@
 
 ## 3. 스케줄
 
-<img src="image/schedule1.png" height="400"/>
-<img src="image/schedule2.png" height="200"/>
-<img src="image/schedule3.png" height="200"/>
-<img src="image/schedule4.png" height="200"/>
+<img src="image/schedule1.png" weight="700"/>
+<img src="image/schedule2.png" height="700"/>
+<img src="image/schedule3.png" height="700"/>
+<img src="image/schedule4.png" height="700"/>
