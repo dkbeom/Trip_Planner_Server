@@ -76,24 +76,7 @@
 
 ## 2. 기술 스택
 
-### 2.1. 데이터 학습
-
-> 이미지 기반으로 점자 번역 데이터를 학습시킨 모델을 사용했습니다.
-
-* Python 3.9
-
-<img src="image/python.png" height="70"/>
-
-  1. 토치를 이용해서 데이터를 학습시키는 데에 효과적인 언어인 python을 사용했습니다.
-
-* Torch
-
-<img src="image/torch1.png" height="100"/>
-
-  1. 점자 인식 데이터들을 Torch를 통해 이미지 기반으로 학습시켜 모델을 구축했습니다.
-  2. 현재 널리 사용중인 PyTorch의 근간이 되는 모델입니다.
-
-### 2.2. 백엔드
+### 2.1. 백엔드
 
 * Spring
 
@@ -121,18 +104,18 @@
   1. JWT(Jason Web Token)는 클라이언트와 서버 간의 인증에 사용되는 토큰 기반의 인증 방식입니다.
   2. JWT는 정보를 암호화하여 안전한 인증을 제공하며, 분산 시스템에서의 확장성과 유연성을 갖고 있습니다.
 
-### 2.3. 프론트엔드
+### 2.2. 프론트엔드
 
 * Node.js
 
-<img src="image/kotlin.png" height="50"/>
+<img src="image/nodejs.png" height="50"/>
 
   1. Node.js는 비동기 이벤트 기반 JavaScript 런타임으로, 빠른 속도와 확장성이 높은 웹 애플리케이션 개발에 적합합니다.
   2. 또한, React와 함께 사용하여 서버와 클라이언트 모두 JavaScript를 사용하여 개발할 수 있어 개발 생산성이 높아집니다.
 
 * React
 
-<img src="image/camerax.png" height="100"/>
+<img src="image/React.png" height="100"/>
 
   1. React는 사용자 인터페이스(UI) 구축을 위한 인기 있는 JavaScript 라이브러리입니다.
   2. Node.js와 함께 javascript로 개발 할 수 있어 생산성이 높습니다.
@@ -145,7 +128,7 @@
   1. AXIOS는 브라우저와 서버 간의 HTTP 통신을 단순화하는 JavaScript 라이브러리입니다.
   2. 비동기 처리와 에러 핸들링 등 다양한 기능을 제공하며, React와 함께 사용하기 편리합니다.
 
-### 2.4. 배포
+### 2.3. 배포
 
 * AWS EC2
 
@@ -159,7 +142,7 @@
 
 * Github
 
-<img src="image/github.jpeg" height="100"/>
+<img src="image/github.png" height="100"/>
 
   1. Github 환경에서 작업물을 실시간으로 공유하며 작업하였습니다. 
   2. 코드 수정 내용을 효과적으로 파악할 수 있어, 유동적으로 작업할 수 있습니다. 
@@ -168,4 +151,7 @@
 
 ## 3. 스케줄
 
-![schedule](image/schedule1.png)
+<img src="image/schedule1.png" height="100"/>
+<img src="image/schedule2.png" height="100"/>
+<img src="image/schedule3.png" height="100"/>
+<img src="image/schedule4.png" height="100"/>
