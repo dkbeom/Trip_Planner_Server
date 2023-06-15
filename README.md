@@ -123,7 +123,7 @@
 
 * AXIOS
 
-<img src="image/tts.png" height="100"/>
+<img src="image/axios.png" height="100"/>
 
   1. AXIOS는 브라우저와 서버 간의 HTTP 통신을 단순화하는 JavaScript 라이브러리입니다.
   2. 비동기 처리와 에러 핸들링 등 다양한 기능을 제공하며, React와 함께 사용하기 편리합니다.
@@ -151,7 +151,7 @@
 
 ## 3. 스케줄
 
-<img src="image/schedule1.png" height="100"/>
+<img src="image/schedule1.png" height="200"/>
 <img src="image/schedule2.png" height="100"/>
 <img src="image/schedule3.png" height="100"/>
 <img src="image/schedule4.png" height="100"/>
