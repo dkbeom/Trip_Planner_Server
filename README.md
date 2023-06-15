@@ -99,26 +99,26 @@
 
 * Spring
 
-<img src="image/SpringBoot.png" height="70"/>
+<img src="image/SpringBoot.png" weight="70"/>
 
   1. Spring은 Java 기반의 오픈 소스 프레임워크로, 엔터프라이즈급 애플리케이션 개발에 많이 사용됩니다. Spring의 다양한 모듈과 기능은 개발 생산성을 높이고 유지 보수성을 개선하는 데 도움을 줍니다.
 
 * Oracle DB
 
-<img src="image/OracleDB.png" height="70"/>
+<img src="image/OracleDB.png" weight="70"/>
 
   1. Oracle은 대규모 데이터베이스 관리 시스템으로, 신뢰성과 성능이 뛰어나며, 기업의 데이터 요구 사항을 충족시킬 수 있습니다.
 
 * MyBatis
 
-<img src="image/MyBatis.png" height="70"/>
+<img src="image/MyBatis.png" weight="70"/>
 
   1. SQL 매핑 프레임워크로, 객체 지향 프로그래밍 언어와 관계형 데이터베이스 간의 상호 작용을 단순화합니다.
   2. SQL과 코드의 분리를 지원하여 유지 보수성을 향상시키고, 개발자가 직접 SQL 쿼리를 작성할 수 있어 유연성을 제공합니다.
 
 * JWT
 
-<img src="image/JWT.png" height="70"/>
+<img src="image/JWT.png" weight="70"/>
 
   1. JWT(Jason Web Token)는 클라이언트와 서버 간의 인증에 사용되는 토큰 기반의 인증 방식입니다.
   2. JWT는 정보를 암호화하여 안전한 인증을 제공하며, 분산 시스템에서의 확장성과 유연성을 갖고 있습니다.
