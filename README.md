@@ -28,7 +28,7 @@
 
 유저의 간단한 정보 입력을 통해 여행 성향을 파악하고 AI를 통해 여행지를 추출 후 경로 추천을 하여 여행자의 전 여정을 계획해주는 웹 서비스입니다. 
 
-<img src="image/splash.jpg" height="400"/>
+<img src="image/STP.png" height="400"/>
 
 
 기존에 여행지 추천 어플리케이션은 여러 개 있었지만, 일정과 경로를 추천해주는 서비스는 1개 밖에 없었고 그마저도 기간과 장소에 매우 제한적인 서비스였습니다.
@@ -50,20 +50,14 @@
 3. 추천된 여행지 리스트에서 AI가 성향을 더욱더 반영하여 날짜별 추천 여행지를 반환합니다.
 4. 알고리즘을 통해 최적의 동선을 추천하고 실시간 교통 정보를 반영하여 스케쥴을 제작합니다.
 
-<img src="image/photo1.jpg" height="400"/>
-
 ### 2.2. 여행지 근처 식당 추천 기능
 
 1. 가지고 있는 여행자의 성향을 통해 미리 추출해둔 식당 데이터에서 각 여행 스팟별 근처 식당을 찾아 추천해줍니다.
-
-<img src="image/photo3.jpg" height="400"/>
 
 ### 2.3. 정보 관리 기능
 
 1. 사용자는 회원가입을 통해 본 서비스를 이용할 수 있습니다.
 2. 로그인을 통해 인증 토큰을 발급 받고 토큰을 통해 닉네임, 비밀번호를 변경 할 수 있습니다.
-
-<img src="image/photo4.jpg" height="400"/>
 
 -----------
 
@@ -144,7 +138,7 @@
 
 ## 4. 스케줄
 
-<img src="image/schedule1.png" weight="300"/>
-<img src="image/schedule2.png" height="300"/>
-<img src="image/schedule3.png" height="300"/>
-<img src="image/schedule4.png" height="300"/>
+<img src="image/schedule1.png" weight="200"/>
+<img src="image/schedule2.png" height="200"/>
+<img src="image/schedule3.png" height="200"/>
+<img src="image/schedule4.png" height="200"/>
