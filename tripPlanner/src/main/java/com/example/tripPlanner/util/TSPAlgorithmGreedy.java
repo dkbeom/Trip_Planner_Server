@@ -25,10 +25,11 @@ public class TSPAlgorithmGreedy {
 	// 여행지 최단 경로 리스트를 반환해주는 메소드
 	public ArrayList<Place> getTspOrderedPlaceList(String currentMapX, String currentMapY) {
 
-		// 여행지 사이 거리 Matrix 작성
+		// 각각의 여행지 사이 거리 Matrix 작성
 		for (int i = 0; i < numOfPlaces; i++) {
 			for (int j = 0; j < numOfPlaces; j++) {
 
+				// 비교대상1
 				BigDecimal aMapX;
 				BigDecimal aMapY;
 				if (i == 0) {
@@ -39,6 +40,7 @@ public class TSPAlgorithmGreedy {
 					aMapY = new BigDecimal(placeList.get(i - 1).getMapY());
 				}
 
+				// 비교대상2
 				BigDecimal bMapX;
 				BigDecimal bMapY;
 
@@ -98,7 +100,7 @@ public class TSPAlgorithmGreedy {
 		return orderedPlaceList;
 	}
 
-	// Greedy 알고리즘 실행해서, 경로 순서를 반환하는 메소드
+	// Greedy 알고리즘 실행해서, 여행지 리스트 인덱스 번호들의 순서를 반환하는 메소드 (0부터 시작)
 	public ArrayList<Integer> getGreedyPathOrder() {
 
 		// 시작 지역 등록 & 방문 체크
@@ -111,8 +113,9 @@ public class TSPAlgorithmGreedy {
 			int closestCity = -1;
 			Double closestDistance = Double.MAX_VALUE;
 
+			// 방문하지 않은 여행지 중 가장 가까운 여행지 찾아서 저장
 			for (int j = 0; j < numOfPlaces; j++) {
-				// 방문하지 않은 여행지 중 가장 가까운 여행지 찾아서 저장
+				// 방문하지 않았고, 현재 가장 가까운 여행지면 저장
 				if (!visited[j] && distances[minPath.get(i - 1)][j] < closestDistance) {
 					closestCity = j;
 					closestDistance = distances[minPath.get(i - 1)][j];
